@@ -50,8 +50,8 @@ function Gluu () {
     };
     
     Gluu.prototype.initLineShader = function() {
-        var fragmentShader = this.getShader(gl, "chunkSelection","fs");
-        var vertexShader = this.getShader(gl, "chunkSelection","vs");
+        var fragmentShader = this.getShader(gl, "line","fs");
+        var vertexShader = this.getShader(gl, "line","vs");
 
         this.lineShader = gl.createProgram();
         gl.attachShader(this.lineShader, vertexShader);
