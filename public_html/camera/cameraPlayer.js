@@ -1,19 +1,11 @@
-function Camera(e,r,u){
-     this.name = "Camera";
-     this.pos = e;
+function CameraPlayer(p){
+     this.name = "CameraPlayer";
+     this.entity = p;
      this.oldPos = new Float32Array(3);
      this.tPos = new Float32Array(3);
-     this.tPos[0] = this.pos[0];
-     this.tPos[1] = this.pos[1];
-     this.tPos[2] = this.pos[2];
-     //this.relPos = e;
-     this.rot = r;
-     this.relRotX = 0;
-     this.relRotY = 0;
-     this.up = u;
-     this.przesx = 8;
-     this.przesy = 1; 
-     this.przesz = 8;
+     this.tPos[0] = p.pos[0];
+     this.tPos[1] = p.pos[1];
+     this.tPos[2] = p.pos[2];
      this.lpm = 0;
      this.control = 0;
      this.fovy = 3.14/3;
@@ -35,51 +27,61 @@ function Camera(e,r,u){
      this.upY = 0;
 }
 
-Camera.prototype.getMatrix = function(){
+CameraPlayer.prototype.getMatrix = function(){
     var lookAt = mat4.create();
-    mat4.lookAt(lookAt, this.pos, this.getTarget(), this.up);
+    mat4.lookAt(lookAt, this.getEye(), this.getTarget(), this.entity.up);
     return lookAt;
 };
 
-Camera.prototype.getTarget = function(){
-    return [this.pos[0] + Math.sin(this.rot[0]) * Math.cos(this.rot[1]), 
-        this.pos[1] + Math.sin(this.rot[1]) * 1, 
-        this.pos[2] + Math.cos(this.rot[0]) * Math.cos(this.rot[1]) ];
+CameraPlayer.prototype.getRot = function(){
+    return [this.entity.rot[0], this.entity.rot[1], this.entity.rot[2]];
 };
 
-Camera.prototype.moveForward = function(fps){
-        this.tPos[2] = this.pos[2] + (this.przesz/fps) * Math.cos(this.rot[0]);//* Math.cos(this.rot[1]);
-        this.tPos[0] = this.pos[0] + (this.przesz/fps) * Math.sin(this.rot[0]);//* Math.cos(this.rot[1]);
-        this.tPos[1] = this.pos[1];// + (this.przesz/fps) * Math.sin(this.rot[1]);
+CameraPlayer.prototype.getEye = function(){
+    return this.entity.getEye();
+};
+
+CameraPlayer.prototype.getPos = function(){
+    return [this.entity.pos[0], this.entity.pos[1], this.entity.pos[2]];
+};
+
+CameraPlayer.prototype.getTarget = function(){
+    return this.entity.getTarget();
+};
+
+CameraPlayer.prototype.moveForward = function(fps){
+        this.tPos[2] = this.entity.pos[2] + (this.entity.przesz/fps) * Math.cos(this.entity.rot[0]);
+        this.tPos[0] = this.entity.pos[0] + (this.entity.przesz/fps) * Math.sin(this.entity.rot[0]);
+        this.tPos[1] = this.entity.pos[1];
     };
 
-Camera.prototype.moveBackward = function(fps){
-        this.tPos[2] = this.pos[2] - (this.przesz/fps) * Math.cos(this.rot[0]);//* Math.cos(this.rot[1]);
-        this.tPos[0] = this.pos[0] - (this.przesz/fps) * Math.sin(this.rot[0]);//* Math.cos(this.rot[1]);
-        this.tPos[1] = this.pos[1];// - (this.przesz/fps) * Math.sin(this.rot[1]);
+CameraPlayer.prototype.moveBackward = function(fps){
+        this.tPos[2] = this.entity.pos[2] - (this.entity.przesz/fps) * Math.cos(this.entity.rot[0]);
+        this.tPos[0] = this.entity.pos[0] - (this.entity.przesz/fps) * Math.sin(this.entity.rot[0]);
+        this.tPos[1] = this.entity.pos[1];
     };
 
-Camera.prototype.moveLeft = function(fps){
-        this.tPos[0] = this.pos[0] + (this.przesz/fps) * Math.cos(this.rot[0]);
-        this.tPos[1] = this.pos[1];
-        this.tPos[2] = this.pos[2] - (this.przesz/fps) * Math.sin(this.rot[0]);
+CameraPlayer.prototype.moveLeft = function(fps){
+        this.tPos[0] = this.entity.pos[0] + (this.entity.przesz/fps) * Math.cos(this.entity.rot[0]);
+        this.tPos[1] = this.entity.pos[1];
+        this.tPos[2] = this.entity.pos[2] - (this.entity.przesz/fps) * Math.sin(this.entity.rot[0]);
     };
 
-Camera.prototype.moveRight = function(fps){
-        this.tPos[0] = this.pos[0] - (this.przesz/fps) * Math.cos(this.rot[0]);
-        this.tPos[1] = this.pos[1];
-        this.tPos[2] = this.pos[2] + (this.przesz/fps) * Math.sin(this.rot[0]);
+CameraPlayer.prototype.moveRight = function(fps){
+        this.tPos[0] = this.entity.pos[0] - (this.entity.przesz/fps) * Math.cos(this.entity.rot[0]);
+        this.tPos[1] = this.entity.pos[1];
+        this.tPos[2] = this.entity.pos[2] + (this.entity.przesz/fps) * Math.sin(this.entity.rot[0]);
     };
 
-Camera.prototype.mouseDown = function(fps){
+CameraPlayer.prototype.mouseDown = function(fps){
         this.lpm = 1;
     };
 
-Camera.prototype.mouseUp = function(fps){
+CameraPlayer.prototype.mouseUp = function(fps){
         this.lpm = 0;
     };
 
-Camera.prototype.mouseMove = function(x, y, fps){
+CameraPlayer.prototype.mouseMove = function(x, y, fps){
         if(this.lpm === 1 || this.autoMove){ 
             if(fps < 20) fps = 20;
             //if(y === 0 && x === 0) return;
@@ -88,24 +90,24 @@ Camera.prototype.mouseMove = function(x, y, fps){
         }
     };
     
-Camera.prototype.patrzX = function(f){
-        this.rot[0] += f;
+CameraPlayer.prototype.patrzX = function(f){
+        this.entity.rot[0] += f;
     };
 
-Camera.prototype.patrzY = function(f){
-        this.rot[1] += f;
-        if (this.rot[1] > 1.57) {
-            this.rot[1] = 1.57;
+CameraPlayer.prototype.patrzY = function(f){
+        this.entity.rot[1] += f;
+        if (this.entity.rot[1] > 1.57) {
+            this.entity.rot[1] = 1.57;
         }
-        if (this.rot[1] < -1.57) {
-            this.rot[1] = -1.57;
+        if (this.entity.rot[1] < -1.57) {
+            this.entity.rot[1] = -1.57;
         }
     };
     
-Camera.prototype.updatePosition = function(fps) {
-        this.oldPos[0] = this.pos[0];
-        this.oldPos[1] = this.pos[1];
-        this.oldPos[2] = this.pos[2];
+CameraPlayer.prototype.updatePosition = function(fps) {
+        this.oldPos[0] = this.entity.pos[0];
+        this.oldPos[1] = this.entity.pos[1];
+        this.oldPos[2] = this.entity.pos[2];
         if(fps < 20) fps = 20;
         if(this.moveF)
             if (this.jestcontrol === 1) {
@@ -126,41 +128,41 @@ Camera.prototype.updatePosition = function(fps) {
             this.moveLeft(fps);
 
        
-        if(camera.upY === 0){
+        if(this.upY === 0){
             this.tPos[1] -= (10/fps);
         } else {
             this.tPos[1] += (8/fps);
-            camera.upY -= (1000/fps);
-            if(camera.upY < 0) camera.upY = 0;
+            this.upY -= (1000/fps);
+            if(this.upY < 0) this.upY = 0;
         }
         
-        this.pos[1] = this.tPos[1];
+        this.entity.pos[1] = this.tPos[1];
         if(testCollisions()){
             //var pos1 = false;
-            this.pos[1] = this.oldPos[1];
+            this.entity.pos[1] = this.oldPos[1];
         } else {
             //var pos1 = true;
-            this.oldPos[1] = this.pos[1];
+            this.oldPos[1] = this.entity.pos[1];
         }
         //this.pos[1] = this.oldPos[1];
 
-        this.pos[2] = this.tPos[2];
+        this.entity.pos[2] = this.tPos[2];
         if(testCollisions()){
             //var pos2 = false;
-            this.pos[2] = this.oldPos[2];
+            this.entity.pos[2] = this.oldPos[2];
         } else {
             //var pos2 = true;
-            this.oldPos[2] = this.pos[2];
+            this.oldPos[2] = this.entity.pos[2];
         }
         //this.pos[2] = this.oldPos[2];
         
-        this.pos[0] = this.tPos[0];
+        this.entity.pos[0] = this.tPos[0];
         if(testCollisions()){
             //var pos0 = false;
-            this.pos[0] = this.oldPos[0];
+            this.entity.pos[0] = this.oldPos[0];
         } else {
             //var pos0 = true;
-            this.oldPos[0] = this.pos[0];
+            this.oldPos[0] = this.entity.pos[0];
         }
         
         this.patrzX((this.moveX)/(this.sensitivity));
@@ -169,9 +171,9 @@ Camera.prototype.updatePosition = function(fps) {
         this.moveY = 0;
         
         //this.pos[0] = this.oldPos[0];
-        this.tPos[0] = this.pos[0];
-        this.tPos[1] = this.pos[1];
-        this.tPos[2] = this.pos[2];
+        this.tPos[0] = this.entity.pos[0];
+        this.tPos[1] = this.entity.pos[1];
+        this.tPos[2] = this.entity.pos[2];
         //if(!pos1) 
       //  this.pos[1] = this.tPos[1];
        // if(!pos2) 
@@ -180,21 +182,15 @@ Camera.prototype.updatePosition = function(fps) {
       //  this.pos[0] = this.tPos[0];
     };
     
-Camera.prototype.previousPosition = function(){
-        this.pos[0] = this.oldPos[0];
-        this.pos[1] = this.oldPos[1];
-        this.pos[2] = this.oldPos[2];
-    };
-    
-Camera.prototype.moveUp = function(fps) {
+CameraPlayer.prototype.moveUp = function(fps) {
         this.tPos[1] += this.przesy;
     };
 
-Camera.prototype.moveDown = function(fps) {
+CameraPlayer.prototype.moveDown = function(fps) {
         this.tPos[1] -= this.przesy;
     };
     
-Camera.prototype.keyUp = function(e){
+CameraPlayer.prototype.keyUp = function(e){
         var code = e.keyCode;
         this.move = false;
         switch (code) {
@@ -202,7 +198,7 @@ Camera.prototype.keyUp = function(e){
                 //this.jestcontrol = 0;
                 break;
             case 69: // E
-                this.przesx = this.przesz = 10;
+                this.entity.przesx = this.entity.przesz = 10;
                 break;
             case 37:  // left
             case 65: // A 
@@ -226,7 +222,7 @@ Camera.prototype.keyUp = function(e){
                 //camera.moveBackward();
         }
     };
-Camera.prototype.keyDown = function(e, fps){  
+CameraPlayer.prototype.keyDown = function(e, fps){  
         var code = e.keyCode;
         switch (code) {
             //case 17:
@@ -252,7 +248,7 @@ Camera.prototype.keyDown = function(e, fps){
                 this.moveB = true;
                 break;
             case 69: // E
-                this.przesx = this.przesz = 20;
+                this.entity.przesx = this.entity.przesz = 20;
                 break;
             default: 
                 //camera.moveBackward();

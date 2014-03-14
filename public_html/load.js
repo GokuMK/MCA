@@ -1,42 +1,4 @@
-String.prototype.equalsIgnoreCase = function(e){
-    return this.toUpperCase() === e.toUpperCase();
-};
-function ab2str(ab) {
-   var str = "";
-   //var ab = new Uint8Array(buf);
-   var abLen = ab.length;
-   var CHUNK_SIZE = Math.pow(2, 10);
-   var offset, len, subab;
-   for (offset = 0; offset < abLen; offset += CHUNK_SIZE) {
-      len = Math.min(CHUNK_SIZE, abLen-offset);
-      subab = ab.subarray(offset, offset+len);
-      str += String.fromCharCode.apply(null, subab);
-   }
-   return str;
-}
-function str2ab(str) {
-  var buf = new ArrayBuffer(str.length);
-  var bufView = new Uint8Array(buf);
-  for (var i=0, strLen=str.length; i<strLen; i++) {
-    bufView[i] = str.charCodeAt(i);
-  }
-  return buf;
-}
-
-function jenkins_hash(key) {
-   var hash = 0;
-   for (var i=0; i<key.length; ++i) {
-      hash += key[i];
-      hash += (hash << 10);
-      hash ^= (hash >> 6);
-   }
-   hash += (hash << 3);
-   hash ^= (hash >> 11);
-   hash += (hash << 15);
-   return (hash >>> 0);
-}
-
-
+require("common.js");
 require("webgl/webgl-utils.js");
 require("webgl/gl-matrix.js");
 require("webgl/gluu.js");
@@ -44,13 +6,17 @@ require("fileIO/zlib.min.js");
 require("fileIO/readfile.js");
 require("fileIO/NBT.js");
 require("intersection3d.js");
-require("camera.js");
-require("camera_1.js");
+require("camera/camera.js");
+require("camera/cameraGod.js");
+require("camera/cameraPlayer.js");
 require("regionLib.js");
 require("chunk/chunk.js");
 require("chunk/chunkCache.js");
 require("chunk/chunkInit.js");
 require("chunk/chunkGetBuffer.js");
+require("entity/mob.js");
+require("entity/player.js");
+
     var gl;
     var gluu = new Gluu();
     var camera;
@@ -80,15 +46,16 @@ require("chunk/chunkGetBuffer.js");
     var useBlock = new Object();
     var distanceLevel = [10,10,10];
     var punkty1 = new Array();
-    var vtx;
     var sensitivity = 50;
     function start() {
-        
+        player = new Player([407,85,-128]);
         //camera = new Camera([-400,120,0],[5.5,0],[0,1,0]);
         //camera = new CameraGod([0,120,0],[5.5,0],[0,1,0]);
         //camera = new Camera([-176,90,2],[5.5,0],[0,1,0]);
         //camera = new CameraGod([-176,90,2],[5.5,0],[0,1,0]);
-        camera = new Camera([407,85,-128],[5.5,0],[0,1,0]);
+        
+        camera = new CameraPlayer(player);
+        
         //camera = new Camera([175,75,-287],[5.5,0],[0,1,0]);
         
         camera.sensitivity = sensitivity * 2;
@@ -137,21 +104,21 @@ require("chunk/chunkGetBuffer.js");
 
     function tick() {
         requestAnimFrame(tick);
-        
         var timeNow = new Date().getTime();
         fps = 1000/(timeNow-lastTime);
+        
+        var cameraPos = camera.getPos();
+        
         if(Math.floor(timeNow/100) - Math.floor(lastTime/100) > 0){
-            textDiv.innerHTML = "x: "+camera.pos[0].toFixed(2)+"  y: "+camera.pos[1].toFixed(2)+"  z: "+camera.pos[2].toFixed(2);
+            textDiv.innerHTML = "x: "+cameraPos[0].toFixed(2)+"  y: "+cameraPos[1].toFixed(2)+"  z: "+cameraPos[2].toFixed(2);
             textDiv.innerHTML += "<br/>FPS: "+Math.floor(fps);
             textDiv.innerHTML += "<br/>Block: "+useBlock.id+"-"+
                     useBlock.data+"  : "+(block[useBlock.id][useBlock.data].name || block[useBlock.id].name || block[useBlock.id][useBlock.data].defaultTexture || ""
             );
         }
         lastTime = timeNow;
-        renderPlayer();
+
         camera.updatePosition(fps);
-        //if(testCollisions())
-        //    camera.previousPosition();
         
         iLag = 3;
         var selection = renderSelection();
@@ -218,16 +185,15 @@ require("chunk/chunkGetBuffer.js");
             }
         }
         render();
-        
+        player.render();
         renderSelectBox(selection);
         renderPointer();
-        
     }
     
     function testCollisions(){
-
-            var posxxx = Math.floor(camera.pos[0]/16);
-            var poszzz = Math.floor(camera.pos[2]/16);
+            var cameraPos = camera.getPos();
+            var posxxx = Math.floor(cameraPos[0]/16);
+            var poszzz = Math.floor(cameraPos[2]/16);
             var posx = 0;
             var posz = 0;
             //var xxx = posxxx + posx;
@@ -236,10 +202,10 @@ require("chunk/chunkGetBuffer.js");
             var timeNow1 = new Date().getTime();
             for(var xxx = posxxx - 1; xxx < posxxx + 2; xxx++)
               for(var zzz = poszzz - 1; zzz < poszzz + 2; zzz++){
-                if(xxx*16 - 2 < camera.pos[0] 
-                && xxx*16 + 18 > camera.pos[0]
-                && zzz*16 - 2 < camera.pos[2] 
-                && zzz*16 + 18 > camera.pos[2]){ 
+                if(xxx*16 - 2 < cameraPos[0] 
+                && xxx*16 + 18 > cameraPos[0]
+                && zzz*16 - 2 < cameraPos[2] 
+                && zzz*16 + 18 > cameraPos[2]){ 
                 
                     var i = xxx*10000+zzz;
                     if(rchunk[i] === -1 || rchunk[i] === -2) {
@@ -249,16 +215,16 @@ require("chunk/chunkGetBuffer.js");
                         return true;
                     }
                     var buffer = rchunk[i].getBuffer([
-                        Math.floor(camera.pos[0] - xxx*16),
-                        Math.floor(camera.pos[1]),
-                        Math.floor(camera.pos[2] - zzz*16)
+                        Math.floor(cameraPos[0] - xxx*16),
+                        Math.floor(cameraPos[1]),
+                        Math.floor(cameraPos[2] - zzz*16)
                     ]);
                     if(buffer === false) continue;
 
                     //console.log(buffer.length);
 
                     var tak = 0;
-                    tak += Intersection3D.shapeIntersectsShape(buffer, vtx, 9, 5, camera.pos);
+                    tak += Intersection3D.shapeIntersectsShape(buffer, player.shape, 9, 5, cameraPos);
                     //if(tak > 0) console.log("tak: "+tak);
                     ttak += tak;
                 }
@@ -269,73 +235,7 @@ require("chunk/chunkGetBuffer.js");
             if(ttak>0) return true;
             return false;
     }
-    
-    function renderPlayer(){
-        var shader = gluu.lineShader;
-        //var shader = gluu.selectionShader;
-        gl.useProgram(shader);
-        mat4.perspective(gluu.pMatrix, camera.fovy, gl.viewportWidth / gl.viewportHeight, 0.1, 6000.0);
-        var lookAt = camera.getMatrix();
-        mat4.multiply(gluu.pMatrix, gluu.pMatrix, lookAt);
-        mat4.identity(gluu.mvMatrix);
-        mat4.translate(gluu.mvMatrix, gluu.mvMatrix, [camera.pos[0], camera.pos[1], camera.pos[2]]);
-        gl.uniformMatrix4fv(shader.pMatrixUniform, false, gluu.pMatrix);
-        gl.uniformMatrix4fv(shader.mvMatrixUniform, false, gluu.mvMatrix);
-        var px = 0;
-        var py = 0;
-        var pz = 0;
-
-        if(vboPlayer === undefined) {
-            vtx = new Float32Array([
-                -0.3+px,-1.5+py,-0.3+pz, 0.0, 0.0,
-                -0.3+px,-1.5+py, 0.3+pz, 0.0, 0.0,
-                -0.3+px, 0.2+py, 0.3+pz, 0.0, 0.0,
-                0.3+px, 0.2+py,-0.3+pz, 0.0, 0.0,
-                -0.3+px,-1.5+py,-0.3+pz, 0.0, 0.0,
-                -0.3+px, 0.2+py,-0.3+pz, 0.0, 0.0,
-                0.3+px,-1.5+py, 0.3+pz, 0.0, 0.0,
-                -0.3+px,-1.5+py,-0.3+pz, 0.0, 0.0,
-                0.3+px,-1.5+py,-0.3+pz, 0.0, 0.0,
-                0.3+px, 0.2+py,-0.3+pz, 0.0, 0.0,
-                0.3+px,-1.5+py,-0.3+pz, 0.0, 0.0,
-                -0.3+px,-1.5+py,-0.3+pz, 0.0, 0.0,
-                -0.3+px,-1.5+py,-0.3+pz, 0.0, 0.0,
-                -0.3+px, 0.2+py, 0.3+pz, 0.0, 0.0,
-                -0.3+px, 0.2+py,-0.3+pz, 0.0, 0.0,
-                0.3+px,-1.5+py, 0.3+pz, 0.0, 0.0,
-                -0.3+px,-1.5+py, 0.3+pz, 0.0, 0.0,
-                -0.3+px,-1.5+py,-0.3+pz, 0.0, 0.0,
-                -0.3+px, 0.2+py, 0.3+pz, 0.0, 0.0,
-                -0.3+px,-1.5+py, 0.3+pz, 0.0, 0.0,
-                0.3+px,-1.5+py, 0.3+pz, 0.0, 0.0,
-                0.3+px, 0.2+py, 0.3+pz, 0.0, 0.0,
-                0.3+px,-1.5+py,-0.3+pz, 0.0, 0.0,
-                0.3+px, 0.2+py,-0.3+pz, 0.0, 0.0,
-                0.3+px,-1.5+py,-0.3+pz, 0.0, 0.0,
-                0.3+px, 0.2+py, 0.3+pz, 0.0, 0.0,
-                0.3+px,-1.5+py, 0.3+pz, 0.0, 0.0,
-                0.3+px, 0.2+py, 0.3+pz, 0.0, 0.0,
-                0.3+px, 0.2+py,-0.3+pz, 0.0, 0.0,
-                -0.3+px, 0.2+py,-0.3+pz, 0.0, 0.0,
-                0.3+px, 0.2+py, 0.3+pz, 0.0, 0.0,
-                -0.3+px, 0.2+py,-0.3+pz, 0.0, 0.0,
-                -0.3+px, 0.2+py, 0.3+pz, 0.0, 0.0,
-                0.3+px, 0.2+py, 0.3+pz, 0.0, 0.0,
-                -0.3+px, 0.2+py, 0.3+pz, 0.0, 0.0,
-                0.3+px,-1.5+py, 0.3+pz, 0.0, 0.0
-                ]);
-            vboPlayer = gl.createBuffer();
-            //gl.bindBuffer(gl.ARRAY_BUFFER, vboPlayer);
-            //gl.bufferData(gl.ARRAY_BUFFER, vtx, gl.STATIC_DRAW);
-        } else {
-            //gl.bindBuffer(gl.ARRAY_BUFFER, vboPlayer);
-            //gl.vertexAttribPointer(shader.vertexPositionAttribute, 3, gl.FLOAT, false, 5*4, 0 );
-            //gl.vertexAttribPointer(shader.lightAttribute, 4, gl.FLOAT, false, 5*4, 0 );
-            //gl.vertexAttribPointer(shader.textureCoordAttribute, 2, gl.FLOAT, false, 5*4, 3*4 );
-            //gl.drawArrays(gl.TRIANGLES, 0, 36);
-        }
-    }    
-    
+   
     function renderSelectBox(selection){
         var shader = gluu.lineShader;
         gl.useProgram(shader);
@@ -439,9 +339,10 @@ require("chunk/chunkGetBuffer.js");
         var zzz = 0;
         var i = 0;
         var level = 0;
+        var cameraPos = camera.getPos();
         for(var drawLevel = 0; drawLevel < 3; drawLevel++){
-            var posxxx = Math.floor(camera.pos[0]/16);
-            var poszzz = Math.floor(camera.pos[2]/16);
+            var posxxx = Math.floor(cameraPos[0]/16);
+            var poszzz = Math.floor(cameraPos[2]/16);
             //for(var xxx = posxxx - dlod[drawLevel]; xxx < posxxx + dlod[drawLevel]; xxx++)
             //  for(var zzz = poszzz - dlod[drawLevel]; zzz < poszzz + dlod[drawLevel]; zzz++){
             pos[0] = 0;
@@ -457,13 +358,13 @@ require("chunk/chunkGetBuffer.js");
                     continue;
                 }
 
-                lodx = camera.pos[0] - (xxx*16 + 8);
-                lodz = camera.pos[2] - (zzz*16 + 8);
+                lodx = cameraPos[0] - (xxx*16 + 8);
+                lodz = cameraPos[2] - (zzz*16 + 8);
                 lod = Math.sqrt( lodx*lodx + lodz*lodz);
                 if(lod > dlod[drawLevel]*16) continue;
                 if(lod > 4*16){
                     var aaa = camera.getTarget();
-                    var v1 = [camera.pos[0] - (aaa[0]), camera.pos[2] - (aaa[2])];
+                    var v1 = [cameraPos[0] - (aaa[0]), cameraPos[2] - (aaa[2])];
                     var v2 = [-lodx, -lodz];
                     var iloczyn = v1[0]*v2[0] + v1[1]*v2[1];
                     var d1 = Math.sqrt(v1[0]*v1[0]+v1[1]*v1[1]);
@@ -484,10 +385,10 @@ require("chunk/chunkGetBuffer.js");
                     continue;
                 }
                 
-                if(camera.pos[1] >= 62 || lod < 10*16 )
+                if(cameraPos[1] >= 62 || lod < 10*16 )
                     rchunk[i].renderChunk(drawLevel, shader, 0);
                 
-                if(camera.pos[1] < 62 && lod < 6*16 )
+                if(cameraPos[1] < 62 && lod < 6*16 )
                     rchunk[i].renderChunk(drawLevel, shader, 1);
                 else if(lod < 4*16)
                     rchunk[i].renderChunk(drawLevel, shader, 1);
@@ -517,9 +418,10 @@ require("chunk/chunkGetBuffer.js");
         var xxx = 0;
         var zzz = 0;
         var i = 0;
+        var cameraPos = camera.getPos();
         for(var drawLevel = 0; drawLevel < 3; drawLevel++){
-            var posxxx = Math.floor(camera.pos[0]/16);
-            var poszzz = Math.floor(camera.pos[2]/16);
+            var posxxx = Math.floor(cameraPos[0]/16);
+            var poszzz = Math.floor(cameraPos[2]/16);
             pos[0] = 0;
             pos[1] = 0;
             for(var lll = -1; lll < 24; lll++){
@@ -560,8 +462,8 @@ require("chunk/chunkGetBuffer.js");
         var chz = cv - chx*5;
         //console.log("y: "+selection.y+" z: "+selection.z+" x: "+selection.x+" chx: "+chx+" chz: "+chz+" side: "+selection.side);
             
-        var posxxx = Math.floor(camera.pos[0]/16);
-        var poszzz = Math.floor(camera.pos[2]/16);
+        var posxxx = Math.floor(cameraPos[0]/16);
+        var poszzz = Math.floor(cameraPos[2]/16);
         var achx = posxxx % 5; if(achx < 0) achx += 5;
         var achz = poszzz % 5; if(achz < 0) achz += 5;
         //console.log(" achx: "+achx+" achz: "+achz);
@@ -702,10 +604,6 @@ require("chunk/chunkGetBuffer.js");
         var code = e.keyCode;
         switch (code) {
             case 81: // Q
-                //testCollisions();
-                //var xxx = Math.floor(camera.pos[0]/16);
-                //var zzz = Math.floor(camera.pos[2]/16);
-                //rchunk[xxx*10000+zzz].refreshLight();
                 if(camera.upY === 0) camera.upY = 200;
                 break;
             case 90: // Z
@@ -749,8 +647,9 @@ require("chunk/chunkGetBuffer.js");
                 break;    
             case 86: // V
                 console.log(camera.name);
-                if(camera.name === "CameraGod") camera = new Camera(camera.pos,camera.rot,[0,1,0]);
-                else if(camera.name === "Camera") camera = new CameraGod(camera.pos,camera.rot,[0,1,0]);
+                //if(camera.name === "CameraGod") camera = new Camera(camera.getEye(),camera.rot,[0,1,0], true);
+                if(camera.name === "CameraGod") camera = new CameraPlayer(player);
+                else if(camera.name === "CameraPlayer") camera = new CameraGod(camera.getEye(),camera.getRot(),[0,1,0]);
                 camera.sensitivity = sensitivity*2;
                 break;    
             default: 

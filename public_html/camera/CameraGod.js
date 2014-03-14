@@ -4,8 +4,6 @@ function CameraGod(e,r,u){
      this.oldPos = new Float32Array(3);
      //this.relPos = e;
      this.rot = r;
-     this.relRotX = 0;
-     this.relRotY = 0;
      this.up = u;
      this.przesx = 1;
      this.przesy = 1; 
@@ -31,14 +29,26 @@ function CameraGod(e,r,u){
 
 CameraGod.prototype.getMatrix = function(){
     var lookAt = mat4.create();
-    mat4.lookAt(lookAt, this.pos, this.getTarget(), this.up);
+    mat4.lookAt(lookAt, this.getEye(), this.getTarget(), this.up);
     return lookAt;
+};
+
+CameraGod.prototype.getRot = function(){
+    return [this.rot[0], this.rot[1], this.rot[2]];
 };
 
 CameraGod.prototype.getTarget = function(){
     return [this.pos[0] + Math.sin(this.rot[0]) * Math.cos(this.rot[1]), 
         this.pos[1] + Math.sin(this.rot[1]) * 1, 
         this.pos[2] + Math.cos(this.rot[0]) * Math.cos(this.rot[1]) ];
+};
+
+CameraGod.prototype.getEye = function(){
+    return [this.pos[0], this.pos[1], this.pos[2]];
+};
+
+CameraGod.prototype.getPos = function(){
+    return [this.pos[0], this.pos[1], this.pos[2]];
 };
 
 CameraGod.prototype.moveForward = function(fps){
