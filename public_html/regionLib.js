@@ -7,7 +7,7 @@ function RegionLib(gameRoot, worldName){
 
 RegionLib.prototype.save =  function(){
     for (var key in rchunk) {
-        if(rchunk[key] === -1 || rchunk[key] === -2) continue;
+        if(rchunk[key] === undefined || rchunk[key] === -1 || rchunk[key] === -2) continue;
         //console.log(rchunk[key]);
         if(rchunk[key].changed){
             mcWorld.saveChunkToStorage(rchunk[key].xPos, rchunk[key].zPos);

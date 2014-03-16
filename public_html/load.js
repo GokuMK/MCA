@@ -655,12 +655,12 @@ require("entity/player.js");
             case 52: // 4
                 selectTt = 3;
                 break;                
-            case 70: // F
+            case 80: // P
                 /*var xxx = Math.floor(camera.pos[0]/16);
                 var zzz = Math.floor(camera.pos[2]/16);
                 mcWorld.saveChunkToStorage(xxx, zzz);*/
                 //textDiv.innerHTML = "Zapisywanie ...";
-                //mcWorld.save();
+                mcWorld.save();
                 break;    
             case 71: // G
                 console.log(window.localStorage);
