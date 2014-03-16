@@ -57,7 +57,7 @@ Chunk.cacheHeightMap9 = new Uint8Array(48*48);
 Chunk.cacheHeightMap9hMax = new Uint8Array(48*48);
 Chunk.cacheSlight9 = new Uint8Array(258*48*48);
 Chunk.cacheBlight9 = new Uint8Array(258*48*48);
-Chunk.cacheId9 = new Float32Array(258*48*48);
+Chunk.cacheId9 = new Int32Array(258*48*48);
 
 Chunk.prototype.initHeightMap = function(){
     var index = 0, skyf = 0;
@@ -627,7 +627,7 @@ Chunk.prototype.deleteBuffers = function(){
                 });
                 this.ivbo[0].forEach(function(e) {
                     gpuMem -= e;
-                    //e = 0;
+                    e = 0;
                 });
             }
 
@@ -637,7 +637,7 @@ Chunk.prototype.deleteBuffers = function(){
                 });
                 this.ivbo[1].forEach(function(e) {
                     gpuMem -= e;
-                    //e = 0;
+                    e = 0;
                 });
             }
         }

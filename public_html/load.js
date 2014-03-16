@@ -206,6 +206,7 @@ require("entity/player.js");
                 if(rchunk[key].isInit === 1 || rchunk[key].isInit1 === 1)
                     if(rchunk[key].timestamp + 10000 < timeNow){
                         rchunk[key].deleteBuffers();    
+                        rchunk[key] = undefined;
                         i++;
                     }
             }
@@ -658,8 +659,8 @@ require("entity/player.js");
                 /*var xxx = Math.floor(camera.pos[0]/16);
                 var zzz = Math.floor(camera.pos[2]/16);
                 mcWorld.saveChunkToStorage(xxx, zzz);*/
-                textDiv.innerHTML = "Zapisywanie ...";
-                mcWorld.save();
+                //textDiv.innerHTML = "Zapisywanie ...";
+                //mcWorld.save();
                 break;    
             case 71: // G
                 console.log(window.localStorage);
