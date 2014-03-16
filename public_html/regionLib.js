@@ -263,6 +263,9 @@ RegionLib.loadChunk = function(aPos, region, compressed){
                 case "Biomes":
                     chunk.biomes = aTag.data;
                     break; 
+                case "LightPopulated":
+                    chunk.lightPopulated = aTag.value;
+                    break; 
                 case "Sections":
                     //console.log("aaaaaaaaaaaaa");
                     RegionLib.readSections(aTag, chunk, chunkData);

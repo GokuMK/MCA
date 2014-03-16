@@ -19,6 +19,7 @@ require("entity/player.js");
 
     var gl;
     var gluu = new Gluu();
+    var gpuMem = 0;
     var camera;
     var rchunk;
     var iChunk = 0;
@@ -33,6 +34,7 @@ require("entity/player.js");
     var lastTime = 0;
     var firstTime = 0;
     var fps = 0;
+    var newSec = 0;
     //var ifps = 0;
     var iLag = 0;
     var click = 0;
@@ -115,7 +117,10 @@ require("entity/player.js");
             textDiv.innerHTML += "<br/>Block: "+useBlock.id+"-"+
                     useBlock.data+"  : "+(block[useBlock.id][useBlock.data].name || block[useBlock.id].name || block[useBlock.id][useBlock.data].defaultTexture || ""
             );
+            textDiv.innerHTML += "<br/>Est. Gpu Mem: "+Math.floor((gpuMem*8)/(1024*1024))+" M";    
         }
+        if(lastTime%1000 > timeNow%1000)
+            newSec++;
         lastTime = timeNow;
 
         camera.updatePosition(fps);
@@ -188,6 +193,25 @@ require("entity/player.js");
         player.render();
         renderSelectBox(selection);
         renderPointer();
+        
+        if(newSec === 10){
+            newSec = 0;
+            var timeNow1 = new Date().getTime();
+            var i = 0;
+            //rchunk.forEach(function(e) {
+            for (var key in rchunk){
+                if(rchunk[key] === undefined) continue;
+                if(rchunk[key] === -1) continue;
+                if(rchunk[key] === -2) continue;
+                if(rchunk[key].isInit === 1 || rchunk[key].isInit1 === 1)
+                    if(rchunk[key].timestamp + 10000 < timeNow){
+                        rchunk[key].deleteBuffers();    
+                        i++;
+                    }
+            }
+            var timeNow3 = new Date().getTime();
+            console.log("delete buffers "+(timeNow3-timeNow1)+" "+i);
+        }
     }
     
     function testCollisions(){
@@ -355,6 +379,7 @@ require("entity/player.js");
                 zzz = poszzz + pos[1];
                 i = xxx*10000+zzz;
                 if(rchunk[i] === -1 || rchunk[i] === -2) {
+                    rchunk[i].timestamp = lastTime;
                     continue;
                 }
 
@@ -384,6 +409,8 @@ require("entity/player.js");
                     }
                     continue;
                 }
+                
+                rchunk[i].timestamp = lastTime;
                 
                 if(cameraPos[1] >= 62 || lod < 10*16 )
                     rchunk[i].renderChunk(drawLevel, shader, 0);
@@ -648,7 +675,10 @@ require("entity/player.js");
             case 86: // V
                 console.log(camera.name);
                 //if(camera.name === "CameraGod") camera = new Camera(camera.getEye(),camera.rot,[0,1,0], true);
-                if(camera.name === "CameraGod") camera = new CameraPlayer(player);
+                if(camera.name === "CameraGod") {
+                    player.setPosRot(camera.getEye(), camera.getRot());
+                    camera = new CameraPlayer(player);
+                }
                 else if(camera.name === "CameraPlayer") camera = new CameraGod(camera.getEye(),camera.getRot(),[0,1,0]);
                 camera.sensitivity = sensitivity*2;
                 break;    

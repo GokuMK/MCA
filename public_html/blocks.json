@@ -461,6 +461,7 @@
     "mask": "0x03",
     "type": 2,        
     "name": "Leaves",
+    "lightTransmission": 0.8,
     "0": {
         "name": "Oak leaves",
         "drawLevel": 0,
@@ -3812,6 +3813,7 @@
 "161": {
     "mask": "0x03",
     "type": 2,        
+    "lightTransmission": 0.8,
     "0": {
         "name": "Acacia leaves",
         "drawLevel": 0,

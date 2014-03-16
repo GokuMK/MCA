@@ -8,7 +8,12 @@ Chunk.prototype.init2 = function(yyyy){
             var yymax = 49;
         }
         
+        //if(this.lightPopulated === 0){
+        //    if(!this.refreshLight(-1, true)) return false;
+        //    this.lightPopulated = 1;
+        //}        
         if(!this.getCache(yymin, yymax)) return false;
+
         
         if(yyyy === 0){ 
             this.isInit = -1;
@@ -1907,14 +1912,23 @@ Chunk.prototype.init2 = function(yyyy){
         //} 
 
         if(this.vbo !== undefined){
-            if(yyyy === 0 && this.vbo[0] !== undefined)
-            this.vbo[0].forEach(function(e) {
-                gl.deleteBuffer(e);
-            });
-            if(yyyy === 1 && this.vbo[1] !== undefined)
-            this.vbo[1].forEach(function(e) {
-                gl.deleteBuffer(e);
-            });
+            if(yyyy === 0 && this.vbo[0] !== undefined){
+                this.vbo[0].forEach(function(e) {
+                    gl.deleteBuffer(e);
+                });
+                this.ivbo[0].forEach(function(e) {
+                    gpuMem -= e;
+                });
+            }
+        
+            if(yyyy === 1 && this.vbo[1] !== undefined){
+                this.vbo[1].forEach(function(e) {
+                    gl.deleteBuffer(e);
+                });
+                this.ivbo[1].forEach(function(e) {
+                    gpuMem -= e;
+                });
+            }
         }
             
         //this.ivbo = new Array();
@@ -1929,6 +1943,7 @@ Chunk.prototype.init2 = function(yyyy){
                    var tpunkty = new Float32Array(punkty[i].data.buffer, 0, punkty[i].offset);
                    this.ivbo[0][i] = tpunkty.length;
                    this.vbo[0][i] = gl.createBuffer();
+                   gpuMem += tpunkty.length;
                    gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[0][i]);
                    gl.bufferData(gl.ARRAY_BUFFER, tpunkty, gl.STATIC_DRAW);
                    tpunkty = null;
@@ -1946,6 +1961,7 @@ Chunk.prototype.init2 = function(yyyy){
                    var tpunkty = new Float32Array(punkty[i].data.buffer, 0, punkty[i].offset);
                    this.ivbo[1][i] = tpunkty.length;
                    this.vbo[1][i] = gl.createBuffer();
+                   gpuMem += tpunkty.length;
                    gl.bindBuffer(gl.ARRAY_BUFFER, this.vbo[1][i]);
                    gl.bufferData(gl.ARRAY_BUFFER, tpunkty, gl.STATIC_DRAW);
                    tpunkty = null;

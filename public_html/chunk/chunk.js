@@ -6,6 +6,7 @@ function Chunk(){
         this.changed = false;
         this.ivbo = new Array();
         this.vbo = new Array();
+        this.timestamp = new Date().getTime();
 }
 
 Chunk.stairsData = new Array();
@@ -84,11 +85,11 @@ Chunk.prototype.initHeightMap = function(){
             //console.log(this.heightMap);
     };
 
-Chunk.prototype.refreshLight = function(blockH){
+Chunk.prototype.refreshLight = function(blockH, lightInit){
     var aindex = 0, lindex = 0, rindex = 0, lindex = 0, findex = 0, bindex = 0, tindex = 0, dindex = 0;
     var index = 0, index2 = 0, skyf = 0;
     //var timeNow1 = new Date().getTime();
-    
+    lightInit = lightInit || false;
     this.initHeightMap();
     if(!this.getCacheL9()) return false;
     
@@ -135,9 +136,11 @@ Chunk.prototype.refreshLight = function(blockH){
                 index2 = y*2304 + z*48 + x;
                 cacheSlight9[index2] = 15;
             }
+            var t = 15;
             for(; y >= 0; y--){
                 index2 = y*2304 + z*48 + x;
-                cacheSlight9[index2] = 0;
+                t *= lightTransmission[cacheId9[index2]];
+                cacheSlight9[index2] = t;
             }
         }
     
@@ -249,6 +252,9 @@ Chunk.prototype.refreshLight = function(blockH){
     var newChunk = [0,0,0,0,0,0,0,0,0];
     for(var iCh = 0; iCh<=2; iCh++)
         for(var jCh = 0; jCh<=2; jCh++){
+            if(lightInit === true)
+                if(iCh !== 1 && jCh !== 1) continue;
+
             var hashSlight = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
             var hashBlight = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
             iChunk = chunk[(iCh)*3+jCh];
@@ -587,6 +593,8 @@ Chunk.prototype.renderChunk = function(drawLevel, shader, level){
             }
             else return;
         }
+        
+
         gl.bindTexture(gl.TEXTURE_2D, blockTexture);
 
             //for(var i = 0; i < 16; i++){
@@ -602,10 +610,35 @@ Chunk.prototype.renderChunk = function(drawLevel, shader, level){
                gl.vertexAttribPointer(shader.vertexPositionAttribute, 3, gl.FLOAT, false, 9*4, 0 );
                gl.vertexAttribPointer(shader.textureCoordAttribute, 2, gl.FLOAT, false, 9*4, 3*4 );
                gl.vertexAttribPointer(shader.lightAttribute, 4, gl.FLOAT, false, 9*4, 5*4 );
-               
+       
                gl.drawArrays(gl.TRIANGLES, 0, this.ivbo[level][drawLevel]/9);
 
                //gluu.mvPopMatrix();
         //     }
     };
     
+Chunk.prototype.deleteBuffers = function(){
+        this.isInit = 0;
+        this.isInit1 = 0;
+        if(this.vbo !== undefined){
+            if(this.vbo[0] !== undefined){
+                this.vbo[0].forEach(function(e) {
+                    gl.deleteBuffer(e);
+                });
+                this.ivbo[0].forEach(function(e) {
+                    gpuMem -= e;
+                    //e = 0;
+                });
+            }
+
+            if(this.vbo[1] !== undefined){
+                this.vbo[1].forEach(function(e) {
+                   gl.deleteBuffer(e);
+                });
+                this.ivbo[1].forEach(function(e) {
+                    gpuMem -= e;
+                    //e = 0;
+                });
+            }
+        }
+    };

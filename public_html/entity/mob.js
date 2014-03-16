@@ -16,6 +16,19 @@ Mob.prototype.getPos = function(){
     return this.pos;
 };
 
+Mob.prototype.setPosRot = function(p, r){
+    if(p !== undefined){
+        this.pos[0] = p[0];
+        this.pos[1] = p[1];
+        this.pos[2] = p[2];    
+    }
+    if(r !== undefined){
+        this.rot[0] = r[0];
+        this.rot[1] = r[1];
+        this.rot[2] = r[2];
+    }
+};
+
 Mob.prototype.getTarget = function(){
     return [this.pos[0] + this.eyePos[0] + Math.sin(this.rot[0]) * Math.cos(this.rot[1]), 
         this.pos[1] + this.eyePos[1] + Math.sin(this.rot[1]) * 1, 
