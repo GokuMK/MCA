@@ -857,6 +857,10 @@ Chunk.prototype.getCacheL9 = function(){
                 cacheId[index2] = 0;
                 cacheSlight[index2] = 15;
                 cacheBlight[index2] = 0;
+                index2 = (256)*2304 + (z)*48 + (x);
+                cacheId[index2] = 0;
+                cacheSlight[index2] = 15;
+                cacheBlight[index2] = 0;
             }
         
         //chunki

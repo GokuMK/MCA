@@ -125,9 +125,9 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
             Chunk.cacheHeightMap9hMax[z*48+x] = yy+1;
         }
     
-    hMax++;
-    hMin -= 16;
-    if(hMin < 0) hMin = 0;
+    //hMax++;
+    //hMin -= 16;
+    //if(hMin < 0) hMin = 0;
     
     for(var z = 2; z < 46; z++)
         for(var x = 2; x < 46; x++){
@@ -141,8 +141,11 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
                 index2 = y*2304 + z*48 + x;
                 t *= lightTransmission[cacheId9[index2]];
                 cacheSlight9[index2] = t;
+                if(t > 0 && y < hMin) hMin = y;
             }
         }
+    
+    if(hMin < 1) hMin = 1;
     
     var t = 0;
     if(blockH === -1){
@@ -195,7 +198,7 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
             }
     var timeNow3 = new Date().getTime();
     console.log("czas L1 "+(timeNow3-timeNow1));
-    //console.log(Chunk.cacheHeightMap9hMax);
+    //console.log("hmin "+ hMin);
     var timeNow1 = new Date().getTime();
     
     //propagacja Slight
@@ -204,7 +207,7 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
     for(var it = 0; it < 14; it++)
        for(var z = 1; z < 47; z++)
           for(var x = 1; x < 47; x++)
-             for(var y = 1; y < Chunk.cacheHeightMap9hMax[z*48+x]; y++){
+             for(var y = hMin; y < Chunk.cacheHeightMap9hMax[z*48+x]; y++){
                 aindex = (y)*2304 + (z)*48 + (x);
                 t = cacheSlight9[aindex] - 1;
                 if(t < 1) continue;
