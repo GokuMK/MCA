@@ -34,7 +34,8 @@ require("entity/player.js");
     var lastTime = 0;
     var firstTime = 0;
     var fps = 0;
-    var newSec = 0;
+    var newSec = false;
+    var sec = 0;
     //var ifps = 0;
     var iLag = 0;
     var click = 0;
@@ -49,60 +50,6 @@ require("entity/player.js");
     var distanceLevel = [10,10,10];
     var punkty1 = new Array();
     var sensitivity = 50;
-    function start() {
-        player = new Player([407,85,-128]);
-        //camera = new Camera([-400,120,0],[5.5,0],[0,1,0]);
-        //camera = new CameraGod([0,120,0],[5.5,0],[0,1,0]);
-        //camera = new Camera([-176,90,2],[5.5,0],[0,1,0]);
-        //camera = new CameraGod([-176,90,2],[5.5,0],[0,1,0]);
-        
-        camera = new CameraPlayer(player);
-        
-        //camera = new Camera([175,75,-287],[5.5,0],[0,1,0]);
-        
-        camera.sensitivity = sensitivity * 2;
-        
-        punkty1[0] = new Object();
-        punkty1[1] = new Object();
-        punkty1[2] = new Object();
-        punkty1[0].data = new Float32Array(2000000);
-        punkty1[1].data = new Float32Array(2000000);
-        punkty1[2].data = new Float32Array(2000000);
-        punkty1[0].offset = 0;
-        punkty1[1].offset = 0;
-        punkty1[2].offset = 0;
-
-        rchunk = new Array();
-        
-        mcWorld = new RegionLib(gameRoot, worldName);
-        
-        var timeNow1 = new Date().getTime();
-        firstTime = timeNow1;
-        /*mcWorld.loadRegion(-2,0);
-        mcWorld.loadRegion(1,-1);
-        mcWorld.loadRegion(1,0);
-        mcWorld.loadRegion(-1,1);
-        mcWorld.loadRegion(0,1);
-        mcWorld.loadRegion(0,0);
-        mcWorld.loadRegion(0,-1);
-        mcWorld.loadRegion(-1,0);
-        mcWorld.loadRegion(-1,-1);*/
-        
-        var timeNow3 = new Date().getTime();
-        console.log("czas "+(timeNow3-timeNow1));
-
-        var timeNow1 = new Date().getTime();
-
-        //for (var k in rchunk){
-        //        rchunk[k].init2();
-        //}
-        
-        var timeNow3 = new Date().getTime();
-        console.log("czas "+(timeNow3-timeNow1));
-        
-        lastTime = new Date().getTime();
-        tick();
-    }
 
     function tick() {
         requestAnimFrame(tick);
@@ -110,6 +57,7 @@ require("entity/player.js");
         fps = 1000/(timeNow-lastTime);
         
         var cameraPos = camera.getPos();
+        var cameraRot = camera.getRot();
         
         if(Math.floor(timeNow/100) - Math.floor(lastTime/100) > 0){
             textDiv.innerHTML = "x: "+cameraPos[0].toFixed(2)+"  y: "+cameraPos[1].toFixed(2)+"  z: "+cameraPos[2].toFixed(2);
@@ -119,8 +67,12 @@ require("entity/player.js");
             );
             textDiv.innerHTML += "<br/>Est. Gpu Mem: "+Math.floor((gpuMem*8)/(1024*1024))+" M";    
         }
-        if(lastTime%1000 > timeNow%1000)
-            newSec++;
+        newSec = false;
+        if(lastTime%1000 > timeNow%1000){
+            newSec = true;
+            sec++;
+        }
+        
         lastTime = timeNow;
 
         camera.updatePosition(fps);
@@ -194,8 +146,14 @@ require("entity/player.js");
         renderSelectBox(selection);
         renderPointer();
         
-        if(newSec === 10){
-            newSec = 0;
+        if(newSec){
+           window.location.hash =
+                   "pos="+cameraPos[0].toFixed(2)+"+"+cameraPos[1].toFixed(2)+"+"+cameraPos[2].toFixed(2)
+                   +"&rot="+cameraRot[0].toFixed(2)+"+"+cameraRot[1].toFixed(2)
+                   +"&camera="+camera.name;
+        }
+        if(sec === 10){
+            sec = 0;
             var timeNow1 = new Date().getTime();
             var i = 0;
             //rchunk.forEach(function(e) {
@@ -654,7 +612,11 @@ require("entity/player.js");
                 break;
             case 52: // 4
                 selectTt = 3;
-                break;                
+                break;               
+            case 84:
+                //var cameraPos = camera.getPos();
+                //var cameraRot = camera.getRot();
+              break;
             case 80: // P
                 /*var xxx = Math.floor(camera.pos[0]/16);
                 var zzz = Math.floor(camera.pos[2]/16);
@@ -808,7 +770,9 @@ require("entity/player.js");
         gl.enable(gl.DEPTH_TEST);
         
         var parameters = new Object();
+        //console.log(window.location);
         window.location.search.substr(1).split("&").forEach(function(item) {parameters[item.split("=")[0]] = item.split("=")[1];});
+        window.location.hash.substr(1).split("&").forEach(function(item) {parameters[item.split("=")[0]] = item.split("=")[1];});
         //console.log(parameters);
         if( parameters["worldname"] !== undefined ) worldName = parameters["worldname"];
         if( parameters["gameroot"] !== undefined ) gameRoot = parameters["gameroot"];
@@ -829,8 +793,50 @@ require("entity/player.js");
             if(sensitivity < 10) sensitivity = 10;
             if(sensitivity > 100) sensitivity = 100;
         }
-        console.log(distanceLevel);
-        start();
+        var pos = [407,85,-128];
+        var rot = [5.5,0];
+        if( parameters["pos"] !== undefined ){
+            pos[0] = parseFloat((parameters["pos"].split("+"))[0]) || pos[0]; 
+            pos[1] = parseFloat((parameters["pos"].split("+"))[1]) || pos[1]; 
+            pos[2] = parseFloat((parameters["pos"].split("+"))[2]) || pos[2]; 
+        }
+        if( parameters["rot"] !== undefined ){
+            rot[0] = parseFloat((parameters["rot"].split("+"))[0]) || pos[0]; 
+            rot[1] = parseFloat((parameters["rot"].split("+"))[1]) || pos[1]; 
+        }
+        //console.log(parameters["pos"]);
+        //console.log(parameters["rot"]);
+        //console.log(distanceLevel);
+        
+        //camera = new Camera([-400,120,0],[5.5,0],[0,1,0]);
+        //camera = new CameraGod([0,120,0],[5.5,0],[0,1,0]);
+        //camera = new Camera([-176,90,2],[5.5,0],[0,1,0]);
+        //camera = new CameraGod([-176,90,2],[5.5,0],[0,1,0]);
+        var cameraType = parameters["camera"] || "CameraPlayer";
+        
+        player = new Player();
+        if(cameraType === "CameraGod")
+            camera = new CameraGod(pos,rot,[0,1,0]);
+        else if(cameraType === "Camera")
+            camera = new Camera(pos,rot,[0,1,0]);
+        else {
+            player.setPosRot([pos[0],pos[1],pos[2]], [rot[0],rot[1]]);
+            camera = new CameraPlayer(player);
+        }
+        
+        camera.sensitivity = sensitivity * 2;
+        
+        for(var i = 0; i < 3; i++){
+            punkty1[i] = new Object();
+            punkty1[i].data = new Float32Array(2000000);
+            punkty1[i].offset = 0;
+        }
+
+        rchunk = new Array();
+        mcWorld = new RegionLib(gameRoot, worldName);
+        firstTime = new Date().getTime();
+        lastTime = new Date().getTime();
+        tick();
     }
     
     function spiralLoop(n) {
