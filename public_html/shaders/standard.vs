@@ -10,20 +10,22 @@ uniform mat4 uPMatrix;
 varying vec2 vTextureCoord;
 varying float aaa;
 varying vec4 color;
-varying float slight;
+varying vec4 sLight;
 
 void main(void) {
      gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
      vTextureCoord = aTextureCoord;
     //if(gl_Position.z < 0) return;
-    aaa = sqrt((gl_Position.x)*(gl_Position.x) + (gl_Position.z)*(gl_Position.z))/(lod*14.5)-0.25;
+    aaa = sqrt((gl_Position.x)*(gl_Position.x) + (gl_Position.z)*(gl_Position.z))/(lod*13.0)-0.25;
     if(aaa<0.0) aaa = 0.0;
+    if(aaa>1.0) aaa = 1.0;
     float skylight = floor(lightValue.x/100.0);
     float blocklight = lightValue.x - skylight*100.0;
-    slight = (skylight/15.0 + blocklight/15.0);//*lightValue.z;
+    float slight = (skylight/15.0 + blocklight/15.0);//*lightValue.z;
     if(slight > 1.0) slight = 1.0;
     slight = slight*0.85 + 0.15;
     slight *= lightValue.z;
+    sLight = vec4(slight,slight,slight,1.0);
     if(lightValue.a != 0.0) {
         float m5 = floor(lightValue.a/(256.0*256.0));
         float m6 = floor((lightValue.a - m5*256.0*256.0)/(256.0));
@@ -34,5 +36,6 @@ void main(void) {
         color = vec4(m5/255.0, m6/255.0, m7/255.0, 1.0);
     }
     else color = vec4(1.0,1.0,1.0,1.0);
+    //sky = skyColor;
     //slight += lightValue.z;
 }

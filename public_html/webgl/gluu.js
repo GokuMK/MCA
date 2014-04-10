@@ -131,6 +131,7 @@ function Gluu () {
         gl.enableVertexAttribArray(this.standardShader.lightAttribute);
         
         this.standardShader.lod = gl.getUniformLocation(this.standardShader, "lod");
+        this.standardShader.skyColor = gl.getUniformLocation(this.standardShader, "skyColor");
         this.standardShader.pMatrixUniform = gl.getUniformLocation(this.standardShader, "uPMatrix");
         this.standardShader.mvMatrixUniform = gl.getUniformLocation(this.standardShader, "uMVMatrix");
         this.standardShader.msMatrixUniform = gl.getUniformLocation(this.standardShader, "uMSMatrix");

@@ -50,6 +50,7 @@ require("entity/player.js");
     var distanceLevel = [10,10,10];
     var punkty1 = new Array();
     var sensitivity = 50;
+    var skyColor = new Float32Array([230/255,248/255,1,1]);
 
     function tick() {
         requestAnimFrame(tick);
@@ -302,7 +303,8 @@ require("entity/player.js");
         var shader = gluu.standardShader;
         gl.useProgram(shader);
         gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
-        gl.clearColor(1.0, 1.0, 1.0, 0);
+        gl.clearColor(skyColor[0], skyColor[1], skyColor[2], 1);
+        //gl.clearColor(1, 1, 1, 1);
         gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
         
         mat4.perspective(gluu.pMatrix, camera.fovy, gl.viewportWidth / gl.viewportHeight, 0.1, 6000.0);
@@ -312,7 +314,7 @@ require("entity/player.js");
         gl.uniformMatrix4fv(shader.pMatrixUniform, false, gluu.pMatrix);
         gl.uniformMatrix4fv(shader.mvMatrixUniform, false, gluu.mvMatrix);
         gl.uniform1f(shader.lod, distanceLevel[1]);
-        
+        gl.uniform4fv(shader.skyColor, skyColor);
         var lodx = 0, lodz = 0, lod = 0;
         //var dlod = [20,23,20];
         //var dlod = [10,10,10];
@@ -742,7 +744,7 @@ require("entity/player.js");
         window.addEventListener( "keydown", keyDown, false);
         window.addEventListener( "keyup", keyUp, true);
         canvas.onclick = canvasOn;
-        
+
         document.addEventListener('pointerlockchange', pointerChange, false);
         document.addEventListener('mozpointerlockchange', pointerChange, false);
         document.addEventListener('webkitpointerlockchange', pointerChange, false);
@@ -804,6 +806,11 @@ require("entity/player.js");
             rot[0] = parseFloat((parameters["rot"].split("+"))[0]) || pos[0]; 
             rot[1] = parseFloat((parameters["rot"].split("+"))[1]) || pos[1]; 
         }
+        if( parameters["skyColor"] !== undefined ){
+            skyColor[0] = parseFloat((parameters["skyColor"].split("-"))[0])/255 || skyColor[0]; 
+            skyColor[1] = parseFloat((parameters["skyColor"].split("-"))[1])/255 || skyColor[1]; 
+            skyColor[2] = parseFloat((parameters["skyColor"].split("-"))[2])/255 || skyColor[2]; 
+        }
         //console.log(parameters["pos"]);
         //console.log(parameters["rot"]);
         //console.log(distanceLevel);
@@ -836,7 +843,7 @@ require("entity/player.js");
         mcWorld = new RegionLib(gameRoot, worldName);
         firstTime = new Date().getTime();
         lastTime = new Date().getTime();
-        tick();
+        tick();       
     }
     
     function spiralLoop(n) {
