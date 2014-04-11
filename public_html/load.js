@@ -1,4 +1,5 @@
 require("common.js");
+require("settings.js");
 require("webgl/webgl-utils.js");
 require("webgl/gl-matrix.js");
 require("webgl/gluu.js");
@@ -16,41 +17,35 @@ require("chunk/chunkInit.js");
 require("chunk/chunkGetBuffer.js");
 require("entity/mob.js");
 require("entity/player.js");
+require("ui/pointer.js");
+require("ui/selectionBox.js");
 
     var gl;
     var gluu = new Gluu();
-    var gpuMem = 0;
-    var camera;
-    var rchunk;
-    var iChunk = 0;
-    var gameRoot = "F:/mcjs";
-    //var gameRoot = "mc";
-    var worldName = "mcjs1";   
-    //var worldName = "world";  
+    var settings = new Settings();
     var biomes;
     var mcWorld;
+    var block;
+    var blockTexture;
+    var camera;
     var initTexture = false;
     
+    var gpuMem = 0;
     var lastTime = 0;
     var firstTime = 0;
     var fps = 0;
     var newSec = false;
     var sec = 0;
-    //var ifps = 0;
     var iLag = 0;
     var click = 0;
     var selectE = false;
     var selectT = 0;
     var selectTt = 1;
     var textDiv = null;
-    var vbol;
-    var vboBox;
-    var vboPlayer;
     var useBlock = new Object();
-    var distanceLevel = [10,10,10];
     var punkty1 = new Array();
-    var sensitivity = 50;
-    var skyColor = new Float32Array([230/255,248/255,1,1]);
+    var pointer = new Pointer();
+    var selectBox = new SelectionBox();
 
     function tick() {
         requestAnimFrame(tick);
@@ -75,11 +70,9 @@ require("entity/player.js");
         }
         
         lastTime = timeNow;
-
         camera.updatePosition(fps);
-        
         iLag = 3;
-        var selection = renderSelection();
+        var selection = mcWorld.renderSelection();
         
         if(selectE){
             selectE = false;
@@ -87,9 +80,7 @@ require("entity/player.js");
             
             switch(selectT){
                 case 0:
-                    var i = selection.chx*10000+selection.chz;
-                    if(rchunk[i] !== undefined)
-                        rchunk[i].updateBlock(selection.x,selection.y,selection.z,0,0);
+                    mcWorld.updateChunkBlock(selection.chx,selection.chz,selection.x,selection.y,selection.z,0,0);
                     break;
                 case 1:
                     var px = 0, pz = 0, py = 0;
@@ -119,33 +110,24 @@ require("entity/player.js");
                     if(selection.z < 0){selection.z = 15; selection.chz--;}
                     if(selection.y < 0){selection.y = 0;}
                     if(selection.y > 256){selection.y = 256;}
-                    var i = selection.chx*10000+selection.chz;
-                    if(rchunk[i] !== undefined){
-                        var updateBlockId = useBlock.id || 1;
-                        var updateBlockData = useBlock.data || 0;
-                        rchunk[i].updateBlock(selection.x,selection.y+py,selection.z,updateBlockId,updateBlockData);
-                    }
+                    var updateBlockId = useBlock.id || 1;
+                    var updateBlockData = useBlock.data || 0;
+                    mcWorld.updateChunkBlock(selection.chx,selection.chz,selection.x,selection.y+py,selection.z,updateBlockId,updateBlockData);
                     break;
                 case 2:
-                    var i = selection.chx*10000+selection.chz;
-                    if(rchunk[i] !== undefined){
-                        var updateBlockId = useBlock.id || 1;
-                        var updateBlockData = useBlock.data || 0;
-                        rchunk[i].updateBlock(selection.x,selection.y,selection.z,updateBlockId,updateBlockData);
-                    }
+                    var updateBlockId = useBlock.id || 1;
+                    var updateBlockData = useBlock.data || 0;
+                    mcWorld.updateChunkBlock(selection.chx,selection.chz,selection.x,selection.y,selection.z,updateBlockId,updateBlockData);
                     break;
                 case 3:
-                    var i = selection.chx*10000+selection.chz;
-                    if(rchunk[i] !== undefined){
-                        rchunk[i].changeAdd(selection.x,selection.y,selection.z);
-                    }
+                    mcWorld.changeChunkBlockAdd(selection.chx,selection.chz,selection.x,selection.y,selection.z);
                     break;
             }
         }
-        render();
+        mcWorld.render();
         player.render();
-        renderSelectBox(selection);
-        renderPointer();
+        selectBox.render(selection);
+        pointer.render();
         
         if(newSec){
            window.location.hash =
@@ -153,324 +135,16 @@ require("entity/player.js");
                    +"&rot="+cameraRot[0].toFixed(2)+"+"+cameraRot[1].toFixed(2)
                    +"&camera="+camera.name;
         }
+        
         if(sec === 10){
             sec = 0;
-            var timeNow1 = new Date().getTime();
-            var i = 0;
-            //rchunk.forEach(function(e) {
-            for (var key in rchunk){
-                if(rchunk[key] === undefined) continue;
-                if(rchunk[key] === -1) continue;
-                if(rchunk[key] === -2) continue;
-                if(rchunk[key].isInit === 1 || rchunk[key].isInit1 === 1)
-                    if(rchunk[key].timestamp + 10000 < timeNow){
-                        rchunk[key].deleteBuffers();    
-                        rchunk[key] = undefined;
-                        i++;
-                    }
-            }
-            var timeNow3 = new Date().getTime();
-            console.log("delete buffers "+(timeNow3-timeNow1)+" "+i);
+            mcWorld.deleteBuffers();
         }
-    }
-    
-    function testCollisions(){
-            var cameraPos = camera.getPos();
-            var posxxx = Math.floor(cameraPos[0]/16);
-            var poszzz = Math.floor(cameraPos[2]/16);
-            var posx = 0;
-            var posz = 0;
-            //var xxx = posxxx + posx;
-            //var zzz = poszzz + posz;
-            var ttak = 0;
-            var timeNow1 = new Date().getTime();
-            for(var xxx = posxxx - 1; xxx < posxxx + 2; xxx++)
-              for(var zzz = poszzz - 1; zzz < poszzz + 2; zzz++){
-                if(xxx*16 - 2 < cameraPos[0] 
-                && xxx*16 + 18 > cameraPos[0]
-                && zzz*16 - 2 < cameraPos[2] 
-                && zzz*16 + 18 > cameraPos[2]){ 
-                
-                    var i = xxx*10000+zzz;
-                    if(rchunk[i] === -1 || rchunk[i] === -2) {
-                        continue;
-                    }
-                    if(rchunk[i] === undefined) {
-                        return true;
-                    }
-                    var buffer = rchunk[i].getBuffer([
-                        Math.floor(cameraPos[0] - xxx*16),
-                        Math.floor(cameraPos[1]),
-                        Math.floor(cameraPos[2] - zzz*16)
-                    ]);
-                    if(buffer === false) continue;
-
-                    //console.log(buffer.length);
-
-                    var tak = 0;
-                    tak += Intersection3D.shapeIntersectsShape(buffer, player.shape, 9, 5, cameraPos);
-                    //if(tak > 0) console.log("tak: "+tak);
-                    ttak += tak;
-                }
-            }
-            
-            var timeNow3 = new Date().getTime();
-            //console.log("czas "+(timeNow3-timeNow1));
-            if(ttak>0) return true;
-            return false;
-    }
-   
-    function renderSelectBox(selection){
-        var shader = gluu.lineShader;
-        gl.useProgram(shader);
-        mat4.perspective(gluu.pMatrix, camera.fovy, gl.viewportWidth / gl.viewportHeight, 0.1, 6000.0);
-        var lookAt = camera.getMatrix();
-        mat4.multiply(gluu.pMatrix, gluu.pMatrix, lookAt);
-        mat4.identity(gluu.mvMatrix);
-        mat4.translate(gluu.mvMatrix, gluu.mvMatrix, [selection.chx*16+selection.x, selection.y, selection.chz*16+selection.z]);
-        gl.uniformMatrix4fv(shader.pMatrixUniform, false, gluu.pMatrix);
-        gl.uniformMatrix4fv(shader.mvMatrixUniform, false, gluu.mvMatrix);
-        if(vboBox === undefined) {
-            var vtx = new Float32Array(
-	                [0.0, 0.0, 0.0, 0.0, 0.0,
-	                0.0, 1.0, 0.0, 0.0, 0.0,
-                        0.0, 1.0, 0.0, 0.0, 0.0,
-	                1.0, 1.0, 0.0, 0.0, 0.0,
-                        1.0, 1.0, 0.0, 0.0, 0.0,
-	                1.0, 0.0, 0.0, 0.0, 0.0,
-                        1.0, 0.0, 0.0, 0.0, 0.0,
-	                0.0, 0.0, 0.0, 0.0, 0.0,
-                        
-                        0.0, 0.0, 1.0, 0.0, 0.0,
-	                0.0, 1.0, 1.0, 0.0, 0.0,
-                        0.0, 1.0, 1.0, 0.0, 0.0,
-	                1.0, 1.0, 1.0, 0.0, 0.0,
-                        1.0, 1.0, 1.0, 0.0, 0.0,
-	                1.0, 0.0, 1.0, 0.0, 0.0,
-                        1.0, 0.0, 1.0, 0.0, 0.0,
-	                0.0, 0.0, 1.0, 0.0, 0.0,
-                    
-                        0.0, 0.0, 1.0, 0.0, 0.0,
-	                0.0, 0.0, 0.0, 0.0, 0.0,
-                        1.0, 1.0, 1.0, 0.0, 0.0,
-	                1.0, 1.0, 0.0, 0.0, 0.0,
-                        0.0, 1.0, 1.0, 0.0, 0.0,
-	                0.0, 1.0, 0.0, 0.0, 0.0,
-                        1.0, 0.0, 1.0, 0.0, 0.0,
-	                1.0, 0.0, 0.0, 0.0, 0.0]);
-            vboBox = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, vboBox);
-            gl.bufferData(gl.ARRAY_BUFFER, vtx, gl.STATIC_DRAW);
-        } else {
-            gl.bindBuffer(gl.ARRAY_BUFFER, vboBox);
-            gl.vertexAttribPointer(shader.vertexPositionAttribute, 3, gl.FLOAT, false, 5*4, 0 );
-            gl.vertexAttribPointer(shader.lightAttribute, 4, gl.FLOAT, false, 5*4, 0 );
-            gl.vertexAttribPointer(shader.textureCoordAttribute, 2, gl.FLOAT, false, 5*4, 3*4 );
-            gl.drawArrays(gl.LINES, 0, 24);
-        }
-    }    
-    
-    function renderPointer(){
-        var shader = gluu.lineShader;
-        gl.useProgram(shader);
-        mat4.identity(gluu.mvMatrix);
-        mat4.identity(gluu.pMatrix);
-        gl.uniformMatrix4fv(shader.pMatrixUniform, false, gluu.pMatrix);
-        gl.uniformMatrix4fv(shader.mvMatrixUniform, false, gluu.mvMatrix);
-        
-        if(vbol === undefined) {
-            var vtx = new Float32Array(
-	                [-0.03, 0.0, 0.0, 0.0, 0.0,
-	                0.03, 0.0, 0.0, 0.0, 0.0,
-                        0.0, -0.05, 0.0, 0.0, 0.0,
-	                0.0, 0.05, 0.0, 0.0, 0.0]
-	    );
-            vbol = gl.createBuffer();
-            gl.bindBuffer(gl.ARRAY_BUFFER, vbol);
-            gl.bufferData(gl.ARRAY_BUFFER, vtx, gl.STATIC_DRAW);
-        } else {
-            gl.bindBuffer(gl.ARRAY_BUFFER, vbol);
-            gl.vertexAttribPointer(shader.vertexPositionAttribute, 3, gl.FLOAT, false, 5*4, 0 );
-            gl.vertexAttribPointer(shader.lightAttribute, 4, gl.FLOAT, false, 5*4, 0 );
-            gl.vertexAttribPointer(shader.textureCoordAttribute, 2, gl.FLOAT, false, 5*4, 3*4 );
-            gl.drawArrays(gl.LINES, 0, 4);
-        }
-    }    
-    
-    function render(){
-        if(!initTexture) return;
-        
-        var shader = gluu.standardShader;
-        gl.useProgram(shader);
-        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
-        gl.clearColor(skyColor[0], skyColor[1], skyColor[2], 1);
-        //gl.clearColor(1, 1, 1, 1);
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-        
-        mat4.perspective(gluu.pMatrix, camera.fovy, gl.viewportWidth / gl.viewportHeight, 0.1, 6000.0);
-        var lookAt = camera.getMatrix();
-        mat4.multiply(gluu.pMatrix, gluu.pMatrix, lookAt);
-        mat4.identity(gluu.mvMatrix);
-        gl.uniformMatrix4fv(shader.pMatrixUniform, false, gluu.pMatrix);
-        gl.uniformMatrix4fv(shader.mvMatrixUniform, false, gluu.mvMatrix);
-        gl.uniform1f(shader.lod, distanceLevel[1]);
-        gl.uniform4fv(shader.skyColor, skyColor);
-        var lodx = 0, lodz = 0, lod = 0;
-        //var dlod = [20,23,20];
-        //var dlod = [10,10,10];
-        var dlod = [distanceLevel[0],distanceLevel[1],distanceLevel[2]];
-        var pos = new Array();
-        var xxx = 0;
-        var zzz = 0;
-        var i = 0;
-        var level = 0;
-        var cameraPos = camera.getPos();
-        for(var drawLevel = 0; drawLevel < 3; drawLevel++){
-            var posxxx = Math.floor(cameraPos[0]/16);
-            var poszzz = Math.floor(cameraPos[2]/16);
-            //for(var xxx = posxxx - dlod[drawLevel]; xxx < posxxx + dlod[drawLevel]; xxx++)
-            //  for(var zzz = poszzz - dlod[drawLevel]; zzz < poszzz + dlod[drawLevel]; zzz++){
-            pos[0] = 0;
-            pos[1] = 0;
-            for(var lll = -1; lll < dlod[drawLevel]*dlod[drawLevel]*4; lll++){
-                if(lll !== -1){
-                    pos = spiralLoop(lll);
-                }
-                xxx = posxxx + pos[0];
-                zzz = poszzz + pos[1];
-                i = xxx*10000+zzz;
-                if(rchunk[i] === -1 || rchunk[i] === -2) {
-                    rchunk[i].timestamp = lastTime;
-                    continue;
-                }
-
-                lodx = cameraPos[0] - (xxx*16 + 8);
-                lodz = cameraPos[2] - (zzz*16 + 8);
-                lod = Math.sqrt( lodx*lodx + lodz*lodz);
-                if(lod > dlod[drawLevel]*16) continue;
-                if(lod > 4*16){
-                    var aaa = camera.getTarget();
-                    var v1 = [cameraPos[0] - (aaa[0]), cameraPos[2] - (aaa[2])];
-                    var v2 = [-lodx, -lodz];
-                    var iloczyn = v1[0]*v2[0] + v1[1]*v2[1];
-                    var d1 = Math.sqrt(v1[0]*v1[0]+v1[1]*v1[1]);
-                    var d2 = Math.sqrt(v2[0]*v2[0]+v2[1]*v2[1]);
-                    var zz = iloczyn/(d1*d2);
-                    if(zz>0) continue;
-
-                    var ccos = Math.cos(camera.fovx/1.5) + zz;
-                    var xxxx = Math.sqrt(2*d2*d2*(1-ccos));
-                    if((ccos > 0) && (xxxx > 16)) continue;
-                }
-                
-                if(rchunk[i] === undefined) {
-                    if(iLag > 1){
-                       iLag -= 1;
-                       mcWorld.requestChunk(xxx, zzz);
-                    }
-                    continue;
-                }
-                
-                rchunk[i].timestamp = lastTime;
-                
-                if(cameraPos[1] >= 62 || lod < 10*16 )
-                    rchunk[i].renderChunk(drawLevel, shader, 0);
-                
-                if(cameraPos[1] < 62 && lod < 6*16 )
-                    rchunk[i].renderChunk(drawLevel, shader, 1);
-                else if(lod < 4*16)
-                    rchunk[i].renderChunk(drawLevel, shader, 1);
-            }
-        }
-    }
-
-    function renderSelection(){
-        if(!initTexture) 
-            return;
-        
-        var shader = gluu.selectionShader;
-        gl.useProgram(shader);
-        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
-        gl.clearColor(0.0, 0.0, 0.0, 0);
-        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
-        
-        mat4.perspective(gluu.pMatrix, camera.fovy, gl.viewportWidth / gl.viewportHeight, 0.1, 6000.0);
-        var lookAt = camera.getMatrix();
-        mat4.multiply(gluu.pMatrix, gluu.pMatrix, lookAt);
-        mat4.identity(gluu.mvMatrix);
-        
-        gl.uniformMatrix4fv(shader.pMatrixUniform, false, gluu.pMatrix);
-        gl.uniformMatrix4fv(shader.mvMatrixUniform, false, gluu.mvMatrix);
-
-        var pos = new Array();
-        var xxx = 0;
-        var zzz = 0;
-        var i = 0;
-        var cameraPos = camera.getPos();
-        for(var drawLevel = 0; drawLevel < 3; drawLevel++){
-            var posxxx = Math.floor(cameraPos[0]/16);
-            var poszzz = Math.floor(cameraPos[2]/16);
-            pos[0] = 0;
-            pos[1] = 0;
-            for(var lll = -1; lll < 24; lll++){
-                if(lll !== -1){
-                    pos = spiralLoop(lll);
-                }
-                xxx = posxxx + pos[0];
-                zzz = poszzz + pos[1];
-                i = xxx*10000+zzz;
-                if(rchunk[i] === -1 || rchunk[i] === -2) {
-                    continue;
-                }
-                if(rchunk[i] === undefined) {
-                    if(iLag > 1){
-                       iLag -= 1;
-                       mcWorld.requestChunk(xxx, zzz);
-                    }
-                    continue;
-                }
-                rchunk[i].renderChunk(drawLevel, shader, 0);
-                rchunk[i].renderChunk(drawLevel, shader, 1);
-            }
-        }
-
-        var frameBufferData = new Uint8Array(4);
-        gl.readPixels(Math.floor(gl.viewportWidth/2), Math.floor(gl.viewportHeight/2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, frameBufferData);
-        var colorIndex = 0;
-        //console.log(" = "+frameBufferData[colorIndex+0]+" = "+frameBufferData[colorIndex+1]+" = "+frameBufferData[colorIndex+2]);
-        
-        var selection = new Object();
-        selection.y = frameBufferData[colorIndex+0];
-        selection.z = Math.floor(frameBufferData[colorIndex+1]/16);
-        selection.x = frameBufferData[colorIndex+1] - selection.z*16;
-            
-        var cv = Math.floor(frameBufferData[colorIndex+2]/10);
-        selection.side = frameBufferData[colorIndex+2] - cv*10;
-        var chx = Math.floor(cv/5);
-        var chz = cv - chx*5;
-        //console.log("y: "+selection.y+" z: "+selection.z+" x: "+selection.x+" chx: "+chx+" chz: "+chz+" side: "+selection.side);
-            
-        var posxxx = Math.floor(cameraPos[0]/16);
-        var poszzz = Math.floor(cameraPos[2]/16);
-        var achx = posxxx % 5; if(achx < 0) achx += 5;
-        var achz = poszzz % 5; if(achz < 0) achz += 5;
-        //console.log(" achx: "+achx+" achz: "+achz);
-        chx -= achx;
-        chz -= achz;
-        if(chx > 2) chx -= 5;
-        if(chx < -2) chx += 5;
-        if(chz > 2) chz -= 5;
-        if(chz < -2) chz += 5;
-        selection.chx = posxxx + chx;
-        selection.chz = poszzz + chz;
-        selection.rchx = chx;
-        selection.rchz = chz;
-        return selection;
     }
 
     function initTextures() {
       blockTexture = gl.createTexture();
-      blockImage = new Image();
+      var blockImage = new Image();
       blockImage.onload = function() { handleTextureLoaded(blockImage, blockTexture); };
       blockImage.src = "blocks.png";
     }
@@ -555,7 +229,7 @@ require("entity/player.js");
        
        useBlock.id = 1;
        useBlock.data = 0;
-       console.log(block);    
+       console.log(block);
     }
     
     function useNextBlock(){
@@ -645,7 +319,7 @@ require("entity/player.js");
                     camera = new CameraPlayer(player);
                 }
                 else if(camera.name === "CameraPlayer") camera = new CameraGod(camera.getEye(),camera.getRot(),[0,1,0]);
-                camera.sensitivity = sensitivity*2;
+                camera.sensitivity = settings.sensitivity*2;
                 break;    
             default: 
                 //camera.moveBackward();
@@ -757,13 +431,9 @@ require("entity/player.js");
         textDiv = document.getElementById("text");
         
         gluu.initGL(canvas);
-        
         gluu.initStandardShader();
         gluu.initLineShader();
         gluu.initSelectionShader();
-        initTextures();
-        initBlocks();
-        
         gl.enable(gl.CULL_FACE);
         gl.enable(gl.BLEND);
         gl.cullFace(gl.BACK);
@@ -771,67 +441,19 @@ require("entity/player.js");
         gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
         gl.enable(gl.DEPTH_TEST);
         
-        var parameters = new Object();
-        //console.log(window.location);
-        window.location.search.substr(1).split("&").forEach(function(item) {parameters[item.split("=")[0]] = item.split("=")[1];});
-        window.location.hash.substr(1).split("&").forEach(function(item) {parameters[item.split("=")[0]] = item.split("=")[1];});
-        //console.log(parameters);
-        if( parameters["worldname"] !== undefined ) worldName = parameters["worldname"];
-        if( parameters["gameroot"] !== undefined ) gameRoot = parameters["gameroot"];
-
-        if( parameters["distanceLevel"] !== undefined ){
-            distanceLevel[0] = parseInt((parameters["distanceLevel"].split("-"))[0]) || distanceLevel[0]; 
-            distanceLevel[1] = parseInt((parameters["distanceLevel"].split("-"))[1]) || distanceLevel[1]; 
-            distanceLevel[2] = parseInt((parameters["distanceLevel"].split("-"))[2]) || distanceLevel[2]; 
-            if(distanceLevel[0] < 10) distanceLevel[0] = 10;
-            if(distanceLevel[1] < distanceLevel[0]) distanceLevel[1] = distanceLevel[0];
-            if(distanceLevel[2] < distanceLevel[0]) distanceLevel[2] = distanceLevel[0];
-            if(distanceLevel[0] > 100) distanceLevel[0] = 100;
-            if(distanceLevel[1] > 100) distanceLevel[1] = 100;
-            if(distanceLevel[2] > 100) distanceLevel[2] = 100;
-        }
-        if( parameters["sensitivity"] !== undefined ){
-            sensitivity = parseInt(parameters["sensitivity"]);
-            if(sensitivity < 10) sensitivity = 10;
-            if(sensitivity > 100) sensitivity = 100;
-        }
-        var pos = [407,85,-128];
-        var rot = [5.5,0];
-        if( parameters["pos"] !== undefined ){
-            pos[0] = parseFloat((parameters["pos"].split("+"))[0]) || pos[0]; 
-            pos[1] = parseFloat((parameters["pos"].split("+"))[1]) || pos[1]; 
-            pos[2] = parseFloat((parameters["pos"].split("+"))[2]) || pos[2]; 
-        }
-        if( parameters["rot"] !== undefined ){
-            rot[0] = parseFloat((parameters["rot"].split("+"))[0]) || pos[0]; 
-            rot[1] = parseFloat((parameters["rot"].split("+"))[1]) || pos[1]; 
-        }
-        if( parameters["skyColor"] !== undefined ){
-            skyColor[0] = parseFloat((parameters["skyColor"].split("-"))[0])/255 || skyColor[0]; 
-            skyColor[1] = parseFloat((parameters["skyColor"].split("-"))[1])/255 || skyColor[1]; 
-            skyColor[2] = parseFloat((parameters["skyColor"].split("-"))[2])/255 || skyColor[2]; 
-        }
-        //console.log(parameters["pos"]);
-        //console.log(parameters["rot"]);
-        //console.log(distanceLevel);
-        
-        //camera = new Camera([-400,120,0],[5.5,0],[0,1,0]);
-        //camera = new CameraGod([0,120,0],[5.5,0],[0,1,0]);
-        //camera = new Camera([-176,90,2],[5.5,0],[0,1,0]);
-        //camera = new CameraGod([-176,90,2],[5.5,0],[0,1,0]);
-        var cameraType = parameters["camera"] || "CameraPlayer";
+        initTextures();
+        initBlocks();
         
         player = new Player();
-        if(cameraType === "CameraGod")
-            camera = new CameraGod(pos,rot,[0,1,0]);
-        else if(cameraType === "Camera")
-            camera = new Camera(pos,rot,[0,1,0]);
+        if(settings.cameraType === "CameraGod")
+            camera = new CameraGod(settings.pos,settings.rot,[0,1,0]);
+        else if(settings.cameraType === "Camera")
+            camera = new Camera(settings.pos,settings.rot,[0,1,0]);
         else {
-            player.setPosRot([pos[0],pos[1],pos[2]], [rot[0],rot[1]]);
+            player.setPosRot([settings.pos[0],settings.pos[1],settings.pos[2]], [settings.rot[0],settings.rot[1]]);
             camera = new CameraPlayer(player);
         }
-        
-        camera.sensitivity = sensitivity * 2;
+        camera.sensitivity = settings.sensitivity * 2;
         
         for(var i = 0; i < 3; i++){
             punkty1[i] = new Object();
@@ -839,37 +461,9 @@ require("entity/player.js");
             punkty1[i].offset = 0;
         }
 
-        rchunk = new Array();
-        mcWorld = new RegionLib(gameRoot, worldName);
+        mcWorld = new RegionLib(settings.gameRoot, settings.worldName);
         firstTime = new Date().getTime();
         lastTime = new Date().getTime();
         tick();       
     }
     
-    function spiralLoop(n) {
-        var r = Math.floor((Math.sqrt(n + 1) - 1) / 2) + 1;
-        var p = (8 * r * (r - 1)) / 2;
-        var en = r * 2;
-        var a = (1 + n - p) % (r * 8);
-        var pos = [0, 0, r];
-        
-        switch (Math.floor(a / (r * 2))) {
-            case 0:
-                pos[0] = a - r;
-                pos[1] = -r;
-                break;
-            case 1:
-                pos[0] = r;
-                pos[1] = (a % en) - r;
-                break;
-            case 2:
-                pos[0] = r - (a % en);
-                pos[1] = r;
-                break;
-            case 3:
-                pos[0] = -r;
-                pos[1] = r - (a % en);
-                break;
-        }
-        return pos;
-    }

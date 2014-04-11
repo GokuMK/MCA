@@ -1,0 +1,34 @@
+{
+"gameroot": {
+    "value": "F:/mcjs",
+    "url": true
+},
+"worldname": {
+    "value": "mcjs6",
+    "url": true
+},
+"distanceLevel": {
+    "value": "10-10-10",
+    "url": true
+},
+"mouseSensitivity": {
+    "value": "50",
+    "url": true
+},
+"pos": {
+    "value": "407+85+-128",
+    "url": true
+},
+"rot": {
+    "value": "5.5+0",
+    "url": true
+},
+"camera": {
+    "value": "CameraPlayer",
+    "url": true
+},
+"skyColor": {
+    "value": "230-248-255",
+    "url": true
+}
+}

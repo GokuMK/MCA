@@ -12,19 +12,19 @@ Chunk.prototype.init2 = function(yyyy){
         var nietfchunk = false;
         var nietbchunk = false;
         
-        var tbchunk = mcWorld.requestChunk(this.xPos+1, this.zPos);//rchunk[(this.xPos+1)*10000+this.zPos];
+        var tbchunk = mcWorld.requestChunk(this.xPos+1, this.zPos);
         if(tbchunk === undefined) nietbchunk = true;
         if(tbchunk === -1) nietbchunk = true;
         if(tbchunk === -2) return false;
-        var tfchunk = mcWorld.requestChunk(this.xPos-1, this.zPos);//rchunk[(this.xPos-1)*10000+this.zPos];
+        var tfchunk = mcWorld.requestChunk(this.xPos-1, this.zPos);
         if(tfchunk === undefined) nietfchunk = true;
         if(tfchunk === -1) nietfchunk = true;
         if(tfchunk === -2) return false;
-        var tlchunk = mcWorld.requestChunk(this.xPos, this.zPos+1);//rchunk[this.xPos*10000+(this.zPos+1)];
+        var tlchunk = mcWorld.requestChunk(this.xPos, this.zPos+1);
         if(tlchunk === undefined) nietlchunk = true;
         if(tlchunk === -1) nietlchunk = true;
         if(tlchunk === -2) return false;
-        var trchunk = mcWorld.requestChunk(this.xPos, this.zPos-1);//rchunk[this.xPos*10000+(this.zPos-1)];
+        var trchunk = mcWorld.requestChunk(this.xPos, this.zPos-1);
         if(trchunk === undefined) nietrchunk = true;
         if(trchunk === -1) nietrchunk = true;
         if(trchunk === -2) return false;

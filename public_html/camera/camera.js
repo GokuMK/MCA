@@ -146,7 +146,7 @@ Camera.prototype.updatePosition = function(fps) {
         }
         
         this.pos[1] = this.tPos[1];
-        if(testCollisions()){
+        if(mcWorld.testCollisions()){
             //var pos1 = false;
             this.pos[1] = this.oldPos[1];
         } else {
@@ -156,7 +156,7 @@ Camera.prototype.updatePosition = function(fps) {
         //this.pos[1] = this.oldPos[1];
 
         this.pos[2] = this.tPos[2];
-        if(testCollisions()){
+        if(mcWorld.testCollisions()){
             //var pos2 = false;
             this.pos[2] = this.oldPos[2];
         } else {
@@ -166,7 +166,7 @@ Camera.prototype.updatePosition = function(fps) {
         //this.pos[2] = this.oldPos[2];
         
         this.pos[0] = this.tPos[0];
-        if(testCollisions()){
+        if(mcWorld.testCollisions()){
             //var pos0 = false;
             this.pos[0] = this.oldPos[0];
         } else {

@@ -3,25 +3,278 @@ function RegionLib(gameRoot, worldName){
     this.worldName = worldName;
     this.region = new Array();
     this.localIChunk = new Array();
+    this.rchunk = new Array();
+    this.iChunk = 0;
 }
 
-RegionLib.prototype.save =  function(){
+RegionLib.prototype.updateChunkBlock = function(chx, chz, x, y, z, b, d){
+    var i = chx*10000+chz;
+    if(this.rchunk[i] !== undefined)
+        this.rchunk[i].updateBlock(x,y,z,b,d);
+};
+
+RegionLib.prototype.changeChunkBlockAdd = function(chx, chz, x, y, z){
+    var i = chx*10000+chz;
+    if(this.rchunk[i] !== undefined)
+        this.rchunk[i].changeAdd(x,y,z);
+};
+
+RegionLib.prototype.deleteBuffers = function(){
+    var timeNow1 = new Date().getTime();
+    var i = 0;
+    //rchunk.forEach(function(e) {
+    for (var key in this.rchunk){
+        if(this.rchunk[key] === undefined) continue;
+        if(this.rchunk[key] === -1) continue;
+        if(this.rchunk[key] === -2) continue;
+        if(this.rchunk[key].isInit === 1 || this.rchunk[key].isInit1 === 1)
+        if(this.rchunk[key].timestamp + 10000 < timeNow1){
+            this.rchunk[key].deleteBuffers();    
+            this.rchunk[key] = undefined;
+            i++;
+        }
+    }
+    var timeNow3 = new Date().getTime();
+    console.log("delete buffers "+(timeNow3-timeNow1)+" "+i);
+};
+
+RegionLib.prototype.render = function(){
+        if(!initTexture) return;
+        
+        var shader = gluu.standardShader;
+        gl.useProgram(shader);
+        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+        gl.clearColor(settings.skyColor[0], settings.skyColor[1], settings.skyColor[2], 1);
+        //gl.clearColor(1, 1, 1, 1);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        
+        mat4.perspective(gluu.pMatrix, camera.fovy, gl.viewportWidth / gl.viewportHeight, 0.1, 6000.0);
+        var lookAt = camera.getMatrix();
+        mat4.multiply(gluu.pMatrix, gluu.pMatrix, lookAt);
+        mat4.identity(gluu.mvMatrix);
+        gl.uniformMatrix4fv(shader.pMatrixUniform, false, gluu.pMatrix);
+        gl.uniformMatrix4fv(shader.mvMatrixUniform, false, gluu.mvMatrix);
+        gl.uniform1f(shader.lod, settings.distanceLevel[1]);
+        gl.uniform4fv(shader.skyColor, settings.skyColor);
+        var lodx = 0, lodz = 0, lod = 0;
+        //var dlod = [20,23,20];
+        //var dlod = [10,10,10];
+        var dlod = [settings.distanceLevel[0],settings.distanceLevel[1],settings.distanceLevel[2]];
+        var pos = new Array();
+        var xxx = 0;
+        var zzz = 0;
+        var i = 0;
+        var level = 0;
+        var cameraPos = camera.getPos();
+        for(var drawLevel = 0; drawLevel < 3; drawLevel++){
+            var posxxx = Math.floor(cameraPos[0]/16);
+            var poszzz = Math.floor(cameraPos[2]/16);
+            //for(var xxx = posxxx - dlod[drawLevel]; xxx < posxxx + dlod[drawLevel]; xxx++)
+            //  for(var zzz = poszzz - dlod[drawLevel]; zzz < poszzz + dlod[drawLevel]; zzz++){
+            pos[0] = 0;
+            pos[1] = 0;
+            for(var lll = -1; lll < dlod[drawLevel]*dlod[drawLevel]*4; lll++){
+                if(lll !== -1){
+                    pos = spiralLoop(lll);
+                }
+                xxx = posxxx + pos[0];
+                zzz = poszzz + pos[1];
+                i = xxx*10000+zzz;
+                
+                if(this.rchunk[i] === -1 || this.rchunk[i] === -2) {
+                    this.rchunk[i].timestamp = lastTime;
+                    continue;
+                }
+
+                lodx = cameraPos[0] - (xxx*16 + 8);
+                lodz = cameraPos[2] - (zzz*16 + 8);
+                lod = Math.sqrt( lodx*lodx + lodz*lodz);
+                if(lod > dlod[drawLevel]*16) continue;
+                if(lod > 4*16){
+                    var aaa = camera.getTarget();
+                    var v1 = [cameraPos[0] - (aaa[0]), cameraPos[2] - (aaa[2])];
+                    var v2 = [-lodx, -lodz];
+                    var iloczyn = v1[0]*v2[0] + v1[1]*v2[1];
+                    var d1 = Math.sqrt(v1[0]*v1[0]+v1[1]*v1[1]);
+                    var d2 = Math.sqrt(v2[0]*v2[0]+v2[1]*v2[1]);
+                    var zz = iloczyn/(d1*d2);
+                    if(zz>0) continue;
+
+                    var ccos = Math.cos(camera.fovx/1.5) + zz;
+                    var xxxx = Math.sqrt(2*d2*d2*(1-ccos));
+                    if((ccos > 0) && (xxxx > 16)) continue;
+                }
+                
+                if(this.rchunk[i] === undefined) {
+                if(iLag > 1){
+                    iLag -= 1;
+                    this.requestChunk(xxx, zzz);
+                    }
+                    continue;
+                }
+                this.rchunk[i].timestamp = lastTime;
+                
+                if(cameraPos[1] >= 62 || lod < 10*16)
+                    this.rchunk[i].render(drawLevel, shader, 0);
+                if(cameraPos[1] < 62 && lod < 6*16)
+                    this.rchunk[i].render(drawLevel, shader, 1);
+                else if(lod < 4*16)
+                    this.rchunk[i].render(drawLevel, shader, 1);
+            }
+        }
+    };
+
+RegionLib.prototype.renderSelection = function(){
+        if(!initTexture) 
+            return;
+        
+        var shader = gluu.selectionShader;
+        gl.useProgram(shader);
+        gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
+        gl.clearColor(0.0, 0.0, 0.0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT | gl.DEPTH_BUFFER_BIT);
+        
+        mat4.perspective(gluu.pMatrix, camera.fovy, gl.viewportWidth / gl.viewportHeight, 0.1, 6000.0);
+        var lookAt = camera.getMatrix();
+        mat4.multiply(gluu.pMatrix, gluu.pMatrix, lookAt);
+        mat4.identity(gluu.mvMatrix);
+        
+        gl.uniformMatrix4fv(shader.pMatrixUniform, false, gluu.pMatrix);
+        gl.uniformMatrix4fv(shader.mvMatrixUniform, false, gluu.mvMatrix);
+
+        var pos = new Array();
+        var xxx = 0;
+        var zzz = 0;
+        var i = 0;
+        var cameraPos = camera.getPos();
+        for(var drawLevel = 0; drawLevel < 3; drawLevel++){
+            var posxxx = Math.floor(cameraPos[0]/16);
+            var poszzz = Math.floor(cameraPos[2]/16);
+            pos[0] = 0;
+            pos[1] = 0;
+            for(var lll = -1; lll < 24; lll++){
+                if(lll !== -1){
+                    pos = spiralLoop(lll);
+                }
+                xxx = posxxx + pos[0];
+                zzz = poszzz + pos[1];
+                i = xxx*10000+zzz;
+                
+                if(this.rchunk[i] === -1 || this.rchunk[i] === -2) {
+                    this.rchunk[i].timestamp = lastTime;
+                    continue;
+                }
+                if(this.rchunk[i] === undefined) {
+                if(iLag > 1){
+                    iLag -= 1;
+                    this.requestChunk(xxx, zzz);
+                    }
+                    continue;
+                }
+                this.rchunk[i].timestamp = lastTime;
+                
+                this.rchunk[i].render(drawLevel, shader, 0);
+                this.rchunk[i].render(drawLevel, shader, 1);
+            }
+        }
+
+        var frameBufferData = new Uint8Array(4);
+        gl.readPixels(Math.floor(gl.viewportWidth/2), Math.floor(gl.viewportHeight/2), 1, 1, gl.RGBA, gl.UNSIGNED_BYTE, frameBufferData);
+        var colorIndex = 0;
+        //console.log(" = "+frameBufferData[colorIndex+0]+" = "+frameBufferData[colorIndex+1]+" = "+frameBufferData[colorIndex+2]);
+        
+        var selection = new Object();
+        selection.y = frameBufferData[colorIndex+0];
+        selection.z = Math.floor(frameBufferData[colorIndex+1]/16);
+        selection.x = frameBufferData[colorIndex+1] - selection.z*16;
+            
+        var cv = Math.floor(frameBufferData[colorIndex+2]/10);
+        selection.side = frameBufferData[colorIndex+2] - cv*10;
+        var chx = Math.floor(cv/5);
+        var chz = cv - chx*5;
+        //console.log("y: "+selection.y+" z: "+selection.z+" x: "+selection.x+" chx: "+chx+" chz: "+chz+" side: "+selection.side);
+            
+        var posxxx = Math.floor(cameraPos[0]/16);
+        var poszzz = Math.floor(cameraPos[2]/16);
+        var achx = posxxx % 5; if(achx < 0) achx += 5;
+        var achz = poszzz % 5; if(achz < 0) achz += 5;
+        //console.log(" achx: "+achx+" achz: "+achz);
+        chx -= achx;
+        chz -= achz;
+        if(chx > 2) chx -= 5;
+        if(chx < -2) chx += 5;
+        if(chz > 2) chz -= 5;
+        if(chz < -2) chz += 5;
+        selection.chx = posxxx + chx;
+        selection.chz = poszzz + chz;
+        selection.rchx = chx;
+        selection.rchz = chz;
+        return selection;
+    };
+
+RegionLib.prototype.testCollisions = function(){
+            var cameraPos = camera.getPos();
+            var posxxx = Math.floor(cameraPos[0]/16);
+            var poszzz = Math.floor(cameraPos[2]/16);
+            var posx = 0;
+            var posz = 0;
+            //var xxx = posxxx + posx;
+            //var zzz = poszzz + posz;
+            var ttak = 0;
+            var timeNow1 = new Date().getTime();
+            for(var xxx = posxxx - 1; xxx < posxxx + 2; xxx++)
+              for(var zzz = poszzz - 1; zzz < poszzz + 2; zzz++){
+                if(xxx*16 - 2 < cameraPos[0] 
+                && xxx*16 + 18 > cameraPos[0]
+                && zzz*16 - 2 < cameraPos[2] 
+                && zzz*16 + 18 > cameraPos[2]){ 
+                
+                    var i = xxx*10000+zzz;
+                    if(this.rchunk[i] === -1 || this.rchunk[i] === -2) {
+                        continue;
+                    }
+                    if(this.rchunk[i] === undefined) {
+                        return true;
+                    }
+                    var buffer = this.rchunk[i].getBuffer([
+                        Math.floor(cameraPos[0] - xxx*16),
+                        Math.floor(cameraPos[1]),
+                        Math.floor(cameraPos[2] - zzz*16)
+                    ]);
+                    if(buffer === false) continue;
+
+                    //console.log(buffer.length);
+
+                    var tak = 0;
+                    tak += Intersection3D.shapeIntersectsShape(buffer, player.shape, 9, 5, cameraPos);
+                    //if(tak > 0) console.log("tak: "+tak);
+                    ttak += tak;
+                }
+            }
+            
+            var timeNow3 = new Date().getTime();
+            //console.log("czas "+(timeNow3-timeNow1));
+            if(ttak>0) return true;
+            return false;
+    }
+
+RegionLib.prototype.save = function(){
     for (var key in rchunk) {
-        if(rchunk[key] === undefined || rchunk[key] === -1 || rchunk[key] === -2) continue;
-        //console.log(rchunk[key]);
-        if(rchunk[key].changed){
-            mcWorld.saveChunkToStorage(rchunk[key].xPos, rchunk[key].zPos);
-            rchunk[key].changed = false;
+        if(this.rchunk[key] === undefined || this.rchunk[key] === -1 || this.rchunk[key] === -2) continue;
+        //console.log(this.rchunk[key]);
+        if(this.rchunk[key].changed){
+            mcWorld.saveChunkToStorage(this.rchunk[key].xPos, this.rchunk[key].zPos);
+            this.rchunk[key].changed = false;
         }
     }
 };
 
 RegionLib.prototype.saveChunkToStorage = function(x, z){
     var i = x*10000+z;
-    if(rchunk[i] === undefined) return;
-    if(rchunk[i] === -1 || rchunk[i] === -2) return;
+    if(this.rchunk[i] === undefined) return;
+    if(this.rchunk[i] === -1 || this.rchunk[i] === -2) return;
     
-    var nbt = rchunk[i].getNBT();
+    var nbt = this.rchunk[i].getNBT();
     var deflate = new Zlib.Deflate(nbt);
     var nbt3 = deflate.compress();
 
@@ -61,7 +314,7 @@ RegionLib.prototype.loadChunkFromStorage = function(x, z, all){
     if(all) return chunk;
     
     var i = x*10000+z;
-    rchunk[i] = chunk;
+    this.rchunk[i] = chunk;
     
     var nietlchunk = false;
     var nietrchunk = false;
@@ -170,27 +423,27 @@ RegionLib.prototype.loadRegionFile = function(region, regionFile){
                 //var poss = chunkPos[i]*4096;
                 //console.log("=== compresion "+region[poss+4]);
                 
-                iChunk++;
+                this.iChunk++;
                 var aPos = region.chunkPos[i]*4096;
                 
                 var chunk = this.loadChunk(aPos, regionData);
-                rchunk[chunk.xPos*10000+chunk.zPos] = chunk;
-                //console.log(rchunk[iChunk].xPos+" "+rchunk[iChunk].zPos);
+                this.rchunk[chunk.xPos*10000+chunk.zPos] = chunk;
+                //console.log(this.rchunk[this.iChunk].xPos+" "+this.rchunk[this.iChunk].zPos);
             }
         }*/
     };
     
 RegionLib.prototype.requestChunk = function(x, z){
     var i = x*10000+z;
-    if(rchunk[i] !== undefined) {
-        return rchunk[i];
+    if(this.rchunk[i] !== undefined) {
+        return this.rchunk[i];
     }
 
     if(this.localIChunk[i] !== 1){
         var chunk = -1;
         this.localIChunk[i] = 1;
         if((chunk = this.loadChunkFromStorage(x, z, true)) !== -1) {
-            rchunk[i] = chunk;
+            this.rchunk[i] = chunk;
             return chunk;
         }
     }
@@ -201,7 +454,7 @@ RegionLib.prototype.requestChunk = function(x, z){
        this.loadRegion(rx, rz);
     }
     if(this.region[rx*1000+rz].loaded === -1){
-        rchunk[i] = -1;
+        this.rchunk[i] = -1;
         return -1;
     }
     if(this.region[rx*1000+rz].loaded === -2){
@@ -217,14 +470,14 @@ RegionLib.prototype.requestChunk = function(x, z){
                 //var poss = chunkPos[i]*4096;
                 //console.log("=== compresion "+region[poss+4]);
                 
-                iChunk++;
+                this.iChunk++;
                 var aPos = this.region[rx*1000+rz].chunkPos[ii]*4096;
 
-                rchunk[i] = RegionLib.loadChunk(aPos, this.region[rx*1000+rz].regionData, true);
-                //console.log(rchunk[iChunk].xPos+" "+rchunk[iChunk].zPos);
-                return rchunk[i];
+                this.rchunk[i] = RegionLib.loadChunk(aPos, this.region[rx*1000+rz].regionData, true);
+                //console.log(this.rchunk[this.iChunk].xPos+" "+this.rchunk[this.iChunk].zPos);
+                return this.rchunk[i];
         } else {
-            rchunk[i] = -1;
+            this.rchunk[i] = -1;
         }
     }
 };

@@ -426,22 +426,6 @@ Chunk.prototype.getNBT = function(y){
     NBT.write0Tag(nbt);
     
     return new Uint8Array(nbt.data.buffer, 0, nbt.offset);
-
-    
-    //str = window.localStorage.getItem('key');    
-    //console.log(window.localStorage);
-    //console.log(nbt4);
-    ///////////////////////////////////
-    //console.log(nbt4);
-    
-    //console.log(str.length);
-    //nbt4 = new Uint8Array(str2ab(str));
-    //console.log(nbt4);
-    //var chunk = RegionLib.loadChunk(0, nbt4, true);
-    
-    //i = chunk.xPos*10000+chunk.zPos;
-    //rchunk[i] = chunk;
-    //console.log(chunk);
     };
     
 Chunk.prototype.newSection = function(y){
@@ -574,7 +558,7 @@ Chunk.prototype.getSunLightValue = function(x, y, z){
         return 16;
 };
     
-Chunk.prototype.renderChunk = function(drawLevel, shader, level){
+Chunk.prototype.render = function(drawLevel, shader, level){
         //console.log("aaa");
         //var level = 0;
         if(!this.visible) return;
@@ -601,8 +585,6 @@ Chunk.prototype.renderChunk = function(drawLevel, shader, level){
         gl.bindTexture(gl.TEXTURE_2D, blockTexture);
 
             //for(var i = 0; i < 16; i++){
-            //   if(rchunk.section[i] === undefined) continue;
-            //   if(rchunk.section[i].vbo === undefined) continue;
             if(this.vbo[level] === undefined) return;
             if(this.vbo[level][drawLevel] === undefined) return;
                //gluu.mvPushMatrix();
