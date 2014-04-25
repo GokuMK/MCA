@@ -416,13 +416,13 @@ RegionLib.prototype.loadRegion = function(x, y){
     var url = "";
     if(this.gameRoot.indexOf(":") === -1){
         //console.log(document.location);
-        url = document.location.href.split(/&|#/)[0];
+        url = document.location.href.split(/\?|#/)[0];
         var index = url.indexOf('index');
         if (index !== -1) {
           url = url.substring(0, index);
         }
     }
-    //console.log(url+path);
+    console.log(url+path);
     worker.postMessage({x: x, y: y, name: url+path});
 };
 
@@ -439,6 +439,7 @@ RegionLib.prototype.regionLoaded = function(e){
         //console.log(e.data);
         
         var regionData = new Uint8Array(e.data.data);
+        //console.log("xy:"+x+" "+y+" "+regionData.length);
         if(regionData.length < 1000){
             var region = this.region[x*1000+y];
             region.loaded = -1;
@@ -522,7 +523,7 @@ RegionLib.prototype.requestChunk = function(x, z){
         var ii = ((xi) + (zi) * 32);
         //console.log("--- "+xi+" "+zi);
         if(this.region[rx*1000+rz].chunkPos[ii] > 0){
-                console.log("chunk "+i+": "+this.region[rx*1000+rz].chunkPos[ii] + " " + this.region[rx*1000+rz].chunkLen[ii]);
+                console.log("chunk "+i+" : "+this.region[rx*1000+rz].chunkPos[ii] + " " + this.region[rx*1000+rz].chunkLen[ii]);
                 //var poss = chunkPos[i]*4096;
                 //console.log("=== compresion "+region[poss+4]);
                 
@@ -543,17 +544,23 @@ RegionLib.loadChunk = function(aPos, region, compressed){
         var aLength = region[aPos+0]*256*256*256 + region[aPos+1]*256*256 + region[aPos+2]*256 + region[aPos+3];
         //console.log("=== length " + aLength);
         //console.log("=== compresion " + region[aPos+4]);
-        
+
         var chunkData = new Object();
         var chunk = new Chunk();
         chunkData.offset = 0;
         
-        if(compressed){
-            var inflate = new Zlib.Inflate(region,{'index': aPos+5});
-            chunkData.data = inflate.decompress();
-        } else {
-            chunkData.data = region;
+        try{
+            if(compressed){
+                var inflate = new Zlib.Inflate(region,{'index': aPos+5});
+                chunkData.data = inflate.decompress();
+            } else {
+                chunkData.data = region;
+            }
+        } catch(e){
+            console.log("fail");
+            return -1;
         }
+    
 
         var aTag;
         
