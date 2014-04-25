@@ -13,10 +13,49 @@ RegionLib.prototype.updateChunkBlock = function(chx, chz, x, y, z, b, d){
         this.rchunk[i].updateBlock(x,y,z,b,d);
 };
 
+RegionLib.prototype.updateBlock = function(x, y, z, b, d){
+    var chx = Math.floor(x/16);
+    var chz = Math.floor(z/16);
+    var i = chx*10000+chz;
+    if(this.rchunk[i] !== undefined){
+        x = x - chx*16; if(x < 0) x+=16;
+        z = z - chz*16; if(z < 0) z+=16;
+        this.rchunk[i].updateBlock(Math.floor(x),Math.floor(y),Math.floor(z),b,d);
+    }
+};
+
+RegionLib.prototype.setBlock = function(x, y, z, b, d){
+    var chx = Math.floor(x/16);
+    var chz = Math.floor(z/16);
+    var i = chx*10000+chz;
+    if(this.rchunk[i] !== undefined){
+        x = x - chx*16; if(x < 0) x+=16;
+        z = z - chz*16; if(z < 0) z+=16;
+        this.rchunk[i].setBlock(Math.floor(x),Math.floor(y),Math.floor(z),b,d);
+    }
+};
+
 RegionLib.prototype.changeChunkBlockAdd = function(chx, chz, x, y, z){
     var i = chx*10000+chz;
     if(this.rchunk[i] !== undefined)
         this.rchunk[i].changeAdd(x,y,z);
+};
+
+RegionLib.prototype.updateChunks = function(){
+    var timeNow1 = new Date().getTime();
+    var i = 0;
+    //rchunk.forEach(function(e) {
+    for (var key in this.rchunk){
+        if(this.rchunk[key] === undefined) continue;
+        if(this.rchunk[key] === -1) continue;
+        if(this.rchunk[key] === -2) continue;
+        if(this.rchunk[key].needsUpdate === true) {
+            this.rchunk[key].update();
+            i++;
+        }
+    }
+    var timeNow3 = new Date().getTime();
+    console.log("update chunk "+(timeNow3-timeNow1)+" "+i);
 };
 
 RegionLib.prototype.deleteBuffers = function(){
@@ -27,12 +66,13 @@ RegionLib.prototype.deleteBuffers = function(){
         if(this.rchunk[key] === undefined) continue;
         if(this.rchunk[key] === -1) continue;
         if(this.rchunk[key] === -2) continue;
+        if(this.rchunk[key].changed === true) continue;
         if(this.rchunk[key].isInit === 1 || this.rchunk[key].isInit1 === 1)
-        if(this.rchunk[key].timestamp + 10000 < timeNow1){
-            this.rchunk[key].deleteBuffers();    
-            this.rchunk[key] = undefined;
-            i++;
-        }
+            if(this.rchunk[key].timestamp + 10000 < timeNow1){
+                this.rchunk[key].deleteBuffers();    
+                this.rchunk[key] = undefined;
+                i++;
+            }
     }
     var timeNow3 = new Date().getTime();
     console.log("delete buffers "+(timeNow3-timeNow1)+" "+i);
@@ -55,6 +95,8 @@ RegionLib.prototype.render = function(){
         gl.uniformMatrix4fv(shader.pMatrixUniform, false, gluu.pMatrix);
         gl.uniformMatrix4fv(shader.mvMatrixUniform, false, gluu.mvMatrix);
         gl.uniform1f(shader.lod, settings.distanceLevel[1]);
+        gl.uniform1f(shader.sun, settings.sun);
+        gl.uniform1f(shader.brightness, settings.brightness);
         gl.uniform4fv(shader.skyColor, settings.skyColor);
         var lodx = 0, lodz = 0, lod = 0;
         //var dlod = [20,23,20];
@@ -355,9 +397,13 @@ RegionLib.prototype.loadChunkFromStorage = function(x, z, all){
 RegionLib.prototype.loadRegion = function(x, y){
     this.region[x*1000+y] = new Object();
     this.region[x*1000+y].loaded = -2;
-    //this.loadRegionFile(this.region[x*1000+y], this.gameRoot+"/worlds/"+this.worldName+"/region/r."+x+"."+y+".mca");
-    
-    var worker = new Worker("loadRegionThread.js");
+
+    if(window['threadsCode'] !== undefined){
+        var blob = new Blob([threadsCode["loadRegionThread"]], {type: 'application/javascript'});
+        var worker = new Worker(window.URL.createObjectURL(blob));
+    } else {
+        var worker = new Worker("threads/loadRegionThread.js");
+    }
     worker.regionLib = this;
     worker.region = this.region[x*1000+y];
     worker.onmessage = function(e){
@@ -367,7 +413,17 @@ RegionLib.prototype.loadRegion = function(x, y){
         this.region.loaded = -1;
     };
     var path = this.gameRoot+"/worlds/"+this.worldName+"/region/r."+x+"."+y+".mca";
-    worker.postMessage({x: x, y: y, name: path});
+    var url = "";
+    if(this.gameRoot.indexOf(":") === -1){
+        //console.log(document.location);
+        url = document.location.href.split(/&|#/)[0];
+        var index = url.indexOf('index');
+        if (index !== -1) {
+          url = url.substring(0, index);
+        }
+    }
+    //console.log(url+path);
+    worker.postMessage({x: x, y: y, name: url+path});
 };
 
 RegionLib.prototype.regionLoaded = function(e){

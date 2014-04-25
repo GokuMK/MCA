@@ -22,13 +22,20 @@ function Gluu () {
 
     Gluu.prototype.getShader = function(gl, name, type) {
         var xmlHttp = new XMLHttpRequest();
-        xmlHttp.open( "GET", "shaders/"+name+"."+type, false );
-        xmlHttp.send( null );
-        var shaderScript = xmlHttp.responseText;
-        if (!shaderScript) {
-            return null;
+        
+        if(window['shadersCode'] !== undefined){
+            var shaderScript = shadersCode[type][name];
+            if (shaderScript === undefined) {
+                return null;
+            }
+        } else {
+            xmlHttp.open( "GET", "shaders/"+name+"."+type, false );
+            xmlHttp.send( null );
+            var shaderScript = xmlHttp.responseText;
+            if (!shaderScript) {
+                return null;
+            }
         }
-
         var shader;
         if (type === "fs") {
             shader = gl.createShader(gl.FRAGMENT_SHADER);
@@ -108,9 +115,9 @@ function Gluu () {
     };
     
     Gluu.prototype.initStandardShader = function() {
-        var fragmentShader = this.getShader(gl, "standard","fs");
-        var vertexShader = this.getShader(gl, "standard","vs");
-
+        var fragmentShader = this.getShader(gl, settings.worldShader,"fs");
+        var vertexShader = this.getShader(gl, settings.worldShader,"vs");
+        
         this.standardShader = gl.createProgram();
         gl.attachShader(this.standardShader, vertexShader);
         gl.attachShader(this.standardShader, fragmentShader);
@@ -131,6 +138,8 @@ function Gluu () {
         gl.enableVertexAttribArray(this.standardShader.lightAttribute);
         
         this.standardShader.lod = gl.getUniformLocation(this.standardShader, "lod");
+        this.standardShader.sun = gl.getUniformLocation(this.standardShader, "sun");
+        this.standardShader.brightness = gl.getUniformLocation(this.standardShader, "brightness");
         this.standardShader.skyColor = gl.getUniformLocation(this.standardShader, "skyColor");
         this.standardShader.pMatrixUniform = gl.getUniformLocation(this.standardShader, "uPMatrix");
         this.standardShader.mvMatrixUniform = gl.getUniformLocation(this.standardShader, "uMVMatrix");

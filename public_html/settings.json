@@ -8,7 +8,7 @@
     "url": true
 },
 "distanceLevel": {
-    "value": "10-10-10",
+    "value": "11-11-11",
     "url": true
 },
 "mouseSensitivity": {
@@ -20,7 +20,7 @@
     "url": true
 },
 "rot": {
-    "value": "5.5+0",
+    "value": "5.5+0.0",
     "url": true
 },
 "camera": {
@@ -30,5 +30,20 @@
 "skyColor": {
     "value": "230-248-255",
     "url": true
+},
+"sun": {
+    "value": "1.0",
+    "url": true
+},
+"brightness": {
+    "value": "0.10",
+    "url": true
+},
+"worldShader": {
+    "value": "bloom",
+    "url": true
+},
+"edit": {
+    "value": true
 }
 }

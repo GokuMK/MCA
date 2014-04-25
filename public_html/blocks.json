@@ -204,7 +204,7 @@
         "name": "Water",
         "drawLevel": 2,
         "shapeType": 9,
-        "useBiomeColor": 1,
+        "useBiomeColor": 3,
         "shapeName": "simpleBlock",
         "defaultTexture": "water_still.png"
     }
@@ -217,7 +217,7 @@
         "name": "Water",
         "drawLevel": 2,
         "shapeType": 9,
-        "useBiomeColor": 1,
+        "useBiomeColor": 3,
         "shapeName": "simpleBlock",
         "defaultTexture": "water_still.png"
     }
@@ -466,7 +466,7 @@
         "name": "Oak leaves",
         "drawLevel": 0,
         "shapeType": 1,
-        "useBiomeColor": 1,
+        "useBiomeColor": 2,
         "shapeName": "simpleBlock",
         "defaultTexture": "leaves_oak.png"
     },
@@ -474,7 +474,7 @@
         "name": "Spruce leaves",
         "drawLevel": 0,
         "shapeType": 1,
-        "useBiomeColor": 1,
+        "useBiomeColor": 2,
         "shapeName": "simpleBlock",
         "defaultTexture": "leaves_spruce.png"
     },
@@ -482,7 +482,7 @@
         "name": "Birch leaves",
         "drawLevel": 0,
         "shapeType": 1,
-        "useBiomeColor": 1,
+        "useBiomeColor": 2,
         "shapeName": "simpleBlock",
         "defaultTexture": "leaves_birch.png"
     },
@@ -490,7 +490,7 @@
         "name": "Jungle leaves",
         "drawLevel": 0,
         "shapeType": 1,
-        "useBiomeColor": 1,
+        "useBiomeColor": 2,
         "shapeName": "simpleBlock",
         "defaultTexture": "leaves_jungle.png"
     }           
@@ -1778,7 +1778,86 @@
         "shapeName": "simpleBlock",
         "defaultTexture": "redstone_ore.png"
     }
-},         
+},      
+"75": {
+    "mask": "0x0F",
+    "type": 2,        
+    "0": {
+        "drawLevel": 0,
+        "shapeType": 1,
+        "useBiomeColor": 0,
+        "shapeName": "torchTBlock",
+        "defaultTexture": "redstone_torch_off.png"
+    },
+    "1": {
+        "drawLevel": 0,
+        "shapeType": 1,
+        "useBiomeColor": 0,
+        "shapeName": "torchRBlock",
+        "defaultTexture": "redstone_torch_off.png"
+    },
+    "2": {
+        "drawLevel": 0,
+        "shapeType": 1,
+        "useBiomeColor": 0,
+        "shapeName": "torchLBlock",
+        "defaultTexture": "redstone_torch_off.png"
+    },
+    "3": {
+        "drawLevel": 0,
+        "shapeType": 1,
+        "useBiomeColor": 0,
+        "shapeName": "torchFBlock",
+        "defaultTexture": "redstone_torch_off.png"
+    },
+    "4": {
+        "drawLevel": 0,
+        "shapeType": 1,
+        "useBiomeColor": 0,
+        "shapeName": "torchBBlock",
+        "defaultTexture": "redstone_torch_off.png"
+    }
+},     
+"76": {
+    "mask": "0x0F",
+    "type": 2,        
+    "lightSource": 7,
+    "0": {
+        "drawLevel": 0,
+        "shapeType": 1,
+        "useBiomeColor": 0,
+        "shapeName": "torchTBlock",
+        "defaultTexture": "redstone_torch_on.png"
+    },
+    "1": {
+        "drawLevel": 0,
+        "shapeType": 1,
+        "useBiomeColor": 0,
+        "shapeName": "torchRBlock",
+        "defaultTexture": "redstone_torch_on.png"
+    },
+    "2": {
+        "drawLevel": 0,
+        "shapeType": 1,
+        "useBiomeColor": 0,
+        "shapeName": "torchLBlock",
+        "defaultTexture": "redstone_torch_on.png"
+    },
+    "3": {
+        "drawLevel": 0,
+        "shapeType": 1,
+        "useBiomeColor": 0,
+        "shapeName": "torchFBlock",
+        "defaultTexture": "redstone_torch_on.png"
+    },
+    "4": {
+        "drawLevel": 0,
+        "shapeType": 1,
+        "useBiomeColor": 0,
+        "shapeName": "torchBBlock",
+        "defaultTexture": "redstone_torch_on.png"
+    }
+},     
 "79": {
     "mask": "0x00",
     "type": 2,        
@@ -2398,7 +2477,7 @@
         "shapeType": 0,
         "drawLevel": 1,
         "shapeType": 10,
-        "useBiomeColor": 1,
+        "useBiomeColor": 2,
         "shapeName": "vineBlock",
         "defaultTexture": "vine.png"
     }
@@ -3273,6 +3352,24 @@
         "defaultTexture": "planks_jungle.png"
     }                 
 },           
+"139": {
+    "mask": "0x03",
+    "type": 2,        
+    "0": {
+        "drawLevel": 0,
+        "shapeType": 5,
+        "useBiomeColor": 0,
+        "shapeName": "wall",
+        "defaultTexture": "cobblestone.png"
+    },        
+    "1": {
+        "drawLevel": 0,
+        "shapeType": 5,
+        "useBiomeColor": 0,
+        "shapeName": "wall",
+        "defaultTexture": "cobblestone_mossy.png"
+    }
+},           
 "141": {
     "mask": "0x0F",
     "type": 2,        
@@ -3858,7 +3955,7 @@
         "name": "Acacia leaves",
         "drawLevel": 0,
         "shapeType": 1,
-        "useBiomeColor": 1,
+        "useBiomeColor": 2,
         "shapeName": "simpleBlock",
         "defaultTexture": "leaves_acacia.png"
     },
@@ -3866,7 +3963,7 @@
         "name": "Dark Oak leaves",
         "drawLevel": 0,
         "shapeType": 1,
-        "useBiomeColor": 1,
+        "useBiomeColor": 2,
         "shapeName": "simpleBlock",
         "defaultTexture": "leaves_big_oak.png"
     }
@@ -4408,5 +4505,91 @@
         "shapeName": "simpleBlockVR",
         "defaultTexture": "stone.png"
     }
-}        
+},
+"175": {
+    "mask": "0x0F",
+    "type": 2,        
+    "0": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "grass3Block",
+        "defaultTexture": "double_plant_sunflower_bottom.png",
+        "mesh2": "double_plant_sunflower_top.png",
+        "front": "double_plant_sunflower_back.png",
+        "back": "double_plant_sunflower_front.png"
+    },        
+    "1": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "grass2Block",
+        "defaultTexture": "double_plant_syringa_bottom.png",
+        "mesh2": "double_plant_syringa_top.png"
+    },        
+    "2": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 1,
+        "shapeName": "grass2Block",
+        "defaultTexture": "double_plant_grass_bottom.png",
+        "mesh2": "double_plant_grass_top.png"
+    },        
+    "3": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 1,
+        "shapeName": "grass2Block",
+        "defaultTexture": "double_plant_fern_bottom.png",
+        "mesh2": "double_plant_fern_top.png"
+    },        
+    "4": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "grass2Block",
+        "defaultTexture": "double_plant_rose_bottom.png",
+        "mesh2": "double_plant_rose_top.png"
+    },        
+    "5": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "grass2Block",
+        "defaultTexture": "double_plant_paeonia_bottom.png",
+        "mesh2": "double_plant_paeonia_top.png"
+    },
+    "8": {
+        "hidden": true,
+        "shapeType": 0
+    },
+    "9": {
+        "hidden": true,
+        "shapeType": 0
+    },
+    "10": {
+        "hidden": true,
+        "shapeType": 0
+    },
+    "11": {
+        "hidden": true,
+        "shapeType": 0
+    },
+    "12": {
+        "hidden": true,
+        "shapeType": 0
+    },
+    "13": {
+        "hidden": true,
+        "shapeType": 0
+    },
+    "14": {
+        "hidden": true,
+        "shapeType": 0
+    },
+    "15": {
+        "hidden": true,
+        "shapeType": 0
+    }
+}  
 }

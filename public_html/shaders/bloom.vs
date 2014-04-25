@@ -17,8 +17,8 @@ varying vec4 sLight;
 void main(void) {
      gl_Position = uPMatrix * uMVMatrix * vec4(aVertexPosition, 1.0);
      vTextureCoord = aTextureCoord;
-    //if(gl_Position.z < 0) return;
-    aaa = sqrt((gl_Position.x)*(gl_Position.x) + (gl_Position.z)*(gl_Position.z))/(lod*13.0)-0.25;
+
+    aaa = sqrt((gl_Position.x)*(gl_Position.x) + (gl_Position.z)*(gl_Position.z))/(lod*13.5)-0.30;
     if(aaa<0.0) aaa = 0.0;
     if(aaa>1.0) aaa = 1.0;
     float skylight = floor(lightValue.x/100.0);
@@ -33,11 +33,7 @@ void main(void) {
         float m6 = floor((lightValue.a - m5*256.0*256.0)/(256.0));
         float m7 = lightValue.a - m5*256.0*256.0 - m6*256.0;
 
-        //writeln("m = "+ m5/255 +" "+m6+" "+m7
-        //color = vec4(0.56,0.74,0.38,1.0);
         color = vec4(m5/255.0, m6/255.0, m7/255.0, 1.0);
     }
     else color = vec4(1.0,1.0,1.0,1.0);
-    //sky = skyColor;
-    //slight += lightValue.z;
 }

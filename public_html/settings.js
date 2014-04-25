@@ -38,12 +38,11 @@ function Settings(){
 
     
     this.sensitivity = 50;
-    if( settings["mouseSensitivity"] !== undefined ){
+    if( settings["mouseSensitivity"] !== undefined )
         this.sensitivity = parseInt(settings["mouseSensitivity"].value);
-    }    
-    if( parameters["mouseSensitivity"] !== undefined && settings["mouseSensitivity"].url){
+    if( parameters["mouseSensitivity"] !== undefined && settings["mouseSensitivity"].url)
         this.sensitivity = parseInt(parameters["mouseSensitivity"]);
-    }  
+
     if(this.sensitivity < 10) this.sensitivity = 10;
     if(this.sensitivity > 100) this.sensitivity = 100;
     
@@ -61,12 +60,12 @@ function Settings(){
         this.pos[2] = parseFloat((parameters["pos"].split("+"))[2]) || this.pos[2]; 
     }
     if( settings["rot"] !== undefined ){
-        this.rot[0] = parseFloat((settings["rot"].value.split("+"))[0]) || this.pos[0]; 
-        this.rot[1] = parseFloat((settings["rot"].value.split("+"))[1]) || this.pos[1]; 
+        this.rot[0] = parseFloat((settings["rot"].value.split("+"))[0]) || this.rot[0]; 
+        this.rot[1] = parseFloat((settings["rot"].value.split("+"))[1]) || this.rot[1]; 
     }
     if( parameters["rot"] !== undefined && settings["rot"].url){
-        this.rot[0] = parseFloat((parameters["rot"].split("+"))[0]) || this.pos[0]; 
-        this.rot[1] = parseFloat((parameters["rot"].split("+"))[1]) || this.pos[1]; 
+        this.rot[0] = parseFloat((parameters["rot"].split("+"))[0]) || this.rot[0]; 
+        this.rot[1] = parseFloat((parameters["rot"].split("+"))[1]) || this.rot[1]; 
     }
     
     this.skyColor = new Float32Array([1,1,1,1]);
@@ -80,7 +79,27 @@ function Settings(){
         this.skyColor[1] = parseFloat((parameters["skyColor"].split("-"))[1])/255 || this.skyColor[1]; 
         this.skyColor[2] = parseFloat((parameters["skyColor"].split("-"))[2])/255 || this.skyColor[2]; 
     }
+    this.sun = 1.0;
+    if( settings["sun"] !== undefined )
+        this.sun = (parseFloat(settings["sun"].value) + 0.1) || this.sun; 
+    if( parameters["sun"] !== undefined && settings["sun"].url)
+        this.sun = (parseFloat(parameters["sun"]) + 0.1) || this.sun; 
 
+    this.brightness = 0.3;
+    if( settings["brightness"] !== undefined )
+        this.brightness = (parseFloat(settings["brightness"].value) + 0.1) || this.brightness; 
+    if( parameters["brightness"] !== undefined && settings["brightness"].url)
+        this.brightness = (parseFloat(parameters["brightness"]) + 0.1) || this.brightness; 
+
+    this.worldShader = "standard";
+    if( settings["worldShader"] !== undefined )
+        this.worldShader = settings["worldShader"].value || this.worldShader; 
+    if( parameters["worldShader"] !== undefined && settings["worldShader"].url)
+        this.worldShader = parameters["worldShader"] || this.worldShader; 
+
+    this.edit = true;
+    if( settings["edit"] !== undefined )
+        this.edit = settings["edit"].value; 
     //camera = new Camera([-400,120,0],[5.5,0],[0,1,0]);
     //camera = new CameraGod([0,120,0],[5.5,0],[0,1,0]);
     //camera = new Camera([-176,90,2],[5.5,0],[0,1,0]);

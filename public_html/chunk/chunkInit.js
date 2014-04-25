@@ -38,9 +38,9 @@ Chunk.prototype.init2 = function(yyyy){
         var ablock = 0;
         var punkty22;
         var punkty = punkty1;
-        punkty[0].offset = 0;
-        punkty[1].offset = 0;
-        punkty[2].offset = 0;
+        punkty[0].o = 0;
+        punkty[1].o = 0;
+        punkty[2].o = 0;
         
            var aindex = 0, lindex = 0, rindex = 0, lindex = 0, findex = 0, bindex = 0, tindex = 0, dindex = 0;
            var selectionIndex;
@@ -193,6 +193,7 @@ Chunk.prototype.init2 = function(yyyy){
                            ablock = block[blockId][blockData];
                        //////////
                        if(ablock.shapeType === undefined) continue;
+                       if(ablock.shapeType === 0) continue;
                        
                             if(ablock.shapeType === 1){ // simple blocks
                                 drawLevel = ablock.drawLevel;
@@ -200,8 +201,8 @@ Chunk.prototype.init2 = function(yyyy){
                                 var shape = ablock.shape;
                                 var shape2 = shape;
                                 color = 0.0;
-                                if(ablock.useBiomeColor === 1){ 
-                                    color = this.getBiomeColor(x, z, 0);
+                                if(ablock.useBiomeColor > 0){ 
+                                    color = this.getBiomeColor(x, z, ablock.useBiomeColor-1);
                                 }
                                 /*if(blockAdd > 0){
                                     shape2 = block[200][blockAdd - 1].shape;
@@ -220,65 +221,65 @@ Chunk.prototype.init2 = function(yyyy){
                                     var f4Blight = Math.floor((fBlight+cacheBlight[findex+324]+cacheBlight[findex+324-18]+cacheBlight[findex-18])/4);
 
                                     var jj = 0;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = f1light * 100 + f1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = f1light * 100 + f1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 5;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = f2light * 100 + f2Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = f2light * 100 + f2Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 10;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = f3light * 100 + f3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = f3light * 100 + f3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 15;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = f1light * 100 + f1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = f1light * 100 + f1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 20;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = f3light * 100 + f3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = f3light * 100 + f3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 25;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = f4light * 100 + f4Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = f4light * 100 + f4Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     //}    
                                 }//back
                                 if(drawB){
@@ -295,65 +296,65 @@ Chunk.prototype.init2 = function(yyyy){
                                     var b4Blight = Math.floor((bBlight+cacheBlight[bindex+324]+cacheBlight[bindex+324-18]+cacheBlight[bindex-18])/4);
                                     //for(var jj = 0; jj < shape2.back.length; jj+=5 ){
                                     var jj = 0;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = b3light * 100 + b3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = b3light * 100 + b3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 5;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = b1light * 100 + b1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = b1light * 100 + b1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 10;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = b4light * 100 + b4Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = b4light * 100 + b4Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 15;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = b1light * 100 + b1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = b1light * 100 + b1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 20;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = b3light * 100 + b3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = b3light * 100 + b3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 25;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = b2light * 100 + b2Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = b2light * 100 + b2Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     //}  
                                 }
                                 if(drawR){ //right
@@ -369,65 +370,65 @@ Chunk.prototype.init2 = function(yyyy){
                                     var r4Blight = Math.floor((rBlight+cacheBlight[rindex+324]+cacheBlight[rindex+324-1]+cacheBlight[rindex-1])/4);
                                     var jj = 0;
                                     //for(var jj = 0; jj < shape2.right.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = r3light * 100 + r3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = r3light * 100 + r3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 5;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = r1light * 100 + r1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = r1light * 100 + r1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 10;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = r4light * 100 + r4Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = r4light * 100 + r4Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 15;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = r3light * 100 + r3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = r3light * 100 + r3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 20;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = r2light * 100 + r2Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = r2light * 100 + r2Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 25;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = r1light * 100 + r1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = r1light * 100 + r1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     //}  
                                 }
                                 if(drawL){ //left
@@ -443,65 +444,65 @@ Chunk.prototype.init2 = function(yyyy){
                                     var l4Blight = Math.floor((lBlight+cacheBlight[lindex+324]+cacheBlight[lindex+324-1]+cacheBlight[lindex-1])/4);
                                     var jj = 0;
                                     //for(var jj = 0; jj < shape2.left.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = l4light * 100 + l4Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = l4light * 100 + l4Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 5;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = l1light * 100 + l1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = l1light * 100 + l1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 10;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = l2light * 100 + l2Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = l2light * 100 + l2Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 15;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = l3light * 100 + l3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = l3light * 100 + l3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 20;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = l4light * 100 + l4Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = l4light * 100 + l4Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 25;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = l2light * 100 + l2Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = l2light * 100 + l2Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     //} 
                                 }
                                 if(drawD){ //bottom
@@ -516,65 +517,65 @@ Chunk.prototype.init2 = function(yyyy){
                                     var d3Blight = Math.floor((dBlight+cacheBlight[dindex+1]+cacheBlight[dindex+18+1]+cacheBlight[dindex+18])/4);
                                     var d4Blight = Math.floor((dBlight+cacheBlight[dindex+18]+cacheBlight[dindex+18-1]+cacheBlight[dindex-1])/4);
                                     var jj = 0;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = d3light * 100 + d3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = d3light * 100 + d3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 5;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = d1light * 100 + d1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = d1light * 100 + d1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 10;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = d2light * 100 + d2Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = d2light * 100 + d2Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 15;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = d3light * 100 + d3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = d3light * 100 + d3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 20;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = d4light * 100 + d4Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = d4light * 100 + d4Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 25;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = d1light * 100 + d1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = d1light * 100 + d1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     //}
                                 }
                                 if(drawT){ //top
@@ -590,65 +591,65 @@ Chunk.prototype.init2 = function(yyyy){
                                     var t3Blight = Math.floor((tBlight+cacheBlight[tindex+1]+cacheBlight[tindex+18+1]+cacheBlight[tindex+18])/4);
                                     var t4Blight = Math.floor((tBlight+cacheBlight[tindex+18]+cacheBlight[tindex+18-1]+cacheBlight[tindex-1])/4);
                                     var jj = 0;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = t3light * 100 + t3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = t3light * 100 + t3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 5;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = t2light * 100 + t2Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = t2light * 100 + t2Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 10;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = t1light * 100 + t1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = t1light * 100 + t1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 15;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = t3light * 100 + t3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = t3light * 100 + t3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 20;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = t1light * 100 + t1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = t1light * 100 + t1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     jj = 25;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = t4light * 100 + t4Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = t4light * 100 + t4Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     //}
                                 }
                             } else if(ablock.shapeType === 2){ // no top / bottom
@@ -657,75 +658,77 @@ Chunk.prototype.init2 = function(yyyy){
                                 var shape = ablock.shape;
                                 if(drawF) 
                                     for(var jj = 0; jj < shape.front.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     }    
                                 //back
                                 if(drawB)
                                     for(var jj = 0; jj < shape.back.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = blight * 100 + bBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = blight * 100 + bBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     }        
                                 if(drawR) //right
                                     for(var jj = 0; jj < shape.right.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = rlight * 100 + rBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = rlight * 100 + rBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     }              
                                 if(drawL) //left
                                     for(var jj = 0; jj < shape.left.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = llight * 100 + lBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     }      
                             } else if(ablock.shapeType === 3){ // custom mesh
                                 drawLevel = ablock.drawLevel;
                                 punkty22 = punkty[drawLevel];
                                 var shape = ablock.shape;
-                                flight = (flight+blight+rlight+llight+tlight)/5;
-                                fBlight = (fBlight+bBlight+rBlight+lBlight+tBlight)/5;
+                                flight = Math.floor((flight+blight+rlight+llight+tlight)/5);
+                                fBlight = Math.floor((fBlight+bBlight+rBlight+lBlight+tBlight)/5);
                                 color = 0.0;
-                                if(ablock.useBiomeColor === 1){ 
-                                    color = this.getBiomeColor(x, z, 0);
+                                if(ablock.useBiomeColor > 0){ 
+                                    color = this.getBiomeColor(x, z, ablock.useBiomeColor-1);
                                 }
                                 if(drawF || drawB || drawR || drawL) 
-                                    for(var jj = 0; jj < shape.mesh.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.mesh[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.mesh[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.mesh[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.mesh[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.mesh[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 0;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
-                                    }    
+                                    for (var key in shape) {
+                                        for(var jj = 0; jj < shape[key].length; jj+=5 ){
+                                            punkty22.d[punkty22.o++] = this.xPos*16+x+shape[key][jj];
+                                            punkty22.d[punkty22.o++] = yy+y+shape[key][jj+1]; 
+                                            punkty22.d[punkty22.o++] = this.zPos*16+z+shape[key][jj+2];
+                                            punkty22.d[punkty22.o++] = shape[key][jj+3]; 
+                                            punkty22.d[punkty22.o++] = shape[key][jj+4];
+                                            punkty22.d[punkty22.o++] = flight * 100 + fBlight;
+                                            punkty22.d[punkty22.o++] = selectionIndex + 0;
+                                            punkty22.d[punkty22.o++] = 1.0;
+                                            punkty22.d[punkty22.o++] = color;
+                                        }
+                                    }
                             } else if(ablock.shapeType === 4){ // dirt - grass
                                 drawLevel = ablock.drawLevel;
                                 punkty22 = punkty[drawLevel];
@@ -739,15 +742,15 @@ Chunk.prototype.init2 = function(yyyy){
                                     if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.front2.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front2[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front2[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front2[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front2[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front2[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front2[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front2[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front2[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front2[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front2[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }    
                                     //for(var jj = 0; jj < shape2.front.length; jj+=5 ){
                                     var f1light = Math.floor((flight+cacheSlight[findex-18]+cacheSlight[findex-324-18]+cacheSlight[findex-324])/4);
@@ -760,65 +763,65 @@ Chunk.prototype.init2 = function(yyyy){
                                     var f4Blight = Math.floor((fBlight+cacheBlight[findex+324]+cacheBlight[findex+324-18]+cacheBlight[findex-18])/4);
 
                                     var jj = 0;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = f1light * 100 + f1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = f1light * 100 + f1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 5;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = f2light * 100 + f2Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = f2light * 100 + f2Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 10;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = f3light * 100 + f3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = f3light * 100 + f3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 15;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = f1light * 100 + f1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = f1light * 100 + f1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 20;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = f3light * 100 + f3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = f3light * 100 + f3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 25;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = f4light * 100 + f4Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = f4light * 100 + f4Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     //}    
                                 }
                                 //back
@@ -826,15 +829,15 @@ Chunk.prototype.init2 = function(yyyy){
                                     if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.back2.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back2[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back2[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back2[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back2[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back2[jj+4];
-                                        punkty22.data[punkty22.offset++] = blight * 100 + bBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back2[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back2[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back2[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back2[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back2[jj+4];
+                                        punkty22.d[punkty22.o++] = blight * 100 + bBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                     var b1light = Math.floor((blight+cacheSlight[bindex-18]+cacheSlight[bindex-324-18]+cacheSlight[bindex-324])/4);
                                     var b2light = Math.floor((blight+cacheSlight[bindex-324]+cacheSlight[bindex-324+18]+cacheSlight[bindex+18])/4);
@@ -846,80 +849,80 @@ Chunk.prototype.init2 = function(yyyy){
                                     var b4Blight = Math.floor((bBlight+cacheBlight[bindex+324]+cacheBlight[bindex+324-18]+cacheBlight[bindex-18])/4);
                                     //for(var jj = 0; jj < shape2.back.length; jj+=5 ){
                                     var jj = 0;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = b3light * 100 + b3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = b3light * 100 + b3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 5;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = b1light * 100 + b1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = b1light * 100 + b1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 10;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = b4light * 100 + b4Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = b4light * 100 + b4Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 15;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = b1light * 100 + b1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = b1light * 100 + b1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 20;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = b3light * 100 + b3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = b3light * 100 + b3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 25;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = b2light * 100 + b2Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = b2light * 100 + b2Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     //}  
                                 }
                                 if(drawR){ //right{
                                     if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.right2.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right2[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right2[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right2[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right2[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right2[jj+4];
-                                        punkty22.data[punkty22.offset++] = rlight * 100 + rBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right2[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right2[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right2[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right2[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right2[jj+4];
+                                        punkty22.d[punkty22.o++] = rlight * 100 + rBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     }    
                                     var r1light = Math.floor((rlight+cacheSlight[rindex-1]+cacheSlight[rindex-324-1]+cacheSlight[rindex-324])/4);
                                     var r2light = Math.floor((rlight+cacheSlight[rindex-324]+cacheSlight[rindex-324+1]+cacheSlight[rindex+1])/4);
@@ -931,80 +934,80 @@ Chunk.prototype.init2 = function(yyyy){
                                     var r4Blight = Math.floor((rBlight+cacheBlight[rindex+324]+cacheBlight[rindex+324-1]+cacheBlight[rindex-1])/4);
                                     var jj = 0;
                                     //for(var jj = 0; jj < shape2.right.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = r3light * 100 + r3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = r3light * 100 + r3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 5;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = r1light * 100 + r1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = r1light * 100 + r1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 10;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = r4light * 100 + r4Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = r4light * 100 + r4Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 15;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = r3light * 100 + r3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = r3light * 100 + r3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 20;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = r2light * 100 + r2Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = r2light * 100 + r2Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 25;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = r1light * 100 + r1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = r1light * 100 + r1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     //}  
                                 }
                                 if(drawL) {//left
                                     if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.left2.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left2[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left2[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left2[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left2[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left2[jj+4];
-                                        punkty22.data[punkty22.offset++] = llight * 100 + lBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left2[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left2[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left2[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left2[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left2[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     }     
                                     var l1light = Math.floor((llight+cacheSlight[lindex-1]+cacheSlight[lindex-324-1]+cacheSlight[lindex-324])/4);
                                     var l2light = Math.floor((llight+cacheSlight[lindex-324]+cacheSlight[lindex-324+1]+cacheSlight[lindex+1])/4);
@@ -1016,65 +1019,65 @@ Chunk.prototype.init2 = function(yyyy){
                                     var l4Blight = Math.floor((lBlight+cacheBlight[lindex+324]+cacheBlight[lindex+324-1]+cacheBlight[lindex-1])/4);
                                     var jj = 0;
                                     //for(var jj = 0; jj < shape2.left.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = l4light * 100 + l4Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = l4light * 100 + l4Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 5;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = l1light * 100 + l1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = l1light * 100 + l1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 10;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = l2light * 100 + l2Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = l2light * 100 + l2Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 15;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = l3light * 100 + l3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = l3light * 100 + l3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 20;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = l4light * 100 + l4Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = l4light * 100 + l4Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 25;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = l2light * 100 + l2Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = l2light * 100 + l2Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     //} 
                                 }
                                 if(drawD){ //bottom
@@ -1088,65 +1091,65 @@ Chunk.prototype.init2 = function(yyyy){
                                     var d3Blight = Math.floor((dBlight+cacheBlight[dindex+1]+cacheBlight[dindex+18+1]+cacheBlight[dindex+18])/4);
                                     var d4Blight = Math.floor((dBlight+cacheBlight[dindex+18]+cacheBlight[dindex+18-1]+cacheBlight[dindex-1])/4);
                                     var jj = 0;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = d3light * 100 + d3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = d3light * 100 + d3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 5;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = d1light * 100 + d1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = d1light * 100 + d1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 10;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = d2light * 100 + d2Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = d2light * 100 + d2Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 15;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = d3light * 100 + d3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = d3light * 100 + d3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 20;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = d4light * 100 + d4Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = d4light * 100 + d4Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     jj = 25;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = d1light * 100 + d1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = d1light * 100 + d1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     //}
                                 }
                                 if(drawT){ //top
@@ -1162,65 +1165,65 @@ Chunk.prototype.init2 = function(yyyy){
                                     var t3Blight = Math.floor((tBlight+cacheBlight[tindex+1]+cacheBlight[tindex+18+1]+cacheBlight[tindex+18])/4);
                                     var t4Blight = Math.floor((tBlight+cacheBlight[tindex+18]+cacheBlight[tindex+18-1]+cacheBlight[tindex-1])/4);
                                     var jj = 0;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = t3light * 100 + t3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color3;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = t3light * 100 + t3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color3;
                                     jj = 5;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = t2light * 100 + t2Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color2;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = t2light * 100 + t2Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color2;
                                     jj = 10;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = t1light * 100 + t1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color1;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = t1light * 100 + t1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color1;
                                     jj = 15;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = t3light * 100 + t3Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color3;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = t3light * 100 + t3Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color3;
                                     jj = 20;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = t1light * 100 + t1Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color1;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = t1light * 100 + t1Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color1;
                                     jj = 25;
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = t4light * 100 + t4Blight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color4;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = t4light * 100 + t4Blight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color4;
                                     //}
                                 }
                             } else if(ablock.shapeType === 8){ // stairs
@@ -1228,8 +1231,8 @@ Chunk.prototype.init2 = function(yyyy){
                                 punkty22 = punkty[drawLevel];
                                 var shape = ablock.shape;
                                 color = 0.0;
-                                if(ablock.useBiomeColor === 1){ 
-                                    color = this.getBiomeColor(x, z, 0);
+                                if(ablock.useBiomeColor > 0){ 
+                                    color = this.getBiomeColor(x, z, ablock.useBiomeColor-1);
                                 }
                                 
                                 var stairsHash = "";
@@ -1262,89 +1265,89 @@ Chunk.prototype.init2 = function(yyyy){
                                     if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.front.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }    
                                 }//back
                                 if(drawB){
                                     if(blight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.back.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = blight * 100 + bBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = blight * 100 + bBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                 }
                                 if(drawR){ //right
                                     if(rlight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.right.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = rlight * 100 + rBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = rlight * 100 + rBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                 }
                                 if(drawL){ //left
                                     if(llight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.left.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = llight * 100 + lBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
                                 if(drawD){ //bottom
                                     punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.bottom.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = dlight * 100 + dBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 0.3;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = dlight * 100 + dBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 0.3;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
                                 if(drawT){ //top
                                     if(tlight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.top.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = tlight * 100 + tBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = tlight * 100 + tBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     }   
                                 }
                                 if(stairsSmall === 1){
@@ -1362,89 +1365,89 @@ Chunk.prototype.init2 = function(yyyy){
                                             if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                             else punkty22 = punkty[drawLevel];
                                             for(var jj = 0; jj < shape.front.length; jj+=5 ){
-                                                punkty22.data[punkty22.offset++] = stairsx+this.xPos*16+x+shape.front[jj];
-                                                punkty22.data[punkty22.offset++] = stairsy+yy+y+shape.front[jj+1]; 
-                                                punkty22.data[punkty22.offset++] = stairsz+this.zPos*16+z+shape.front[jj+2];
-                                                punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                                punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                                punkty22.data[punkty22.offset++] = flight * 100 + fBlight;
-                                                punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                                punkty22.data[punkty22.offset++] = 0.8;
-                                                punkty22.data[punkty22.offset++] = color;
+                                                punkty22.d[punkty22.o++] = stairsx+this.xPos*16+x+shape.front[jj];
+                                                punkty22.d[punkty22.o++] = stairsy+yy+y+shape.front[jj+1]; 
+                                                punkty22.d[punkty22.o++] = stairsz+this.zPos*16+z+shape.front[jj+2];
+                                                punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                                punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                                punkty22.d[punkty22.o++] = flight * 100 + fBlight;
+                                                punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                                punkty22.d[punkty22.o++] = 0.8;
+                                                punkty22.d[punkty22.o++] = color;
                                             }    
                                         }//back
                                         if(drawB){
                                             if(blight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                             else punkty22 = punkty[drawLevel];
                                             for(var jj = 0; jj < shape.back.length; jj+=5 ){
-                                                punkty22.data[punkty22.offset++] = stairsx+this.xPos*16+x+shape.back[jj];
-                                                punkty22.data[punkty22.offset++] = stairsy+yy+y+shape.back[jj+1]; 
-                                                punkty22.data[punkty22.offset++] = stairsz+this.zPos*16+z+shape.back[jj+2];
-                                                punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                                punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                                punkty22.data[punkty22.offset++] = blight * 100 + bBlight;
-                                                punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                                punkty22.data[punkty22.offset++] = 0.8;
-                                                punkty22.data[punkty22.offset++] = color;
+                                                punkty22.d[punkty22.o++] = stairsx+this.xPos*16+x+shape.back[jj];
+                                                punkty22.d[punkty22.o++] = stairsy+yy+y+shape.back[jj+1]; 
+                                                punkty22.d[punkty22.o++] = stairsz+this.zPos*16+z+shape.back[jj+2];
+                                                punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                                punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                                punkty22.d[punkty22.o++] = blight * 100 + bBlight;
+                                                punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                                punkty22.d[punkty22.o++] = 0.8;
+                                                punkty22.d[punkty22.o++] = color;
                                             }  
                                         }
                                         if(drawR){ //right
                                             if(rlight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                             else punkty22 = punkty[drawLevel];
                                             for(var jj = 0; jj < shape.right.length; jj+=5 ){
-                                                punkty22.data[punkty22.offset++] = stairsx+this.xPos*16+x+shape.right[jj];
-                                                punkty22.data[punkty22.offset++] = stairsy+yy+y+shape.right[jj+1]; 
-                                                punkty22.data[punkty22.offset++] = stairsz+this.zPos*16+z+shape.right[jj+2];
-                                                punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                                punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                                punkty22.data[punkty22.offset++] = rlight * 100 + rBlight;
-                                                punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                                punkty22.data[punkty22.offset++] = 0.55;
-                                                punkty22.data[punkty22.offset++] = color;
+                                                punkty22.d[punkty22.o++] = stairsx+this.xPos*16+x+shape.right[jj];
+                                                punkty22.d[punkty22.o++] = stairsy+yy+y+shape.right[jj+1]; 
+                                                punkty22.d[punkty22.o++] = stairsz+this.zPos*16+z+shape.right[jj+2];
+                                                punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                                punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                                punkty22.d[punkty22.o++] = rlight * 100 + rBlight;
+                                                punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                                punkty22.d[punkty22.o++] = 0.55;
+                                                punkty22.d[punkty22.o++] = color;
                                             }  
                                         }
                                         if(drawL){ //left
                                             if(llight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                             else punkty22 = punkty[drawLevel];
                                             for(var jj = 0; jj < shape.left.length; jj+=5 ){
-                                                punkty22.data[punkty22.offset++] = stairsx+this.xPos*16+x+shape.left[jj];
-                                                punkty22.data[punkty22.offset++] = stairsy+yy+y+shape.left[jj+1]; 
-                                                punkty22.data[punkty22.offset++] = stairsz+this.zPos*16+z+shape.left[jj+2];
-                                                punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                                punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                                punkty22.data[punkty22.offset++] = llight * 100 + lBlight;
-                                                punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                                punkty22.data[punkty22.offset++] = 0.55;
-                                                punkty22.data[punkty22.offset++] = color;
+                                                punkty22.d[punkty22.o++] = stairsx+this.xPos*16+x+shape.left[jj];
+                                                punkty22.d[punkty22.o++] = stairsy+yy+y+shape.left[jj+1]; 
+                                                punkty22.d[punkty22.o++] = stairsz+this.zPos*16+z+shape.left[jj+2];
+                                                punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                                punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                                punkty22.d[punkty22.o++] = llight * 100 + lBlight;
+                                                punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                                punkty22.d[punkty22.o++] = 0.55;
+                                                punkty22.d[punkty22.o++] = color;
                                             } 
                                         }
                                         if(drawD){ //bottom
                                             punkty22 = punkty[drawLevel];
                                             for(var jj = 0; jj < shape.bottom.length; jj+=5 ){
-                                                punkty22.data[punkty22.offset++] = stairsx+this.xPos*16+x+shape.bottom[jj];
-                                                punkty22.data[punkty22.offset++] = stairsy+yy+y+shape.bottom[jj+1]; 
-                                                punkty22.data[punkty22.offset++] = stairsz+this.zPos*16+z+shape.bottom[jj+2];
-                                                punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                                punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                                punkty22.data[punkty22.offset++] = dlight * 100 + dBlight;
-                                                punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                                punkty22.data[punkty22.offset++] = 0.3;
-                                                punkty22.data[punkty22.offset++] = color;
+                                                punkty22.d[punkty22.o++] = stairsx+this.xPos*16+x+shape.bottom[jj];
+                                                punkty22.d[punkty22.o++] = stairsy+yy+y+shape.bottom[jj+1]; 
+                                                punkty22.d[punkty22.o++] = stairsz+this.zPos*16+z+shape.bottom[jj+2];
+                                                punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                                punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                                punkty22.d[punkty22.o++] = dlight * 100 + dBlight;
+                                                punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                                punkty22.d[punkty22.o++] = 0.3;
+                                                punkty22.d[punkty22.o++] = color;
                                             } 
                                         }
                                         if(drawT){ //top
                                             if(tlight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                             else punkty22 = punkty[drawLevel];
                                             for(var jj = 0; jj < shape.top.length; jj+=5 ){
-                                                punkty22.data[punkty22.offset++] = stairsx+this.xPos*16+x+shape.top[jj];
-                                                punkty22.data[punkty22.offset++] = stairsy+yy+y+shape.top[jj+1]; 
-                                                punkty22.data[punkty22.offset++] = stairsz+this.zPos*16+z+shape.top[jj+2];
-                                                punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                                punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                                punkty22.data[punkty22.offset++] = tlight * 100 + tBlight;
-                                                punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                                punkty22.data[punkty22.offset++] = 1.0;
-                                                punkty22.data[punkty22.offset++] = color;
+                                                punkty22.d[punkty22.o++] = stairsx+this.xPos*16+x+shape.top[jj];
+                                                punkty22.d[punkty22.o++] = stairsy+yy+y+shape.top[jj+1]; 
+                                                punkty22.d[punkty22.o++] = stairsz+this.zPos*16+z+shape.top[jj+2];
+                                                punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                                punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                                punkty22.d[punkty22.o++] = tlight * 100 + tBlight;
+                                                punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                                punkty22.d[punkty22.o++] = 1.0;
+                                                punkty22.d[punkty22.o++] = color;
                                             }   
                                         }
                                     }
@@ -1455,8 +1458,8 @@ Chunk.prototype.init2 = function(yyyy){
                                     punkty22 = punkty[drawLevel];
                                     var shape = ablock.shape;
                                     color = 0.0;
-                                    if(ablock.useBiomeColor === 1){ 
-                                        color = this.getBiomeColor(x, z, 0);
+                                    if(ablock.useBiomeColor > 0){ 
+                                        color = this.getBiomeColor(x, z, ablock.useBiomeColor-1);
                                     }                                
 
                                     if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
@@ -1476,15 +1479,15 @@ Chunk.prototype.init2 = function(yyyy){
                                                 }
                                             }
                                         }
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }    
 
                                     if(blight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
@@ -1504,15 +1507,15 @@ Chunk.prototype.init2 = function(yyyy){
                                                 }
                                             }
                                         }
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = blight * 100 + bBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = blight * 100 + bBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
 
                                     if(rlight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
@@ -1532,15 +1535,15 @@ Chunk.prototype.init2 = function(yyyy){
                                                 }
                                             }
                                         }
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = rlight * 100 + rBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = rlight * 100 + rBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
 
                                     if(llight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
@@ -1560,15 +1563,15 @@ Chunk.prototype.init2 = function(yyyy){
                                                 }
                                             }
                                         }
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = llight * 100 + lBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
 
                                     punkty22 = punkty[drawLevel];
@@ -1599,15 +1602,15 @@ Chunk.prototype.init2 = function(yyyy){
                                                 }
                                             }   
                                         }
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = dlight * 100 + dBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 0.3;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = dlight * 100 + dBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 0.3;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
 
                                     if(tlight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
@@ -1639,15 +1642,15 @@ Chunk.prototype.init2 = function(yyyy){
                                                 }
                                             }   
                                         }
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = tlight * 100 + tBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = tlight * 100 + tBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     }   
                                 }
                             } else if(ablock.shapeType === 6){ // no top / bottom + simple light
@@ -1655,68 +1658,68 @@ Chunk.prototype.init2 = function(yyyy){
                                 punkty22 = punkty[drawLevel];
                                 var shape = ablock.shape;
                                 color = 0.0;
-                                if(ablock.useBiomeColor === 1){ 
-                                    color = this.getBiomeColor(x, z, 0);
+                                if(ablock.useBiomeColor > 0){ 
+                                    color = this.getBiomeColor(x, z, ablock.useBiomeColor-1);
                                 }                                
                                 if(drawF || drawB || drawR || drawL || drawD || drawT) {
                                     if(blockData === 5){
                                         if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                         else punkty22 = punkty[drawLevel];
                                         for(var jj = 0; jj < shape.front.length; jj+=5 ){
-                                            punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                            punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                            punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                            punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                            punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                            punkty22.data[punkty22.offset++] = flight * 100 + fBlight;
-                                            punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                            punkty22.data[punkty22.offset++] = 0.8;
-                                            punkty22.data[punkty22.offset++] = color;
+                                            punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                            punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                            punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                            punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                            punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                            punkty22.d[punkty22.o++] = flight * 100 + fBlight;
+                                            punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                            punkty22.d[punkty22.o++] = 0.8;
+                                            punkty22.d[punkty22.o++] = color;
                                         }    
                                     }//back
                                     if(blockData === 4){
                                         if(blight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                         else punkty22 = punkty[drawLevel];
                                         for(var jj = 0; jj < shape.back.length; jj+=5 ){
-                                            punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                            punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                            punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                            punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                            punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                            punkty22.data[punkty22.offset++] = blight * 100 + bBlight;
-                                            punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                            punkty22.data[punkty22.offset++] = 0.8;
-                                            punkty22.data[punkty22.offset++] = color;
+                                            punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                            punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                            punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                            punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                            punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                            punkty22.d[punkty22.o++] = blight * 100 + bBlight;
+                                            punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                            punkty22.d[punkty22.o++] = 0.8;
+                                            punkty22.d[punkty22.o++] = color;
                                         }  
                                     }
                                     if(blockData === 3){ //right
                                         if(rlight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                         else punkty22 = punkty[drawLevel];
                                         for(var jj = 0; jj < shape.right.length; jj+=5 ){
-                                            punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                            punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                            punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                            punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                            punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                            punkty22.data[punkty22.offset++] = rlight * 100 + rBlight;
-                                            punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                            punkty22.data[punkty22.offset++] = 0.55;
-                                            punkty22.data[punkty22.offset++] = color;
+                                            punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                            punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                            punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                            punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                            punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                            punkty22.d[punkty22.o++] = rlight * 100 + rBlight;
+                                            punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                            punkty22.d[punkty22.o++] = 0.55;
+                                            punkty22.d[punkty22.o++] = color;
                                         }  
                                     }
                                     if(blockData === 2){ //left
                                         if(llight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                         else punkty22 = punkty[drawLevel];
                                         for(var jj = 0; jj < shape.left.length; jj+=5 ){
-                                            punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                            punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                            punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                            punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                            punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                            punkty22.data[punkty22.offset++] = llight * 100 + lBlight;
-                                            punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                            punkty22.data[punkty22.offset++] = 0.55;
-                                            punkty22.data[punkty22.offset++] = color;
+                                            punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                            punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                            punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                            punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                            punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                            punkty22.d[punkty22.o++] = llight * 100 + lBlight;
+                                            punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                            punkty22.d[punkty22.o++] = 0.55;
+                                            punkty22.d[punkty22.o++] = color;
                                         } 
                                     }
                                 }
@@ -1725,98 +1728,98 @@ Chunk.prototype.init2 = function(yyyy){
                                 punkty22 = punkty[drawLevel];
                                 var shape = ablock.shape;
                                 color = 0.0;
-                                if(ablock.useBiomeColor === 1){ 
+                                if(ablock.useBiomeColor > 0){ 
                                     //if((biomes[this.cacheBiomes[(z)*18+x]].waterColor || false))
-                                        color = this.getBiomeColor(x, z, 2);
+                                        color = this.getBiomeColor(x, z, ablock.useBiomeColor-1);
                                 }
 
                                 if(drawF){
                                     if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.front.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }    
                                 }//back
                                 if(drawB){
                                     if(blight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.back.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = blight * 100 + bBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = blight * 100 + bBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                 }
                                 if(drawR){ //right
                                     if(rlight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.right.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = rlight * 100 + rBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = rlight * 100 + rBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                 }
                                 if(drawL){ //left
                                     if(llight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.left.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = llight * 100 + lBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
                                 if(drawD){ //bottom
                                     punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.bottom.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = dlight * 100 + dBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 0.3;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = dlight * 100 + dBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
                                 if(drawT){ //top
                                     if(tlight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.top.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = tlight * 100 + tBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = tlight * 100 + tBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     }   
                                 }
                             } else if(ablock.shapeType === 10){ // vines
@@ -1824,82 +1827,82 @@ Chunk.prototype.init2 = function(yyyy){
                                 punkty22 = punkty[drawLevel];
                                 var shape = ablock.shape;
                                 color = 0.0;
-                                if(ablock.useBiomeColor === 1){ 
-                                    color = this.getBiomeColor(x, z, 0);
+                                if(ablock.useBiomeColor > 0){ 
+                                    color = this.getBiomeColor(x, z, ablock.useBiomeColor-1);
                                 }
                                 if(drawF || drawB || drawR || drawL || drawD || drawT) {
                                 if((cacheData[aindex] & 0x08) === 8){
                                     if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.front.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }    
                                 }//back
                                 if((cacheData[aindex] & 0x02) === 2){
                                     if(blight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.back.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = blight * 100 + bBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = blight * 100 + bBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                 }
                                 if((cacheData[aindex] & 0x01) === 1){
                                     if(rlight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.right.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = rlight * 100 + rBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = rlight * 100 + rBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                 }
                                 if((cacheData[aindex] & 0x04) === 4){
                                     if(llight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.left.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = llight * 100 + lBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
                                 if(tBlockType === 1 || cacheData[aindex] === 0 ){ 
                                     punkty22 = punkty[drawLevel];
                                     for(var jj = 0; jj < shape.bottom.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = dlight * 100 + dBlight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 0.3;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = dlight * 100 + dBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 0.3;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
                                 }
@@ -1938,9 +1941,9 @@ Chunk.prototype.init2 = function(yyyy){
             this.vbo[0] = new Array();
 
             for(var i = 0; i < 3; i++){
-               if(punkty[i].offset>0){
+               if(punkty[i].o>0){
                    //if(punkty[i].offset>10) console.log(i+" "+punkty[i].offset);
-                   var tpunkty = new Float32Array(punkty[i].data.buffer, 0, punkty[i].offset);
+                   var tpunkty = new Float32Array(punkty[i].d.buffer, 0, punkty[i].o);
                    this.ivbo[0][i] = tpunkty.length;
                    this.vbo[0][i] = gl.createBuffer();
                    gpuMem += tpunkty.length;
@@ -1956,9 +1959,9 @@ Chunk.prototype.init2 = function(yyyy){
             this.vbo[1] = new Array();
             
             for(var i = 0; i < 3; i++){
-               if(punkty[i].offset>0){
+               if(punkty[i].o>0){
                    //if(punkty[i].offset>10) console.log(i+" "+punkty[i].offset);
-                   var tpunkty = new Float32Array(punkty[i].data.buffer, 0, punkty[i].offset);
+                   var tpunkty = new Float32Array(punkty[i].d.buffer, 0, punkty[i].o);
                    this.ivbo[1][i] = tpunkty.length;
                    this.vbo[1][i] = gl.createBuffer();
                    gpuMem += tpunkty.length;

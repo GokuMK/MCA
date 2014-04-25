@@ -51,6 +51,10 @@ CameraGod.prototype.getPos = function(){
     return [this.pos[0], this.pos[1], this.pos[2]];
 };
 
+CameraGod.prototype.getXYZPos = function(){
+    return { x: Math.floor(this.pos[0]), y: Math.floor(this.pos[1]), z: Math.floor(this.pos[2]) };
+};
+
 CameraGod.prototype.moveForward = function(fps){
         this.pos[2] = this.pos[2] + (30/fps) * this.przesz * Math.cos(this.rot[0])* Math.cos(this.rot[1]);
         this.pos[0] = this.pos[0] + (30/fps) * this.przesz * Math.sin(this.rot[0])* Math.cos(this.rot[1]);

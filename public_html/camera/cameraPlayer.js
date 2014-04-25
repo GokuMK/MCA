@@ -48,6 +48,10 @@ CameraPlayer.prototype.getPos = function(){
     return [this.entity.pos[0], this.entity.pos[1], this.entity.pos[2]];
 };
 
+CameraPlayer.prototype.getXYZPos = function(){
+    return { x: Math.floor(this.entity.pos[0]), y: Math.floor(this.entity.pos[1]), z: Math.floor(this.entity.pos[2]) };
+};
+
 CameraPlayer.prototype.getTarget = function(){
     return this.entity.getTarget();
 };

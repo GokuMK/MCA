@@ -8,7 +8,7 @@ Chunk.prototype.getBuffer = function(pos){
         var nietfchunk = false;
         var nietbchunk = false;
 
-        punkty1[0].offset = 0;
+        punkty1[0].o = 0;
         
         var drawLevel = 0;
         var blockType = 0;
@@ -406,132 +406,132 @@ Chunk.prototype.getBuffer = function(pos){
                                 }
                                 if(drawF){
                                     for(var jj = 0; jj < shape2.front.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }    
                                 }//back
                                 if(drawB){
                                     for(var jj = 0; jj < shape2.back.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = blight * 100 + bblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = blight * 100 + bblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                 }
                                 if(drawR){ //right
                                     for(var jj = 0; jj < shape2.right.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = rlight * 100 + rblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = rlight * 100 + rblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                 }
                                 if(drawL){ //left
                                     for(var jj = 0; jj < shape2.left.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = llight * 100 + lblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
                                 if(drawD){ //bottom
                                     for(var jj = 0; jj < shape2.bottom.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = dlight * 100 + dblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 0.3;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = dlight * 100 + dblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 0.3;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
                                 if(drawT){ //top
                                     for(var jj = 0; jj < shape2.top.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape2.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape2.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape2.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = tlight * 100 + tblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape2.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = tlight * 100 + tblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     }   
                                 }
                             } else if(ablock.shapeType === 2){ // no top / bottom
                                /* var shape = ablock.shape;
                                 if(drawF) 
                                     for(var jj = 0; jj < shape.front.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     }    
                                 //back
                                 if(drawB)
                                     for(var jj = 0; jj < shape.back.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = blight * 100 + bblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = blight * 100 + bblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     }        
                                 if(drawR) //right
                                     for(var jj = 0; jj < shape.right.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = rlight * 100 + rblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = rlight * 100 + rblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     }              
                                 if(drawL) //left
                                     for(var jj = 0; jj < shape.left.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = llight * 100 + lblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     }      */
                             } else if(ablock.shapeType === 3){ // custom mesh
                                 /*var shape = ablock.shape;
@@ -543,140 +543,140 @@ Chunk.prototype.getBuffer = function(pos){
                                 }
                                 if(drawF || drawB || drawR || drawL) 
                                     for(var jj = 0; jj < shape.mesh.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.mesh[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.mesh[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.mesh[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.mesh[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.mesh[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 0;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.mesh[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.mesh[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.mesh[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.mesh[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.mesh[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 0;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     }    */
                             } else if(ablock.shapeType === 4){ // dirt
                                 var shape = ablock.shape;
                                 color = this.getBiomeColor(x, z, 0);
                                 if(drawF) {
                                     for(var jj = 0; jj < shape.front2.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front2[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front2[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front2[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front2[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front2[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front2[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front2[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front2[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front2[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front2[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }    
                                     for(var jj = 0; jj < shape.front.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     }    
                                 }
                                 //back
                                 if(drawB){
                                     for(var jj = 0; jj < shape.back2.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back2[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back2[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back2[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back2[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back2[jj+4];
-                                        punkty22.data[punkty22.offset++] = blight * 100 + bblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back2[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back2[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back2[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back2[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back2[jj+4];
+                                        punkty22.d[punkty22.o++] = blight * 100 + bblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                     for(var jj = 0; jj < shape.back.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = blight * 100 + bblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = blight * 100 + bblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     }        
                                 }
                                 if(drawR){ //right{
                                     for(var jj = 0; jj < shape.right2.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right2[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right2[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right2[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right2[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right2[jj+4];
-                                        punkty22.data[punkty22.offset++] = rlight * 100 + rblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right2[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right2[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right2[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right2[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right2[jj+4];
+                                        punkty22.d[punkty22.o++] = rlight * 100 + rblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     }    
                                     for(var jj = 0; jj < shape.right.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = rlight * 100 + rblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = rlight * 100 + rblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     }       
                                 }
                                 if(drawL) {//left
                                     for(var jj = 0; jj < shape.left2.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left2[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left2[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left2[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left2[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left2[jj+4];
-                                        punkty22.data[punkty22.offset++] = llight * 100 + lblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left2[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left2[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left2[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left2[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left2[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     }     
                                     for(var jj = 0; jj < shape.left.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = llight * 100 + lblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     }     
                                 }
                                 if(drawD){ //bottom
                                     for(var jj = 0; jj < shape.bottom.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = dlight * 100 + dblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 0.3;
-                                        punkty22.data[punkty22.offset++] = 0.0;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = dlight * 100 + dblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 0.3;
+                                        punkty22.d[punkty22.o++] = 0.0;
                                     }     
                                 }
                                 if(drawT){ //top
                                     for(var jj = 0; jj < shape.top.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = tlight * 100 + tblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = tlight * 100 + tblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     }
                                 }
                             } else if(ablock.shapeType === 8){ // stairs
@@ -714,80 +714,80 @@ Chunk.prototype.getBuffer = function(pos){
                                 }
                                 if(drawF){
                                     for(var jj = 0; jj < shape.front.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }    
                                 }//back
                                 if(drawB){
                                     for(var jj = 0; jj < shape.back.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = blight * 100 + bblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = blight * 100 + bblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                 }
                                 if(drawR){ //right
                                     for(var jj = 0; jj < shape.right.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = rlight * 100 + rblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = rlight * 100 + rblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                 }
                                 if(drawL){ //left
                                     for(var jj = 0; jj < shape.left.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = llight * 100 + lblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
                                 if(drawD){ //bottom
                                     for(var jj = 0; jj < shape.bottom.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = dlight * 100 + dblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 0.3;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = dlight * 100 + dblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 0.3;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
                                 if(drawT){ //top
                                     for(var jj = 0; jj < shape.top.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = tlight * 100 + tblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = tlight * 100 + tblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     }   
                                 }
                                 if(stairsSmall === 1){
@@ -803,80 +803,80 @@ Chunk.prototype.getBuffer = function(pos){
                                         if(ismall>1) stairsz = 0.5; else stairsz = 0;
                                         if(drawF){
                                             for(var jj = 0; jj < shape.front.length; jj+=5 ){
-                                                punkty22.data[punkty22.offset++] = stairsx+this.xPos*16+x+shape.front[jj];
-                                                punkty22.data[punkty22.offset++] = stairsy+yy+y+shape.front[jj+1]; 
-                                                punkty22.data[punkty22.offset++] = stairsz+this.zPos*16+z+shape.front[jj+2];
-                                                punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                                punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                                punkty22.data[punkty22.offset++] = flight * 100 + fblight;
-                                                punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                                punkty22.data[punkty22.offset++] = 0.8;
-                                                punkty22.data[punkty22.offset++] = color;
+                                                punkty22.d[punkty22.o++] = stairsx+this.xPos*16+x+shape.front[jj];
+                                                punkty22.d[punkty22.o++] = stairsy+yy+y+shape.front[jj+1]; 
+                                                punkty22.d[punkty22.o++] = stairsz+this.zPos*16+z+shape.front[jj+2];
+                                                punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                                punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                                punkty22.d[punkty22.o++] = flight * 100 + fblight;
+                                                punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                                punkty22.d[punkty22.o++] = 0.8;
+                                                punkty22.d[punkty22.o++] = color;
                                             }    
                                         }//back
                                         if(drawB){
                                             for(var jj = 0; jj < shape.back.length; jj+=5 ){
-                                                punkty22.data[punkty22.offset++] = stairsx+this.xPos*16+x+shape.back[jj];
-                                                punkty22.data[punkty22.offset++] = stairsy+yy+y+shape.back[jj+1]; 
-                                                punkty22.data[punkty22.offset++] = stairsz+this.zPos*16+z+shape.back[jj+2];
-                                                punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                                punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                                punkty22.data[punkty22.offset++] = blight * 100 + bblight;
-                                                punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                                punkty22.data[punkty22.offset++] = 0.8;
-                                                punkty22.data[punkty22.offset++] = color;
+                                                punkty22.d[punkty22.o++] = stairsx+this.xPos*16+x+shape.back[jj];
+                                                punkty22.d[punkty22.o++] = stairsy+yy+y+shape.back[jj+1]; 
+                                                punkty22.d[punkty22.o++] = stairsz+this.zPos*16+z+shape.back[jj+2];
+                                                punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                                punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                                punkty22.d[punkty22.o++] = blight * 100 + bblight;
+                                                punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                                punkty22.d[punkty22.o++] = 0.8;
+                                                punkty22.d[punkty22.o++] = color;
                                             }  
                                         }
                                         if(drawR){ //right
                                             for(var jj = 0; jj < shape.right.length; jj+=5 ){
-                                                punkty22.data[punkty22.offset++] = stairsx+this.xPos*16+x+shape.right[jj];
-                                                punkty22.data[punkty22.offset++] = stairsy+yy+y+shape.right[jj+1]; 
-                                                punkty22.data[punkty22.offset++] = stairsz+this.zPos*16+z+shape.right[jj+2];
-                                                punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                                punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                                punkty22.data[punkty22.offset++] = rlight * 100 + rblight;
-                                                punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                                punkty22.data[punkty22.offset++] = 0.55;
-                                                punkty22.data[punkty22.offset++] = color;
+                                                punkty22.d[punkty22.o++] = stairsx+this.xPos*16+x+shape.right[jj];
+                                                punkty22.d[punkty22.o++] = stairsy+yy+y+shape.right[jj+1]; 
+                                                punkty22.d[punkty22.o++] = stairsz+this.zPos*16+z+shape.right[jj+2];
+                                                punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                                punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                                punkty22.d[punkty22.o++] = rlight * 100 + rblight;
+                                                punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                                punkty22.d[punkty22.o++] = 0.55;
+                                                punkty22.d[punkty22.o++] = color;
                                             }  
                                         }
                                         if(drawL){ //left
                                             for(var jj = 0; jj < shape.left.length; jj+=5 ){
-                                                punkty22.data[punkty22.offset++] = stairsx+this.xPos*16+x+shape.left[jj];
-                                                punkty22.data[punkty22.offset++] = stairsy+yy+y+shape.left[jj+1]; 
-                                                punkty22.data[punkty22.offset++] = stairsz+this.zPos*16+z+shape.left[jj+2];
-                                                punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                                punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                                punkty22.data[punkty22.offset++] = llight * 100 + lblight;
-                                                punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                                punkty22.data[punkty22.offset++] = 0.55;
-                                                punkty22.data[punkty22.offset++] = color;
+                                                punkty22.d[punkty22.o++] = stairsx+this.xPos*16+x+shape.left[jj];
+                                                punkty22.d[punkty22.o++] = stairsy+yy+y+shape.left[jj+1]; 
+                                                punkty22.d[punkty22.o++] = stairsz+this.zPos*16+z+shape.left[jj+2];
+                                                punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                                punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                                punkty22.d[punkty22.o++] = llight * 100 + lblight;
+                                                punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                                punkty22.d[punkty22.o++] = 0.55;
+                                                punkty22.d[punkty22.o++] = color;
                                             } 
                                         }
                                         if(drawD){ //bottom
                                               for(var jj = 0; jj < shape.bottom.length; jj+=5 ){
-                                                punkty22.data[punkty22.offset++] = stairsx+this.xPos*16+x+shape.bottom[jj];
-                                                punkty22.data[punkty22.offset++] = stairsy+yy+y+shape.bottom[jj+1]; 
-                                                punkty22.data[punkty22.offset++] = stairsz+this.zPos*16+z+shape.bottom[jj+2];
-                                                punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                                punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                                punkty22.data[punkty22.offset++] = dlight * 100 + dblight;
-                                                punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                                punkty22.data[punkty22.offset++] = 0.3;
-                                                punkty22.data[punkty22.offset++] = color;
+                                                punkty22.d[punkty22.o++] = stairsx+this.xPos*16+x+shape.bottom[jj];
+                                                punkty22.d[punkty22.o++] = stairsy+yy+y+shape.bottom[jj+1]; 
+                                                punkty22.d[punkty22.o++] = stairsz+this.zPos*16+z+shape.bottom[jj+2];
+                                                punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                                punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                                punkty22.d[punkty22.o++] = dlight * 100 + dblight;
+                                                punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                                punkty22.d[punkty22.o++] = 0.3;
+                                                punkty22.d[punkty22.o++] = color;
                                             } 
                                         }
                                         if(drawT){ //top
                                             for(var jj = 0; jj < shape.top.length; jj+=5 ){
-                                                punkty22.data[punkty22.offset++] = stairsx+this.xPos*16+x+shape.top[jj];
-                                                punkty22.data[punkty22.offset++] = stairsy+yy+y+shape.top[jj+1]; 
-                                                punkty22.data[punkty22.offset++] = stairsz+this.zPos*16+z+shape.top[jj+2];
-                                                punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                                punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                                punkty22.data[punkty22.offset++] = tlight * 100 + tblight;
-                                                punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                                punkty22.data[punkty22.offset++] = 1.0;
-                                                punkty22.data[punkty22.offset++] = color;
+                                                punkty22.d[punkty22.o++] = stairsx+this.xPos*16+x+shape.top[jj];
+                                                punkty22.d[punkty22.o++] = stairsy+yy+y+shape.top[jj+1]; 
+                                                punkty22.d[punkty22.o++] = stairsz+this.zPos*16+z+shape.top[jj+2];
+                                                punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                                punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                                punkty22.d[punkty22.o++] = tlight * 100 + tblight;
+                                                punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                                punkty22.d[punkty22.o++] = 1.0;
+                                                punkty22.d[punkty22.o++] = color;
                                             }   
                                         }
                                     }
@@ -904,15 +904,15 @@ Chunk.prototype.getBuffer = function(pos){
                                                 }
                                             }
                                         }
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }    
 
                                     for(var jj = 0; jj < shape.back.length; jj+=5 ){
@@ -930,15 +930,15 @@ Chunk.prototype.getBuffer = function(pos){
                                                 }
                                             }
                                         }
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = blight * 100 + bblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = blight * 100 + bblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
 
                                     for(var jj = 0; jj < shape.right.length; jj+=5 ){
@@ -956,15 +956,15 @@ Chunk.prototype.getBuffer = function(pos){
                                                 }
                                             }
                                         }
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = rlight * 100 + rblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = rlight * 100 + rblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
 
                                     for(var jj = 0; jj < shape.left.length; jj+=5 ){
@@ -982,15 +982,15 @@ Chunk.prototype.getBuffer = function(pos){
                                                 }
                                             }
                                         }
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = llight * 100 + lblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
 
                                     for(var jj = 0; jj < shape.bottom.length; jj+=5 ){
@@ -1020,15 +1020,15 @@ Chunk.prototype.getBuffer = function(pos){
                                                 }
                                             }   
                                         }
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = dlight * 100 + dblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 0.3;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = dlight * 100 + dblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 0.3;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
 
                                     for(var jj = 0; jj < shape.top.length; jj+=5 ){
@@ -1058,15 +1058,15 @@ Chunk.prototype.getBuffer = function(pos){
                                                 }
                                             }   
                                         }
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = tlight * 100 + tblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = tlight * 100 + tblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     }   
                                 }
                             } else if(ablock.shapeType === 6){ // no top / bottom + simple light
@@ -1079,54 +1079,54 @@ Chunk.prototype.getBuffer = function(pos){
                                 if(drawF || drawB || drawR || drawL || drawD || drawT) {
                                     if(blockData === 5){
                                         for(var jj = 0; jj < shape.front.length; jj+=5 ){
-                                            punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                            punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                            punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                            punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                            punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                            punkty22.data[punkty22.offset++] = flight * 100 + fblight;
-                                            punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                            punkty22.data[punkty22.offset++] = 0.8;
-                                            punkty22.data[punkty22.offset++] = color;
+                                            punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                            punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                            punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                            punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                            punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                            punkty22.d[punkty22.o++] = flight * 100 + fblight;
+                                            punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                            punkty22.d[punkty22.o++] = 0.8;
+                                            punkty22.d[punkty22.o++] = color;
                                         }    
                                     }//back
                                     if(blockData === 4){
                                         for(var jj = 0; jj < shape.back.length; jj+=5 ){
-                                            punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                            punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                            punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                            punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                            punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                            punkty22.data[punkty22.offset++] = blight * 100 + bblight;
-                                            punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                            punkty22.data[punkty22.offset++] = 0.8;
-                                            punkty22.data[punkty22.offset++] = color;
+                                            punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                            punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                            punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                            punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                            punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                            punkty22.d[punkty22.o++] = blight * 100 + bblight;
+                                            punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                            punkty22.d[punkty22.o++] = 0.8;
+                                            punkty22.d[punkty22.o++] = color;
                                         }  
                                     }
                                     if(blockData === 3){ //right
                                         for(var jj = 0; jj < shape.right.length; jj+=5 ){
-                                            punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                            punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                            punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                            punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                            punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                            punkty22.data[punkty22.offset++] = rlight * 100 + rblight;
-                                            punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                            punkty22.data[punkty22.offset++] = 0.55;
-                                            punkty22.data[punkty22.offset++] = color;
+                                            punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                            punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                            punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                            punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                            punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                            punkty22.d[punkty22.o++] = rlight * 100 + rblight;
+                                            punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                            punkty22.d[punkty22.o++] = 0.55;
+                                            punkty22.d[punkty22.o++] = color;
                                         }  
                                     }
                                     if(blockData === 2){ //left
                                         for(var jj = 0; jj < shape.left.length; jj+=5 ){
-                                            punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                            punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                            punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                            punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                            punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                            punkty22.data[punkty22.offset++] = llight * 100 + lblight;
-                                            punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                            punkty22.data[punkty22.offset++] = 0.55;
-                                            punkty22.data[punkty22.offset++] = color;
+                                            punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                            punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                            punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                            punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                            punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                            punkty22.d[punkty22.o++] = llight * 100 + lblight;
+                                            punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                            punkty22.d[punkty22.o++] = 0.55;
+                                            punkty22.d[punkty22.o++] = color;
                                         } 
                                     }
                                 }
@@ -1140,80 +1140,80 @@ Chunk.prototype.getBuffer = function(pos){
 
                                 if(drawF){
                                     for(var jj = 0; jj < shape.front.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }    
                                 }//back
                                 if(drawB){
                                     for(var jj = 0; jj < shape.back.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = blight * 100 + bblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = blight * 100 + bblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                 }
                                 if(drawR){ //right
                                     for(var jj = 0; jj < shape.right.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = rlight * 100 + rblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = rlight * 100 + rblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                 }
                                 if(drawL){ //left
                                     for(var jj = 0; jj < shape.left.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = llight * 100 + lblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
                                 if(drawD){ //bottom
                                     for(var jj = 0; jj < shape.bottom.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = dlight * 100 + dblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 0.3;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = dlight * 100 + dblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 0.3;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
                                 if(drawT){ //top
                                     for(var jj = 0; jj < shape.top.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.top[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.top[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.top[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.top[jj+4];
-                                        punkty22.data[punkty22.offset++] = tlight * 100 + tblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 6;
-                                        punkty22.data[punkty22.offset++] = 1.0;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = tlight * 100 + tblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = 1.0;
+                                        punkty22.d[punkty22.o++] = color;
                                     }   
                                 }
                             } else if(ablock.shapeType === 10){ // vines
@@ -1225,67 +1225,67 @@ Chunk.prototype.getBuffer = function(pos){
                                 if(drawF || drawB || drawR || drawL || drawD || drawT) {
                                 if((Chunk.cacheData[aindex] & 0x08) === 8){
                                     for(var jj = 0; jj < shape.front.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.front[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.front[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.front[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.front[jj+4];
-                                        punkty22.data[punkty22.offset++] = flight * 100 + fblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 1;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.front[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.front[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.front[jj+4];
+                                        punkty22.d[punkty22.o++] = flight * 100 + fblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }    
                                 }//back
                                 if((Chunk.cacheData[aindex] & 0x02) === 2){
                                     for(var jj = 0; jj < shape.back.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.back[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.back[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.back[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.back[jj+4];
-                                        punkty22.data[punkty22.offset++] = blight * 100 + bblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 2;
-                                        punkty22.data[punkty22.offset++] = 0.8;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.back[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.back[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.back[jj+4];
+                                        punkty22.d[punkty22.o++] = blight * 100 + bblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                 }
                                 if((Chunk.cacheData[aindex] & 0x01) === 1){
                                     for(var jj = 0; jj < shape.right.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.right[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.right[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.right[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.right[jj+4];
-                                        punkty22.data[punkty22.offset++] = rlight * 100 + rblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 3;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.right[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.right[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.right[jj+4];
+                                        punkty22.d[punkty22.o++] = rlight * 100 + rblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     }  
                                 }
                                 if((Chunk.cacheData[aindex] & 0x04) === 4){
                                     for(var jj = 0; jj < shape.left.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.left[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.left[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.left[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.left[jj+4];
-                                        punkty22.data[punkty22.offset++] = llight * 100 + lblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 4;
-                                        punkty22.data[punkty22.offset++] = 0.55;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.left[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.left[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.left[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.55;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
                                 if(Chunk.cacheBlock[tindex] === 1 || Chunk.cacheData[aindex] === 0 ){ 
                                     for(var jj = 0; jj < shape.bottom.length; jj+=5 ){
-                                        punkty22.data[punkty22.offset++] = this.xPos*16+x+shape.bottom[jj];
-                                        punkty22.data[punkty22.offset++] = yy+y+shape.bottom[jj+1]; 
-                                        punkty22.data[punkty22.offset++] = this.zPos*16+z+shape.bottom[jj+2];
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+3]; 
-                                        punkty22.data[punkty22.offset++] = shape.bottom[jj+4];
-                                        punkty22.data[punkty22.offset++] = dlight * 100 + dblight;
-                                        punkty22.data[punkty22.offset++] = selectionIndex + 5;
-                                        punkty22.data[punkty22.offset++] = 0.3;
-                                        punkty22.data[punkty22.offset++] = color;
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.bottom[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.bottom[jj+4];
+                                        punkty22.d[punkty22.o++] = dlight * 100 + dblight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = 0.3;
+                                        punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
                                 }
@@ -1297,8 +1297,8 @@ Chunk.prototype.getBuffer = function(pos){
            
         } 
             
-        if(punkty1[0].offset>0)
-            return new Float32Array(punkty1[0].data.buffer, 0, punkty1[0].offset);
+        if(punkty1[0].o>0)
+            return new Float32Array(punkty1[0].d.buffer, 0, punkty1[0].o);
 
         return false;
     };

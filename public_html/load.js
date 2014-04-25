@@ -22,6 +22,8 @@ require("ui/selectionBox.js");
 
     var gl;
     var gluu = new Gluu();
+    var glCanvas, lastTarget = false;
+    var codeEditor = null;
     var settings = new Settings();
     var biomes;
     var mcWorld;
@@ -232,29 +234,29 @@ require("ui/selectionBox.js");
        console.log(block);
     }
     
-    function useNextBlock(){
+    function useNextBlock(useBlock){
         if(useBlock.id === block.length - 1) useBlock.id = 0;
         while(block[++useBlock.id].type === 0){
             if(useBlock.id === block.length - 1) useBlock.id = 0;
         }
         useBlock.data = -1;
-        useNextBlockData();
+        useNextBlockData(useBlock);
     }
     
-    function usePrevBlock(){
+    function usePrevBlock(useBlock){
         if(useBlock.id === 1) useBlock.id = block.length;
         while(block[--useBlock.id].type === 0){
             if(useBlock.id === 0) useBlock.id = block.length;
         }
         useBlock.data = -1;
-        useNextBlockData();
+        useNextBlockData(useBlock);
     }
     
-    function useNextBlockData(){
+    function useNextBlockData(useBlock){
         for(var i = 0; i < 16; i++){
             if(block[useBlock.id][++useBlock.data] !== undefined){
                  if(block[useBlock.id][useBlock.data].shapeType !== undefined && !(block[useBlock.id][useBlock.data].hidden || false))
-                    return;   
+                    return ;   
             }
             if(useBlock.data === 16) useBlock.data = -1;
         }
@@ -262,97 +264,147 @@ require("ui/selectionBox.js");
     }   
     
     function keyDown(e){
-        camera.keyDown(e, fps);  
-        var code = e.keyCode;
-        switch (code) {
-            case 81: // Q
-                if(camera.upY === 0) camera.upY = 200;
-                break;
-            case 90: // Z
-                useNextBlock();
-                break;
-            case 88: // X
-                usePrevBlock();
-                break;
-            case 67: // C
-                useNextBlockData();
-                break;
-            case 49: // 1
-                selectTt = 0;
-                break;
-            case 50: // 2
-                selectTt = 1;
-                break;
-            case 51: // 3
-                selectTt = 2;
-                break;
-            case 52: // 4
-                selectTt = 3;
-                break;               
-            case 84:
-                //var cameraPos = camera.getPos();
-                //var cameraRot = camera.getRot();
-              break;
-            case 80: // P
-                /*var xxx = Math.floor(camera.pos[0]/16);
-                var zzz = Math.floor(camera.pos[2]/16);
-                mcWorld.saveChunkToStorage(xxx, zzz);*/
-                //textDiv.innerHTML = "Zapisywanie ...";
-                mcWorld.save();
-                break;    
-            case 71: // G
-                console.log(window.localStorage);
-                /*var xxx = Math.floor(camera.pos[0]/16);
-                var zzz = Math.floor(camera.pos[2]/16);
-                mcWorld.loadChunkFromStorage(xxx, zzz, false);*/
-                break;    
-            case 77: // M
-                window.localStorage.clear();
-                //var timeNow3 = new Date().getTime();
-                //console.log("Run time "+Math.floor((timeNow3-firstTime)/1000));
-                break;    
-            case 86: // V
-                console.log(camera.name);
-                //if(camera.name === "CameraGod") camera = new Camera(camera.getEye(),camera.rot,[0,1,0], true);
-                if(camera.name === "CameraGod") {
-                    player.setPosRot(camera.getEye(), camera.getRot());
-                    camera = new CameraPlayer(player);
-                }
-                else if(camera.name === "CameraPlayer") camera = new CameraGod(camera.getEye(),camera.getRot(),[0,1,0]);
-                camera.sensitivity = settings.sensitivity*2;
-                break;    
-            default: 
-                //camera.moveBackward();
+        if(lastTarget === glCanvas){
+            camera.keyDown(e, fps);  
+            var code = e.keyCode;
+            switch (code) {
+                case 81: // Q
+                    if(camera.upY === 0) camera.upY = 200;
+                    break;
+                case 90: // Z
+                    useNextBlock(useBlock);
+                    break;
+                case 88: // X
+                    usePrevBlock(useBlock);
+                    break;
+                case 67: // C
+                    useNextBlockData(useBlock);
+                    break;
+                case 49: // 1
+                    selectTt = 0;
+                    break;
+                case 50: // 2
+                    selectTt = 1;
+                    break;
+                case 51: // 3
+                    selectTt = 2;
+                    break;
+                case 52: // 4
+                    selectTt = 3;
+                    break;               
+                case 84:
+                    //var cameraPos = camera.getPos();
+                    //var cameraRot = camera.getRot();
+                  break;
+                case 80: // P
+                    /*var xxx = Math.floor(camera.pos[0]/16);
+                    var zzz = Math.floor(camera.pos[2]/16);
+                    mcWorld.saveChunkToStorage(xxx, zzz);*/
+                    //textDiv.innerHTML = "Zapisywanie ...";
+                    mcWorld.save();
+                    break;    
+                case 71: // G
+                    if(codeEditor === null){
+                        codeEditor = ace.edit("editor");
+                        codeEditor.setTheme("ace/theme/tomorrow_night");
+                        codeEditor.getSession().setMode("ace/mode/javascript");
+                        codeEditor.setValue("var pos = camera.getXYZPos();\n\
+var block = { id: 17, data: 0};\n\
+\n\
+for(var i = -2; i < 3; i++)\n\
+    for(var j = -2; j < 3; j++){\n\
+    if(i > -2 && i < 2 && j > -2 && j < 2) continue;\n\
+    useNextBlockData(block);\n\
+    mcWorld.setBlock(pos.x+i,pos.y,pos.z+j,block.id,block.data);\n\
+}\n\
+\n\
+mcWorld.updateChunks();");
+                    }                                                                
+                    var tools = document.getElementById("tools");
+                    if(tools.style.display === "none") tools.style.display = "block";
+                    else if(tools.style.display === "block") tools.style.display = "none";
+
+                    break;
+                    /*var pos = camera.getXYZPos();
+                    var id = 17;
+                    var data = 0;
+                    for(var i = -2; i < 3; i++)
+                        for(var j = -2; j < 3; j++){
+                            if(i > -2 && i < 2 && j > -2 && j < 2) continue;
+                            data = getNextBlockDataId(id, data);
+                            mcWorld.setBlock(pos.x+i,pos.y,pos.z+j,id,data);
+                        }
+                    mcWorld.updateChunks();*/
+                    //console.log(window.localStorage);
+                    /*var xxx = Math.floor(camera.pos[0]/16);
+                    var zzz = Math.floor(camera.pos[2]/16);
+                    mcWorld.loadChunkFromStorage(xxx, zzz, false);*/
+                    break;    
+                case 72: //H
+                    executeJS();
+                    break;
+                case 77: // M
+                    window.localStorage.clear();
+                    //var timeNow3 = new Date().getTime();
+                    //console.log("Run time "+Math.floor((timeNow3-firstTime)/1000));
+                    break;    
+                case 86: // V
+                    console.log(camera.name);
+                    //if(camera.name === "CameraGod") camera = new Camera(camera.getEye(),camera.rot,[0,1,0], true);
+                    if(camera.name === "CameraGod") {
+                        player.setPosRot(camera.getEye(), camera.getRot());
+                        camera = new CameraPlayer(player);
+                    }
+                    else if(camera.name === "CameraPlayer") camera = new CameraGod(camera.getEye(),camera.getRot(),[0,1,0]);
+                    camera.sensitivity = settings.sensitivity*2;
+                    break;    
+                default: 
+                    //camera.moveBackward();
+            }
         }
     }
 
     function keyUp(e){
-        camera.keyUp(e);
-        var code = e.keyCode;
-        switch (code) {
-            default: 
+        if(lastTarget === glCanvas){
+            camera.keyUp(e);
+            var code = e.keyCode;
+            switch (code) {
+                default: 
+            }
         }
     }
     
     function mouseDown(e){
-        camera.starex = e.clientX;
-        camera.starey = e.clientY;
-        if(camera.autoMove) selectE = true;
-        if(e.button === 0) selectT = 0;
-        else selectT = selectTt;
-        camera.mouseDown(fps);  
+        lastTarget = e.target;
+        
+        if(lastTarget === glCanvas){
+            camera.starex = e.clientX;
+            camera.starey = e.clientY;
+
+            if(settings.edit){
+                if(camera.autoMove) selectE = true;
+                if(e.button === 0) selectT = 0;
+                else selectT = selectTt;
+            }
+
+            camera.mouseDown(fps);  
+        }
     }
 
     function mouseUp(e){
-        camera.mouseUp(fps);  
+        if(lastTarget === glCanvas){
+            camera.mouseUp(fps);  
+        }
     }
 
     function mouseMove(e){
-        var x = e.clientX;
-        var y = e.clientY;
-        camera.mouseMove((camera.starex-x), (camera.starey-y), fps); 
-        camera.starex = x;
-        camera.starey = y;
+        if(lastTarget === glCanvas){
+            var x = e.clientX;
+            var y = e.clientY;
+            camera.mouseMove((camera.starex-x), (camera.starey-y), fps); 
+            camera.starex = x;
+            camera.starey = y;
+        }
     }
     
     function pointerMove(e){
@@ -372,12 +424,13 @@ require("ui/selectionBox.js");
     }
     
     function mouseWheel(e) {
-
-	// cross-browser wheel delta
-	e = window.event || e; // old IE support
-	var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
-        if(delta < 0) useNextBlock();
-        else usePrevBlock();
+        if(lastTarget === glCanvas){
+            // cross-browser wheel delta
+            e = window.event || e; // old IE support
+            var delta = Math.max(-1, Math.min(1, (e.wheelDelta || -e.detail)));
+            if(delta < 0) useNextBlock(useBlock);
+            else usePrevBlock(useBlock);
+        }
     }
     function pointerChange(e){
         var canvas = document.getElementById("webgl");
@@ -411,26 +464,26 @@ require("ui/selectionBox.js");
     }
     
     function webGLStart() {
-        var canvas = document.getElementById("webgl");
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+        glCanvas = document.getElementById("webgl");
+        glCanvas.width = window.innerWidth;
+        glCanvas.height = window.innerHeight;
         window.onresize = windowResize;
         window.addEventListener( "keydown", keyDown, false);
         window.addEventListener( "keyup", keyUp, true);
-        canvas.onclick = canvasOn;
+        glCanvas.onclick = canvasOn;
 
         document.addEventListener('pointerlockchange', pointerChange, false);
         document.addEventListener('mozpointerlockchange', pointerChange, false);
         document.addEventListener('webkitpointerlockchange', pointerChange, false);
         //window.addEventListener( "mousemove", mouseMove, true);
-        window.addEventListener( "mousedown", mouseDown, true);
-        window.addEventListener( "mouseup", mouseUp, true);
+        window.addEventListener("mousedown", mouseDown, true);
+        window.addEventListener("mouseup", mouseUp, true);
         window.addEventListener("mousewheel", mouseWheel, false);
 	window.addEventListener("DOMMouseScroll", mouseWheel, false);
         
         textDiv = document.getElementById("text");
         
-        gluu.initGL(canvas);
+        gluu.initGL(glCanvas);
         gluu.initStandardShader();
         gluu.initLineShader();
         gluu.initSelectionShader();
@@ -457,13 +510,20 @@ require("ui/selectionBox.js");
         
         for(var i = 0; i < 3; i++){
             punkty1[i] = new Object();
-            punkty1[i].data = new Float32Array(2000000);
-            punkty1[i].offset = 0;
+            punkty1[i].d = new Float32Array(2000000);
+            punkty1[i].o = 0;
         }
 
         mcWorld = new RegionLib(settings.gameRoot, settings.worldName);
+        
+        document.getElementById("tools").style.display = 'none';
+        
         firstTime = new Date().getTime();
         lastTime = new Date().getTime();
         tick();       
+    }
+    
+    function executeJS(){
+        eval(codeEditor.getValue());
     }
     
