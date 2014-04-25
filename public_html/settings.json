@@ -40,7 +40,7 @@
     "url": true
 },
 "worldShader": {
-    "value": "bloom",
+    "value": "standard",
     "url": true
 },
 "edit": {
