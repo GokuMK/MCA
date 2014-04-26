@@ -421,6 +421,29 @@ Chunk.prototype.getBiomeColor = function(x, z, idx){
     return color;    
     };  
     
+Chunk.prototype.getBlock = function(x,h,z){
+        if(this.isInit === -1)
+            return {id: 0, data: 0};
+
+        var yy = Math.floor(h/16);
+        var y = h - yy*16;
+        var index = y*256+z*16+x;
+        
+        if(this.section[yy] === undefined) 
+            return {id: 0, data: 0};
+        
+        var id = this.section[yy].blocks[index];
+        var data = 0;
+        var skyf = index % 2;
+        if(skyf === 0){
+            data = (this.section[yy].data[(index/2)] & 0x0F);
+        }else{
+            data = (this.section[yy].data[(index/2 - 0.5)] & 0xF0) >> 4;
+        }
+        
+        return {id: id, data: data};
+};
+    
 Chunk.prototype.getNBT = function(y){
     var nbt = new Object();
     nbt.offset = 0;

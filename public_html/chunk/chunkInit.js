@@ -41,6 +41,7 @@ Chunk.prototype.init2 = function(yyyy){
         punkty[0].o = 0;
         punkty[1].o = 0;
         punkty[2].o = 0;
+        punkty[3].o = 0;
         
            var aindex = 0, lindex = 0, rindex = 0, lindex = 0, findex = 0, bindex = 0, tindex = 0, dindex = 0;
            var selectionIndex;
@@ -141,38 +142,38 @@ Chunk.prototype.init2 = function(yyyy){
                                    bBlight = cacheBlight[bindex];
                                    drawB = true;
                                }
-                       } else if(blockType === 3){
-                               if(tBlockType !== 1 && tBlockType !== 3) {
+                       } else if(blockType > 299){
+                               if(tBlockType !== blockType || cacheData[tindex] !== cacheData[aindex]) {
                                    tlight = cacheSlight[tindex];
                                    tBlight = cacheBlight[tindex];
                                    drawT = true;
                                }
 
-                               if(dBlockType !== 1 && dBlockType !== 3) {
+                               if(dBlockType !== 1 && dBlockType !== blockType || cacheData[dindex] !== cacheData[aindex]) {
                                    dlight = cacheSlight[dindex];
                                    dBlight = cacheBlight[dindex];
                                    drawD = true;
                                }
                                
-                               if(rBlockType !== 1 && rBlockType !== 3) {
+                               if(rBlockType !== blockType || cacheData[rindex] !== cacheData[aindex]) {
                                    rlight = cacheSlight[rindex];
                                    rBlight = cacheBlight[rindex];
                                    drawR = true;
                                }
 
-                               if(lBlockType !== 1 && lBlockType !== 3) {
+                               if(lBlockType !== blockType || cacheData[lindex] !== cacheData[aindex]) {
                                    llight = cacheSlight[lindex];
                                    lBlight = cacheBlight[lindex];
                                    drawL = true;
                                }
                                
-                               if(fBlockType !== 1 && fBlockType !== 3) {
+                               if(fBlockType !== blockType || cacheData[findex] !== cacheData[aindex]) {
                                    flight = cacheSlight[findex];
                                    fBlight = cacheBlight[findex];
                                    drawF = true;
                                }
 
-                               if(bBlockType !== 1 && bBlockType !== 3) {
+                               if(bBlockType !== blockType || cacheData[bindex] !== cacheData[aindex]) {
                                    blight = cacheSlight[bindex];
                                    bBlight = cacheBlight[bindex];
                                    drawB = true;
@@ -732,15 +733,22 @@ Chunk.prototype.init2 = function(yyyy){
                             } else if(ablock.shapeType === 4){ // dirt - grass
                                 drawLevel = ablock.drawLevel;
                                 punkty22 = punkty[drawLevel];
+                                if(cacheId[tindex] === 78)ablock = block[blockId][1];
                                 var shape = ablock.shape;
-                                color = this.getBiomeColor(x, z, 0);
-                                color1 = this.getBiomeColor1(x, z, 0);
-                                color2 = this.getBiomeColor2(x, z, 0);
-                                color3 = this.getBiomeColor3(x, z, 0);
-                                color4 = this.getBiomeColor4(x, z, 0);
+                                
+                                if(ablock.useBiomeColor > 0){
+                                    color = this.getBiomeColor(x, z, ablock.useBiomeColor - 1);
+                                    color1 = this.getBiomeColor1(x, z, ablock.useBiomeColor - 1);
+                                    color2 = this.getBiomeColor2(x, z, ablock.useBiomeColor - 1);
+                                    color3 = this.getBiomeColor3(x, z, ablock.useBiomeColor - 1);
+                                    color4 = this.getBiomeColor4(x, z, ablock.useBiomeColor - 1);
+                                } else {
+                                    color4 = color3 = color2 = color1 = color = 0.0;
+                                }
                                 if(drawF) {
                                     if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
+                                    if(ablock.shapeType === 4)
                                     for(var jj = 0; jj < shape.front2.length; jj+=5 ){
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front2[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape.front2[jj+1]; 
@@ -828,6 +836,7 @@ Chunk.prototype.init2 = function(yyyy){
                                 if(drawB){
                                     if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
+                                    if(ablock.shapeType === 4)
                                     for(var jj = 0; jj < shape.back2.length; jj+=5 ){
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back2[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape.back2[jj+1]; 
@@ -913,6 +922,7 @@ Chunk.prototype.init2 = function(yyyy){
                                 if(drawR){ //right{
                                     if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
+                                    if(ablock.shapeType === 4)
                                     for(var jj = 0; jj < shape.right2.length; jj+=5 ){
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right2[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape.right2[jj+1]; 
@@ -998,6 +1008,7 @@ Chunk.prototype.init2 = function(yyyy){
                                 if(drawL) {//left
                                     if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
+                                    if(ablock.shapeType === 4)
                                     for(var jj = 0; jj < shape.left2.length; jj+=5 ){
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left2[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape.left2[jj+1]; 
@@ -1940,7 +1951,7 @@ Chunk.prototype.init2 = function(yyyy){
             this.ivbo[0] = new Array();
             this.vbo[0] = new Array();
 
-            for(var i = 0; i < 3; i++){
+            for(var i = 0; i < 4; i++){
                if(punkty[i].o>0){
                    //if(punkty[i].offset>10) console.log(i+" "+punkty[i].offset);
                    var tpunkty = new Float32Array(punkty[i].d.buffer, 0, punkty[i].o);
@@ -1958,7 +1969,7 @@ Chunk.prototype.init2 = function(yyyy){
             this.ivbo[1] = new Array();
             this.vbo[1] = new Array();
             
-            for(var i = 0; i < 3; i++){
+            for(var i = 0; i < 4; i++){
                if(punkty[i].o>0){
                    //if(punkty[i].offset>10) console.log(i+" "+punkty[i].offset);
                    var tpunkty = new Float32Array(punkty[i].d.buffer, 0, punkty[i].o);

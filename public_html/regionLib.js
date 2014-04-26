@@ -7,6 +7,27 @@ function RegionLib(gameRoot, worldName){
     this.iChunk = 0;
 }
 
+RegionLib.prototype.getChunkBlock = function(chx, chz, x, y, z){
+    var i = chx*10000+chz;
+    if(this.rchunk[i] !== undefined)
+        return this.rchunk[i].getBlock(x,y,z);
+    else
+        return {id: 0, data: 0};
+};
+
+RegionLib.prototype.getBlock = function(x, y, z){
+    var chx = Math.floor(x/16);
+    var chz = Math.floor(z/16);
+    var i = chx*10000+chz;
+    var i = chx*10000+chz;
+    if(this.rchunk[i] !== undefined){
+        x = x - chx*16; if(x < 0) x+=16;
+        z = z - chz*16; if(z < 0) z+=16;
+        return this.rchunk[i].getBlock(x,y,z);
+    } else
+        return {id: 0, data: 0};
+};
+
 RegionLib.prototype.updateChunkBlock = function(chx, chz, x, y, z, b, d){
     var i = chx*10000+chz;
     if(this.rchunk[i] !== undefined)
@@ -101,14 +122,14 @@ RegionLib.prototype.render = function(){
         var lodx = 0, lodz = 0, lod = 0;
         //var dlod = [20,23,20];
         //var dlod = [10,10,10];
-        var dlod = [settings.distanceLevel[0],settings.distanceLevel[1],settings.distanceLevel[2]];
+        var dlod = [settings.distanceLevel[0],settings.distanceLevel[1],settings.distanceLevel[2],settings.distanceLevel[2]];
         var pos = new Array();
         var xxx = 0;
         var zzz = 0;
         var i = 0;
         var level = 0;
         var cameraPos = camera.getPos();
-        for(var drawLevel = 0; drawLevel < 3; drawLevel++){
+        for(var drawLevel = 0; drawLevel < 4; drawLevel++){
             var posxxx = Math.floor(cameraPos[0]/16);
             var poszzz = Math.floor(cameraPos[2]/16);
             //for(var xxx = posxxx - dlod[drawLevel]; xxx < posxxx + dlod[drawLevel]; xxx++)
@@ -189,7 +210,7 @@ RegionLib.prototype.renderSelection = function(){
         var zzz = 0;
         var i = 0;
         var cameraPos = camera.getPos();
-        for(var drawLevel = 0; drawLevel < 3; drawLevel++){
+        for(var drawLevel = 0; drawLevel < 4; drawLevel++){
             var posxxx = Math.floor(cameraPos[0]/16);
             var poszzz = Math.floor(cameraPos[2]/16);
             pos[0] = 0;
@@ -235,7 +256,7 @@ RegionLib.prototype.renderSelection = function(){
         var chx = Math.floor(cv/5);
         var chz = cv - chx*5;
         //console.log("y: "+selection.y+" z: "+selection.z+" x: "+selection.x+" chx: "+chx+" chz: "+chz+" side: "+selection.side);
-            
+
         var posxxx = Math.floor(cameraPos[0]/16);
         var poszzz = Math.floor(cameraPos[2]/16);
         var achx = posxxx % 5; if(achx < 0) achx += 5;

@@ -29,6 +29,7 @@ require("ui/selectionBox.js");
     var mcWorld;
     var block;
     var blockTexture;
+    var blockSelection;
     var camera;
     var initTexture = false;
     
@@ -70,13 +71,18 @@ require("ui/selectionBox.js");
             newSec = true;
             sec++;
         }
-        
+        var new100msec = false;
+        if(lastTime%100 > timeNow%100){
+            new100msec = true;
+        }
         lastTime = timeNow;
         camera.updatePosition(fps);
         iLag = 3;
-        var selection = mcWorld.renderSelection();
         
+        if(settings.edit){
+        if(new100msec) blockSelection = mcWorld.renderSelection();    
         if(selectE){
+            var selection = blockSelection;
             selectE = false;
             console.log("y: "+selection.y+" z: "+selection.z+" x: "+selection.x+" chx: "+selection.chx+" chz: "+selection.chz+" side: "+selection.side);
             
@@ -86,6 +92,15 @@ require("ui/selectionBox.js");
                     break;
                 case 1:
                     var px = 0, pz = 0, py = 0;
+                    var selectedBlock = mcWorld.getChunkBlock(selection.chx,selection.chz,selection.x,selection.y,selection.z);
+                    console.log(selectedBlock.id+" "+selectedBlock.data);
+                    var replace = false;
+                    if(block[selectedBlock.id][selectedBlock.data].replace !== undefined) 
+                        replace = block[selectedBlock.id][selectedBlock.data].replace;
+                    else if(block[selectedBlock.id].replace !== undefined) 
+                        replace = block[selectedBlock.id].replace;
+                    
+                    if(!replace)
                     switch( selection.side){
                         case 1:
                             px = -1; break;
@@ -126,10 +141,15 @@ require("ui/selectionBox.js");
                     break;
             }
         }
+        }
+        
         mcWorld.render();
         player.render();
-        selectBox.render(selection);
-        pointer.render();
+        
+        if(settings.edit) {
+            selectBox.render(blockSelection);
+            pointer.render();
+        }
         
         if(newSec){
            window.location.hash =
@@ -508,7 +528,7 @@ mcWorld.updateChunks();");
         }
         camera.sensitivity = settings.sensitivity * 2;
         
-        for(var i = 0; i < 3; i++){
+        for(var i = 0; i < 4; i++){
             punkty1[i] = new Object();
             punkty1[i].d = new Float32Array(2000000);
             punkty1[i].o = 0;

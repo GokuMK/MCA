@@ -346,28 +346,28 @@ Chunk.prototype.getBuffer = function(pos){
                                if(Chunk.cacheBlock[bindex] !== 1) {
                                    drawB = true;
                                }
-                       } else if(blockType === 3){
-                               if(Chunk.cacheBlock[tindex] !== 1 && Chunk.cacheBlock[tindex] !== 3) {
+                       } else if(blockType > 3){
+                               if(Chunk.cacheBlock[tindex] !== 1 && Chunk.cacheBlock[tindex] !== blockType) {
                                    drawT = true;
                                }
 
-                               if(Chunk.cacheBlock[dindex] !== 1 && Chunk.cacheBlock[dindex] !== 3) {
+                               if(Chunk.cacheBlock[dindex] !== 1 && Chunk.cacheBlock[dindex] !== blockType) {
                                    drawD = true;
                                }
                                
-                               if(Chunk.cacheBlock[rindex] !== 1 && Chunk.cacheBlock[rindex] !== 3) {
+                               if(Chunk.cacheBlock[rindex] !== 1 && Chunk.cacheBlock[rindex] !== blockType) {
                                    drawR = true;
                                }
 
-                               if(Chunk.cacheBlock[lindex] !== 1 && Chunk.cacheBlock[lindex] !== 3) {
+                               if(Chunk.cacheBlock[lindex] !== 1 && Chunk.cacheBlock[lindex] !== blockType) {
                                    drawL = true;
                                }
                                
-                               if(Chunk.cacheBlock[findex] !== 1 && Chunk.cacheBlock[findex] !== 3) {
+                               if(Chunk.cacheBlock[findex] !== 1 && Chunk.cacheBlock[findex] !== blockType) {
                                    drawF = true;
                                }
 
-                               if(Chunk.cacheBlock[bindex] !== 1 && Chunk.cacheBlock[bindex] !== 3) {
+                               if(Chunk.cacheBlock[bindex] !== 1 && Chunk.cacheBlock[bindex] !== blockType) {
                                    drawB = true;
                                }
                        } else {
