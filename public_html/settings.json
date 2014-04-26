@@ -46,5 +46,9 @@
 "edit": {
     "value": true,
     "url": true
+},
+"loadLag": {
+    "value": 3,
+    "url": true
 }
 }

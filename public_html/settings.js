@@ -91,6 +91,12 @@ function Settings(){
     if( parameters["brightness"] !== undefined && settings["brightness"].url)
         this.brightness = (parseFloat(parameters["brightness"]) + 0.1) || this.brightness; 
 
+    this.loadLag = 3;
+    if( settings["loadLag"] !== undefined )
+        this.loadLag = (parseFloat(settings["loadLag"].value)) || this.loadLag; 
+    if( parameters["loadLag"] !== undefined && settings["loadLag"].url)
+        this.loadLag = (parseFloat(parameters["loadLag"])) || this.loadLag; 
+
     this.worldShader = "standard";
     if( settings["worldShader"] !== undefined )
         this.worldShader = settings["worldShader"].value || this.worldShader; 

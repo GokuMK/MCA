@@ -77,7 +77,7 @@ require("ui/selectionBox.js");
         }
         lastTime = timeNow;
         camera.updatePosition(fps);
-        iLag = 3;
+        iLag = settings.loadLag;
         
         if(settings.edit){
         if(new100msec) blockSelection = mcWorld.renderSelection();    
