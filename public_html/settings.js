@@ -100,6 +100,10 @@ function Settings(){
     this.edit = true;
     if( settings["edit"] !== undefined )
         this.edit = settings["edit"].value; 
+    if( settings["edit"] !== undefined && settings["edit"].url){
+        if(parameters["edit"] === "true") this.edit = true; 
+        if(parameters["edit"] === "false") this.edit = false; 
+    }
     //camera = new Camera([-400,120,0],[5.5,0],[0,1,0]);
     //camera = new CameraGod([0,120,0],[5.5,0],[0,1,0]);
     //camera = new Camera([-176,90,2],[5.5,0],[0,1,0]);
