@@ -87,9 +87,9 @@ function Settings(){
 
     this.brightness = 0.3;
     if( settings["brightness"] !== undefined )
-        this.brightness = (parseFloat(settings["brightness"].value) + 0.1) || this.brightness; 
+        this.brightness = (parseFloat(settings["brightness"].value) + 0.01) || this.brightness; 
     if( parameters["brightness"] !== undefined && settings["brightness"].url)
-        this.brightness = (parseFloat(parameters["brightness"]) + 0.1) || this.brightness; 
+        this.brightness = (parseFloat(parameters["brightness"]) + 0.01) || this.brightness; 
 
     this.loadLag = 3;
     if( settings["loadLag"] !== undefined )

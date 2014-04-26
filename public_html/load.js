@@ -148,7 +148,7 @@ require("ui/selectionBox.js");
         }
         
         mcWorld.render();
-        player.render();
+        //player.render();
         
         if(settings.edit) {
             selectBox.render(blockSelection);
@@ -328,6 +328,7 @@ require("ui/selectionBox.js");
                     mcWorld.save();
                     break;    
                 case 71: // G
+                    if(window["ace"] === undefined) break;
                     if(codeEditor === null){
                         codeEditor = ace.edit("editor");
                         codeEditor.setTheme("ace/theme/tomorrow_night");
@@ -347,7 +348,10 @@ mcWorld.updateChunks();");
                     var tools = document.getElementById("tools");
                     if(tools.style.display === "none") tools.style.display = "block";
                     else if(tools.style.display === "block") tools.style.display = "none";
-
+                    document.exitPointerLock = document.exitPointerLock ||
+                                               document.mozExitPointerLock ||
+                                               document.webkitExitPointerLock;
+                    document.exitPointerLock();
                     break;
                     /*var pos = camera.getXYZPos();
                     var id = 17;
@@ -365,6 +369,7 @@ mcWorld.updateChunks();");
                     mcWorld.loadChunkFromStorage(xxx, zzz, false);*/
                     break;    
                 case 72: //H
+                    if(window["ace"] === undefined) break;
                     executeJS();
                     break;
                 case 77: // M
