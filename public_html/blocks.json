@@ -902,6 +902,7 @@
 "39": {
     "mask": "0x00",
     "type": 2,        
+    "lightSource": 2,
     "0": {
         "drawLevel": 0,
         "shapeType": 3,
@@ -1282,40 +1283,53 @@
     "lightSource": 14,
     "0": {
         "drawLevel": 0,
-        "shapeType": 1,
+        "shapeType": 3,
         "useBiomeColor": 0,
         "shapeName": "torchTBlock",
         "defaultTexture": "torch_on.png"
     },
     "1": {
         "drawLevel": 0,
-        "shapeType": 1,
+        "shapeType": 3,
         "useBiomeColor": 0,
         "shapeName": "torchRBlock",
         "defaultTexture": "torch_on.png"
     },
     "2": {
         "drawLevel": 0,
-        "shapeType": 1,
+        "shapeType": 3,
         "useBiomeColor": 0,
         "shapeName": "torchLBlock",
         "defaultTexture": "torch_on.png"
     },
     "3": {
         "drawLevel": 0,
-        "shapeType": 1,
+        "shapeType": 3,
         "useBiomeColor": 0,
         "shapeName": "torchFBlock",
         "defaultTexture": "torch_on.png"
     },
     "4": {
         "drawLevel": 0,
-        "shapeType": 1,
+        "shapeType": 3,
         "useBiomeColor": 0,
         "shapeName": "torchBBlock",
         "defaultTexture": "torch_on.png"
     }
-},        
+},       
+"51": {
+    "mask": "0x00",
+    "type": 2,        
+    "name": "fire",
+    "lightSource": 15,
+    "0": {
+        "drawLevel": 0,
+        "shapeType": 2,
+        "useBiomeColor": 0,
+        "shapeName": "wheatBlock",
+        "defaultTexture": "fire_layer_0.png"
+    }        
+},
 "52": {
     "mask": "0x00",
     "type": 2,        
@@ -1795,35 +1809,35 @@
     "type": 2,        
     "0": {
         "drawLevel": 0,
-        "shapeType": 1,
+        "shapeType": 3,
         "useBiomeColor": 0,
         "shapeName": "torchTBlock",
         "defaultTexture": "redstone_torch_off.png"
     },
     "1": {
         "drawLevel": 0,
-        "shapeType": 1,
+        "shapeType": 3,
         "useBiomeColor": 0,
         "shapeName": "torchRBlock",
         "defaultTexture": "redstone_torch_off.png"
     },
     "2": {
         "drawLevel": 0,
-        "shapeType": 1,
+        "shapeType": 3,
         "useBiomeColor": 0,
         "shapeName": "torchLBlock",
         "defaultTexture": "redstone_torch_off.png"
     },
     "3": {
         "drawLevel": 0,
-        "shapeType": 1,
+        "shapeType": 3,
         "useBiomeColor": 0,
         "shapeName": "torchFBlock",
         "defaultTexture": "redstone_torch_off.png"
     },
     "4": {
         "drawLevel": 0,
-        "shapeType": 1,
+        "shapeType": 3,
         "useBiomeColor": 0,
         "shapeName": "torchBBlock",
         "defaultTexture": "redstone_torch_off.png"
@@ -2066,6 +2080,7 @@
 "91": {
     "mask": "0x00",
     "type": 1,        
+    "lightSource": 15,
     "0": {
         "drawLevel": 0,
         "shapeType": 1,
@@ -2915,6 +2930,7 @@
 "124": {
     "mask": "0x00",
     "type": 1,        
+    "lightSource": 15,
     "0": {
         "drawLevel": 0,
         "shapeType": 1,
@@ -3437,6 +3453,19 @@
         "useBiomeColor": 0,
         "shapeName": "simpleBlock",
         "defaultTexture": "command_block.png"
+    }
+},          
+"138": {
+    "mask": "0x00",
+    "type": 2,
+    "lightSource": 15,
+    "name": "Beacon",
+    "0": {
+        "drawLevel": 0,
+        "shapeType": 1,
+        "useBiomeColor": 0,
+        "shapeName": "simpleBlock",
+        "defaultTexture": "glass.png"
     }
 },            
 "139": {

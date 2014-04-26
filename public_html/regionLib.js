@@ -581,7 +581,6 @@ RegionLib.loadChunk = function(aPos, region, compressed){
             console.log("fail");
             return -1;
         }
-    
 
         var aTag;
         
@@ -612,10 +611,10 @@ RegionLib.loadChunk = function(aPos, region, compressed){
             if(aTag.type === 9) NBT.read9(aTag, chunk, chunkData);
         }
         
-        //if(chunk.heightMap === undefined){
+        if(chunk.heightMap === undefined){
             chunk.initHeightMap();
-        //}
-        
+        }
+
         return chunk;
     };
     

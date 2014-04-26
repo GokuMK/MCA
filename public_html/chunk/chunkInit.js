@@ -8,12 +8,12 @@ Chunk.prototype.init2 = function(yyyy){
             var yymax = 49;
         }
         
-        //if(this.lightPopulated === 0){
-        //    if(!this.refreshLight(-1, true)) return false;
-        //    this.lightPopulated = 1;
-        //}        
+        if(this.lightPopulated === 0 && settings.lightInit){
+            if(!this.refreshLight(-1, true)) return false;
+            this.lightPopulated = 1;
+        }
+        
         if(!this.getCache(yymin, yymax)) return false;
-
         
         if(yyyy === 0){ 
             this.isInit = -1;

@@ -50,5 +50,13 @@
 "loadLag": {
     "value": 3,
     "url": true
+},
+"loadSpeed": {
+    "value": 3,
+    "url": true
+},
+"lightInit": {
+    "value": false,
+    "url": true
 }
 }

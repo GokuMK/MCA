@@ -77,7 +77,10 @@ require("ui/selectionBox.js");
         }
         lastTime = timeNow;
         camera.updatePosition(fps);
-        iLag = settings.loadLag;
+        
+        iLag += settings.loadSpeed;
+        if(iLag > settings.loadLag)
+            iLag = settings.loadLag;
         
         if(settings.edit){
         if(new100msec) blockSelection = mcWorld.renderSelection();    
@@ -95,8 +98,9 @@ require("ui/selectionBox.js");
                     var selectedBlock = mcWorld.getChunkBlock(selection.chx,selection.chz,selection.x,selection.y,selection.z);
                     console.log(selectedBlock.id+" "+selectedBlock.data);
                     var replace = false;
-                    if(block[selectedBlock.id][selectedBlock.data].replace !== undefined) 
-                        replace = block[selectedBlock.id][selectedBlock.data].replace;
+                    if(block[selectedBlock.id][selectedBlock.data] & block[selectedBlock.id].mask !== undefined) 
+                        if(block[selectedBlock.id][selectedBlock.data].replace !== undefined) 
+                            replace = block[selectedBlock.id][selectedBlock.data].replace;
                     else if(block[selectedBlock.id].replace !== undefined) 
                         replace = block[selectedBlock.id].replace;
                     

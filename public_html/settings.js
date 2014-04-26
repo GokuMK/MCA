@@ -96,7 +96,13 @@ function Settings(){
         this.loadLag = (parseFloat(settings["loadLag"].value)) || this.loadLag; 
     if( parameters["loadLag"] !== undefined && settings["loadLag"].url)
         this.loadLag = (parseFloat(parameters["loadLag"])) || this.loadLag; 
-
+    
+    this.loadSpeed = 1;
+    if( settings["loadSpeed"] !== undefined )
+        this.loadSpeed = (parseFloat(settings["loadSpeed"].value)) || this.loadSpeed; 
+    if( parameters["loadSpeed"] !== undefined && settings["loadSpeed"].url)
+        this.loadSpeed = (parseFloat(parameters["loadSpeed"])) || this.loadSpeed; 
+    
     this.worldShader = "standard";
     if( settings["worldShader"] !== undefined )
         this.worldShader = settings["worldShader"].value || this.worldShader; 
@@ -109,6 +115,14 @@ function Settings(){
     if( settings["edit"] !== undefined && settings["edit"].url){
         if(parameters["edit"] === "true") this.edit = true; 
         if(parameters["edit"] === "false") this.edit = false; 
+    }
+    
+    this.lightInit = false;
+    if( settings["lightInit"] !== undefined )
+        this.lightInit = settings["lightInit"].value; 
+    if( settings["lightInit"] !== undefined && settings["lightInit"].url){
+        if(parameters["lightInit"] === "true") this.lightInit = true; 
+        if(parameters["lightInit"] === "false") this.lightInit = false; 
     }
     //camera = new Camera([-400,120,0],[5.5,0],[0,1,0]);
     //camera = new CameraGod([0,120,0],[5.5,0],[0,1,0]);

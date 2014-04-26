@@ -89,14 +89,11 @@ Chunk.prototype.initHeightMap = function(){
 Chunk.prototype.refreshLight = function(blockH, lightInit){
     var aindex = 0, lindex = 0, rindex = 0, lindex = 0, findex = 0, bindex = 0, tindex = 0, dindex = 0;
     var index = 0, index2 = 0, skyf = 0;
-    //var timeNow1 = new Date().getTime();
+    var timeNow1 = new Date().getTime();
+    
     lightInit = lightInit || false;
     this.initHeightMap();
     if(!this.getCacheL9()) return false;
-    
-    //var timeNow3 = new Date().getTime();
-    //console.log("czas L0 "+(timeNow3-timeNow1));
-    var timeNow1 = new Date().getTime();
     
     var lightSource = block.lightSource;
     var lightTransmission = block.lightTransmission;
@@ -129,7 +126,9 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
     //hMax++;
     //hMin -= 16;
     //if(hMin < 0) hMin = 0;
-    
+    //var timeNow3 = new Date().getTime();
+    //console.log("czas L00 "+(timeNow3-timeNow1));
+    //var timeNow1 = new Date().getTime();
     for(var z = 2; z < 46; z++)
         for(var x = 2; x <46; x++){
             var y = Chunk.cacheHeightMap9hMax[z*48+x];
@@ -178,13 +177,24 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
         bMax = blockH + 16; if(bMax > 256) bMax = 256;
     }
      
+    var bbMin = 255, bbMax = 0;
     for(var z = 2; z < 46; z++)
        for(var x = 2; x < 46; x++)
           for(var y = bMin + 1; y < bMax - 1; y++){
              aindex = (y)*2304 + (z)*48 + (x);
              cacheBlight9[aindex] = lightSource[cacheId9[aindex]];
+             if(cacheBlight9[aindex] > 0 && y < bbMin) bbMin = y;
+             if(cacheBlight9[aindex] > 0 && y > bbMax) bbMax = y;
           }
-
+  
+    if(blockH === -1){
+        bMin = bbMin - 16; if(bMin < 0) bMin = 0;
+        bMax = bbMax + 16; if(bMax > 256) bMax = 256;
+    }
+    
+    //var timeNow3 = new Date().getTime();
+    //console.log("czas L0 "+(timeNow3-timeNow1));
+    //var timeNow1 = new Date().getTime();
     //propagacja Blight
     for(var it = 0; it < 14; it++)
        for(var z = 1; z < 47; z++)
@@ -218,10 +228,10 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
                     cacheBlight9[bindex] = t*lightTransmission[cacheId9[bindex]];
 
             }
-    var timeNow3 = new Date().getTime();
-    console.log("czas L1 "+(timeNow3-timeNow1));
+    //var timeNow3 = new Date().getTime();
+    //console.log("czas L1 "+(timeNow3-timeNow1));
     //console.log("hmin "+ hMin);
-    var timeNow1 = new Date().getTime();
+    //var timeNow1 = new Date().getTime();
     
     //propagacja Slight
     var tSum = 0;
