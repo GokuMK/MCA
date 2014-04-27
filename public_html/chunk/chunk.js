@@ -196,6 +196,7 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
     //console.log("czas L0 "+(timeNow3-timeNow1));
     //var timeNow1 = new Date().getTime();
     //propagacja Blight
+
     for(var it = 0; it < 14; it++)
        for(var z = 1; z < 47; z++)
           for(var x = 1; x < 47; x++)
@@ -228,14 +229,16 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
                     cacheBlight9[bindex] = t*lightTransmission[cacheId9[bindex]];
 
             }
-    //var timeNow3 = new Date().getTime();
-    //console.log("czas L1 "+(timeNow3-timeNow1));
+    
+    var timeNow3 = new Date().getTime();
+    console.log("czas L1 "+(timeNow3-timeNow1));
     //console.log("hmin "+ hMin);
-    //var timeNow1 = new Date().getTime();
+    var timeNow1 = new Date().getTime();
     
     //propagacja Slight
     var tSum = 0;
     var t = 0;
+    
     for(var it = 0; it < 14; it++)
        for(var z = 1; z < 47; z++)
           for(var x = 1; x < 47; x++)
@@ -270,7 +273,6 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
 
             }
 
-
     var timeNow3 = new Date().getTime();
     console.log("czas L2 "+(timeNow3-timeNow1));
     var timeNow1 = new Date().getTime();
@@ -285,17 +287,21 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
         
     var iChunk;
     var newChunk = [0,0,0,0,0,0,0,0,0];
+    var hashSlight = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    var hashBlight = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
+    //lightInit = true;
+    if(lightInit) 
+        var newChunk = [0,1,0,1,1,1,0,1,0];
+    
     for(var iCh = 0; iCh<=2; iCh++)
         for(var jCh = 0; jCh<=2; jCh++){
-            if(lightInit === true)
+            if(lightInit)
                 if(iCh !== 1 && jCh !== 1) continue;
 
-            var hashSlight = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
-            var hashBlight = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0];
             iChunk = chunk[(iCh)*3+jCh];
             if(iChunk === undefined || iChunk === -1)
-               continue;
-
+                continue;
+                
             for(var i = 0, y = 0; i < 256; i++, y++){
                 if(i%16 === 0){
                     var asection = iChunk.section[i/16];
@@ -305,8 +311,10 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
                         y = -1;
                         continue;
                     }
-                    hashSlight[i/16] = jenkins_hash(asection.skyLight);
-                    hashBlight[i/16] = jenkins_hash(asection.blockLight);
+                    if(!lightInit){
+                        hashSlight[i/16] = jenkins_hash(asection.skyLight);
+                        hashBlight[i/16] = jenkins_hash(asection.blockLight);
+                    }
                 }       
                 for(var z = 0; z < 16; z++){
                     for(var x = 0; x < 16; x++){
@@ -325,19 +333,22 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
             }
             //console.log(hashSlight);
             var hh = 0;
-            for(var i = 0; i < 16; i++){
-                if(iChunk.section[i] === undefined) continue;
-                hh = jenkins_hash(iChunk.section[i].skyLight);
-                if(hashSlight[i] !== hh){
-                    newChunk[(iCh)*3+jCh] = 1;
-                    //console.log("rozne");
+            if(!lightInit)
+                for(var i = 0; i < 16; i++){
+                    if(iChunk.section[i] === undefined) continue;
+                    hh = jenkins_hash(iChunk.section[i].skyLight);
+                    if(hashSlight[i] !== hh){
+                        newChunk[(iCh)*3+jCh] = 1;
+                        break;
+                        //console.log("rozne");
+                    }
+                    hh = jenkins_hash(iChunk.section[i].blockLight);
+                    if(hashBlight[i] !== hh){
+                        newChunk[(iCh)*3+jCh] = 1;
+                        break;
+                        //console.log("rozne");
+                    }
                 }
-                hh = jenkins_hash(iChunk.section[i].blockLight);
-                if(hashBlight[i] !== hh){
-                    newChunk[(iCh)*3+jCh] = 1;
-                    //console.log("rozne");
-                }
-            }
             //console.log(hashSlight2);
         }
     var timeNow3 = new Date().getTime();

@@ -98,9 +98,9 @@ require("ui/selectionBox.js");
                     var selectedBlock = mcWorld.getChunkBlock(selection.chx,selection.chz,selection.x,selection.y,selection.z);
                     console.log(selectedBlock.id+" "+selectedBlock.data);
                     var replace = false;
-                    if(block[selectedBlock.id][selectedBlock.data] & block[selectedBlock.id].mask !== undefined) 
-                        if(block[selectedBlock.id][selectedBlock.data].replace !== undefined) 
-                            replace = block[selectedBlock.id][selectedBlock.data].replace;
+                    if(block[selectedBlock.id][selectedBlock.data & block[selectedBlock.id].mask] !== undefined) 
+                        if(block[selectedBlock.id][selectedBlock.data & block[selectedBlock.id].mask].replace !== undefined) 
+                            replace = block[selectedBlock.id][selectedBlock.data & block[selectedBlock.id].mask].replace;
                     else if(block[selectedBlock.id].replace !== undefined) 
                         replace = block[selectedBlock.id].replace;
                     
@@ -146,7 +146,7 @@ require("ui/selectionBox.js");
             }
         }
         }
-        
+
         mcWorld.render();
         //player.render();
         
