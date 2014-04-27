@@ -549,7 +549,7 @@ mcWorld.updateChunks();");
         
         firstTime = new Date().getTime();
         lastTime = new Date().getTime();
-        tick();       
+        tick();               
     }
     
     function executeJS(){
