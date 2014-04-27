@@ -352,6 +352,8 @@ mcWorld.updateChunks();");
                                                document.mozExitPointerLock ||
                                                document.webkitExitPointerLock;
                     document.exitPointerLock();
+                    camera.moveX = 0;
+                    camera.moveY = 0;
                     break;
                     /*var pos = camera.getXYZPos();
                     var id = 17;
@@ -484,6 +486,7 @@ mcWorld.updateChunks();");
     }
     
     function canvasOn(){
+        document.getElementById("tools").style.display = 'none';
         var canvas = document.getElementById("webgl");
         canvas.onclick = function(){};
         canvas.requestPointerLock = canvas.requestPointerLock ||
