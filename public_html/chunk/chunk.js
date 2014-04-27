@@ -695,7 +695,7 @@ Chunk.prototype.render = function(drawLevel, shader, level){
             if(iLag > 1){
                 iLag -= 1;
                 if(!this.init2(0, true)) {
-                    iLag += 1;
+                    //iLag += 1;
                     return;
                 }
             }
