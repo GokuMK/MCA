@@ -208,8 +208,8 @@
     }
 },
 "8": {
-    "mask": "0x00",
-    "type": 300,        
+    "mask": "0x0F",
+    "type": 301,        
     "lightTransmission": 0.7,
     "0": {
         "name": "Water",
@@ -221,8 +221,8 @@
     }
 },
 "9": {
-    "mask": "0x00",
-    "type": 300,     
+    "mask": "0x0F",
+    "type": 301,     
     "lightTransmission": 0.7,
     "0": {
         "name": "Water",
@@ -234,8 +234,8 @@
     }
 },
 "10": {
-    "mask": "0x00",
-    "type": 1,        
+    "mask": "0x0F",
+    "type": 302,        
     "lightSource": 15,
     "0": {
         "name": "Lava",
@@ -247,8 +247,8 @@
     }
 },    
 "11": {
-    "mask": "0x00",
-    "type": 1,        
+    "mask": "0x0F",
+    "type": 302,        
     "lightSource": 15,
     "0": {
         "name": "Lava",
@@ -1886,7 +1886,7 @@
 "78": {
     "mask": "0x0F",
     "name": "Snow",
-    "type": 303,        
+    "type": 300,        
     "replace": true,
     "0": {
         "drawLevel": 0,
@@ -1950,10 +1950,10 @@
     "mask": "0x00",
     "name": "Ice",
     "lightTransmission": 1.0,
-    "type": 301,        
+    "type": 302,        
     "0": {
         "drawLevel": 3,
-        "shapeType": 9,
+        "shapeType": 1,
         "useBiomeColor": 0,
         "shapeName": "simpleBlock",
         "defaultTexture": "ice.png"

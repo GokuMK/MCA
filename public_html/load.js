@@ -156,10 +156,7 @@ require("ui/selectionBox.js");
         }
         
         if(newSec){
-           window.location.hash =
-                   "pos="+cameraPos[0].toFixed(2)+"+"+cameraPos[1].toFixed(2)+"+"+cameraPos[2].toFixed(2)
-                   +"&rot="+cameraRot[0].toFixed(2)+"+"+cameraRot[1].toFixed(2)
-                   +"&camera="+camera.name;
+           settings.setHashURL(cameraPos, cameraRot, camera.name);
         }
         
         if(sec === 10){
@@ -328,6 +325,9 @@ require("ui/selectionBox.js");
                     mcWorld.save();
                     break;    
                 case 71: // G
+                    var tools = document.getElementById("settings");
+                    if(tools.style.display === "none") tools.style.display = "block";
+                    else if(tools.style.display === "block") tools.style.display = "none";
                     if(window["ace"] === undefined) break;
                     if(codeEditor === null){
                         codeEditor = ace.edit("editor");
@@ -345,7 +345,7 @@ for(var i = -2; i < 3; i++)\n\
 \n\
 mcWorld.updateChunks();");
                     }                                                                
-                    var tools = document.getElementById("tools");
+                    tools = document.getElementById("tools");
                     if(tools.style.display === "none") tools.style.display = "block";
                     else if(tools.style.display === "block") tools.style.display = "none";
                     document.exitPointerLock = document.exitPointerLock ||
@@ -487,6 +487,7 @@ mcWorld.updateChunks();");
     
     function canvasOn(){
         document.getElementById("tools").style.display = 'none';
+        document.getElementById("settings").style.display = 'none';
         var canvas = document.getElementById("webgl");
         canvas.onclick = function(){};
         canvas.requestPointerLock = canvas.requestPointerLock ||
@@ -516,7 +517,7 @@ mcWorld.updateChunks();");
         textDiv = document.getElementById("text");
         
         gluu.initGL(glCanvas);
-        gluu.initStandardShader();
+        gluu.initStandardShader(settings.worldShader);
         gluu.initLineShader();
         gluu.initSelectionShader();
         gl.enable(gl.CULL_FACE);
@@ -549,7 +550,15 @@ mcWorld.updateChunks();");
         mcWorld = new RegionLib(settings.gameRoot, settings.worldName);
         
         document.getElementById("tools").style.display = 'none';
-        
+        document.getElementById("setDstLvl").value = settings.distanceLevel[0];
+        document.getElementById("setDstLvl_val").innerHTML = settings.distanceLevel[0];
+        document.getElementById("shaderName").value = settings.worldShader;
+        document.getElementById("setSun").value = settings.sun;
+        document.getElementById("setSun_val").innerHTML = settings.sun;
+        document.getElementById("setBrightness").value = settings.brightness;
+        document.getElementById("setBrightness_val").innerHTML = settings.brightness;
+        document.getElementById("setSkyColor").color.fromRGB(settings.skyColor[0], settings.skyColor[1], settings.skyColor[2]);
+      
         firstTime = new Date().getTime();
         lastTime = new Date().getTime();
         tick();               
@@ -558,4 +567,4 @@ mcWorld.updateChunks();");
     function executeJS(){
         eval(codeEditor.getValue());
     }
-    
+   

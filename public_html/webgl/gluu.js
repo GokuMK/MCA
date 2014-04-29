@@ -114,9 +114,11 @@ function Gluu () {
         this.selectionShader.samplerUniform = gl.getUniformLocation(this.selectionShader, "uSampler");
     };
     
-    Gluu.prototype.initStandardShader = function() {
-        var fragmentShader = this.getShader(gl, settings.worldShader,"fs");
-        var vertexShader = this.getShader(gl, settings.worldShader,"vs");
+    Gluu.prototype.initStandardShader = function(name) {
+        if(this.standardShader !== undefined)
+            gl.deleteProgram(this.standardShader);
+        var fragmentShader = this.getShader(gl, name,"fs");
+        var vertexShader = this.getShader(gl, name,"vs");
         
         this.standardShader = gl.createProgram();
         gl.attachShader(this.standardShader, vertexShader);
@@ -126,7 +128,7 @@ function Gluu () {
         if (!gl.getProgramParameter(this.standardShader, gl.LINK_STATUS)) {
             alert("Could not initialise shaders");
         }
-
+        settings.worldShader = name;
         gl.useProgram(this.standardShader);
 
         this.standardShader.vertexPositionAttribute = gl.getAttribLocation(this.standardShader, "aVertexPosition");

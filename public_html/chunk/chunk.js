@@ -61,7 +61,7 @@ Chunk.cacheBlight9 = new Uint8Array(258*48*48);
 Chunk.cacheId9 = new Int32Array(258*48*48);
 
 Chunk.prototype.initHeightMap = function(){
-    var index = 0, skyf = 0;
+    var index = 0;
     this.heightMap = new Uint32Array(256);
     for(var z = 0; z < 16; z++)
         for(var x = 0; x < 16; x++)
@@ -76,8 +76,6 @@ Chunk.prototype.initHeightMap = function(){
                     }
                 }
                 index = y*256+z*16+x;
-                //skyf = index % 2;
-                //if(((asection.skyLight[(index/2 - skyf/2)] >> skyf*4) & 0x0F) !== 15){
                 if(block.lightTransmission[asection.blocks[index]] !== 1.0){
                     this.heightMap[z*16+x] = i+1;
                     break;
@@ -88,7 +86,8 @@ Chunk.prototype.initHeightMap = function(){
 
 Chunk.prototype.refreshLight = function(blockH, lightInit){
     var aindex = 0, lindex = 0, rindex = 0, lindex = 0, findex = 0, bindex = 0, tindex = 0, dindex = 0;
-    var index = 0, index2 = 0, skyf = 0;
+    var index = 0, index2 = 0;
+    
     var timeNow1 = new Date().getTime();
     
     lightInit = lightInit || false;
@@ -101,18 +100,16 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
     var cacheBlight9 = Chunk.cacheBlight9;
     var cacheId9 = Chunk.cacheId9;
     
-    //init
+    //find min/max level of sunlight
     var hMin = 256;
     var hMax = 0;
+    var yy = 0;
+    var y = 0;
     for(var z = 0; z < 48; z++)
         for(var x = 0; x < 48; x++){
             y = Chunk.cacheHeightMap9[z*48+x];
             if(y > hMax) hMax = y;
             if(y < hMin) hMin = y;
-        }
-    var yy;
-    for(var z = 0; z < 48; z++)
-        for(var x = 0; x < 48; x++){
             yy = 0;
             for(var i = -1; i<=1; i++)
                 for(var j = -1; j<=1; j++){
@@ -123,12 +120,7 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
             Chunk.cacheHeightMap9hMax[z*48+x] = yy+1;
         }
     
-    //hMax++;
-    //hMin -= 16;
-    //if(hMin < 0) hMin = 0;
-    //var timeNow3 = new Date().getTime();
-    //console.log("czas L00 "+(timeNow3-timeNow1));
-    //var timeNow1 = new Date().getTime();
+    //sunlight down propagation
     for(var z = 2; z < 46; z++)
         for(var x = 2; x <46; x++){
             var y = Chunk.cacheHeightMap9hMax[z*48+x];
@@ -168,6 +160,7 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
     hMin--;
     if(hMin < 1) hMin = 1;
     
+    //find min/max level of blocklight
     var t = 0;
     if(blockH === -1){
         var bMin = 0;
@@ -187,16 +180,25 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
              if(cacheBlight9[aindex] > 0 && y > bbMax) bbMax = y;
           }
   
+    var isNewBlockLight = false;
     if(blockH === -1){
         bMin = bbMin - 16; if(bMin < 0) bMin = 0;
         bMax = bbMax + 16; if(bMax > 256) bMax = 256;
+        isNewBlockLight = true;
+    } else {
+        for(aindex = bMin*2304; aindex < bMax*2304; aindex++){
+            if(cacheBlight9[aindex] > 0) {
+                isNewBlockLight = true; 
+                break;
+            }
+        }
     }
     
-    //var timeNow3 = new Date().getTime();
-    //console.log("czas L0 "+(timeNow3-timeNow1));
-    //var timeNow1 = new Date().getTime();
+    var timeNow3 = new Date().getTime();
+    console.log("czas L0 "+(timeNow3-timeNow1));
+    var timeNow1 = new Date().getTime();
     //propagacja Blight
-
+    if(isNewBlockLight)
     for(var it = 0; it < 14; it++)
        for(var z = 1; z < 47; z++)
           for(var x = 1; x < 47; x++)
@@ -317,17 +319,11 @@ Chunk.prototype.refreshLight = function(blockH, lightInit){
                     }
                 }       
                 for(var z = 0; z < 16; z++){
-                    for(var x = 0; x < 16; x++){
-                           index = y*256+z*16+x;
-                           index2 = (i)*2304 + (jCh*16+z)*48 + (iCh*16+x);
-                           skyf = index % 2;
-                           if(skyf === 0){
-                               asection.skyLight[(index/2)] = (asection.skyLight[(index/2)] & 0xF0) + cacheSlight9[index2];
-                               asection.blockLight[(index/2)] = (asection.blockLight[(index/2)] & 0xF0) + cacheBlight9[index2];
-                           }else{
-                               asection.skyLight[(index/2 - 0.5)] = (asection.skyLight[(index/2 - 0.5)] & 0x0F) + (cacheSlight9[index2] << 4);
-                               asection.blockLight[(index/2 - 0.5)] = (asection.blockLight[(index/2 - 0.5)] & 0x0F) + (cacheBlight9[index2] << 4);
-                           }
+                    for(var x = 0; x < 16; x+=2){
+                        index = (y*256+z*16+x)/2;
+                        index2 = (i)*2304 + (jCh*16+z)*48 + (iCh*16+x);
+                        asection.skyLight[index] = cacheSlight9[index2] + (cacheSlight9[index2+1] << 4);
+                        asection.blockLight[index] = cacheBlight9[index2] + (cacheBlight9[index2+1] << 4);
                     }
                 }
             }
@@ -601,11 +597,12 @@ Chunk.prototype.updateBlock = function(x, h, z, id, data){
                 if(newChunk[(i+1)*3+j+1] === 0) continue;
                 iChunk = mcWorld.requestChunk(this.xPos+i, this.zPos+j);
                 if(iChunk === undefined || iChunk === -1 || iChunk === -2 ) continue;
+                iChunk.changed = true;
                 iChunk.init2(0);
                 iChunk.init2(1);
             }
         var timeNow3 = new Date().getTime();
-        console.log("czas Total "+(timeNow3-timeNow1));
+        console.log("czas chunk "+(timeNow3-timeNow1));
     };  
     
 Chunk.prototype.update = function(){
@@ -622,12 +619,13 @@ Chunk.prototype.update = function(){
                 if(newChunk[(i+1)*3+j+1] === 0) continue;
                 iChunk = mcWorld.requestChunk(this.xPos+i, this.zPos+j);
                 if(iChunk === undefined || iChunk === -1 || iChunk === -2 ) continue;
+                iChunk.changed = true;
                 iChunk.init2(0);
                 iChunk.init2(1);
             }
         this.needsUpdate = false;
         var timeNow3 = new Date().getTime();
-        console.log("czas Total "+(timeNow3-timeNow1));
+        console.log("czas chunk "+(timeNow3-timeNow1));
     };  
     
 Chunk.prototype.setBlock = function(x, h, z, id, data){

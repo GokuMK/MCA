@@ -81,9 +81,10 @@ function Settings(){
     }
     this.sun = 1.0;
     if( settings["sun"] !== undefined )
-        this.sun = (parseFloat(settings["sun"].value) + 0.1) || this.sun; 
+        this.sun = (parseFloat(settings["sun"].value) + 0.01) || this.sun; 
     if( parameters["sun"] !== undefined && settings["sun"].url)
-        this.sun = (parseFloat(parameters["sun"]) + 0.1) || this.sun; 
+        this.sun = (parseFloat(parameters["sun"]) + 0.01) || this.sun; 
+    if(this.sun > 1.0) this.sun = 1.0;
 
     this.brightness = 0.3;
     if( settings["brightness"] !== undefined )
@@ -132,3 +133,84 @@ function Settings(){
     if( parameters["camera"] !== undefined && settings["camera"].url)
         this.cameraType = parameters["camera"];
 }
+
+Settings.prototype.setDistanceLevel = function(val){
+        this.distanceLevel = [val,val,val];
+        document.getElementById("setDstLvl_val").innerHTML = this.distanceLevel[0];
+        this.getSettingsURL();
+    };
+    
+Settings.prototype.setSkyColor = function(color){
+        this.skyColor[0] = color[0];
+        this.skyColor[1] = color[1];
+        this.skyColor[2] = color[2];
+        this.getSettingsURL();
+    };
+    
+Settings.prototype.setSun = function(value){
+        this.sun = value;
+        //console.log(settings.skyColor);
+        document.getElementById("setSun_val").innerHTML = this.sun;
+        this.getSettingsURL();
+    };
+    
+Settings.prototype.setBrightness = function(value){
+        this.brightness = value;
+        //console.log(settings.skyColor);
+        document.getElementById("setBrightness_val").innerHTML = this.brightness;
+        this.getSettingsURL();
+    };
+    
+Settings.prototype.getSettingsURL = function(){
+       //console.log(document.location);
+       var url2 = document.location.href.split(/#/)[0];
+       url2 = url2.split(/\?/);
+       var url3;
+       if(url2[1] === undefined) url3 = [];
+       else url3 = url2[1].split(/&/);
+       
+       var url = url2[0];
+       var and = false;
+       var names = { };
+       var s = this;
+       url3.forEach(function(e) {
+           if(!and){ 
+               and = true;
+               url+="?";
+           } else {
+               url+="&";
+           }
+           if(e.split(/=/)[0].toLowerCase() === "sun") {
+               names["sun"] = true;
+               url+="sun="+s.sun;
+           } else if(e.split(/=/)[0].toLowerCase() === "skycolor") {
+               names["skyColor"] = true;
+               url+="skyColor="+Math.floor(s.skyColor[0]*255)+"-"+Math.floor(s.skyColor[1]*255)+"-"+Math.floor(s.skyColor[2]*255);
+           } else if(e.split(/=/)[0].toLowerCase() === "brightness") {
+               names["brightness"] = true;
+               url+="brightness="+s.brightness;
+           } else if(e.split(/=/)[0].toLowerCase() === "worldshader") {
+               names["worldshader"] = true;
+               url+="worldShader="+s.worldShader;
+           } else if(e.split(/=/)[0].toLowerCase() === "distancelevel") {
+               names["distancelevel"] = true;
+               url+="distanceLevel="+s.distanceLevel[0];
+           } else {
+               url+=e;
+           }
+       });
+       if(names["sun"] !== true) url+="&sun="+this.sun;
+       if(names["worldshader"] !== true) url+="&worldShader="+this.worldShader;
+       if(names["brightness"] !== true) url+="&brightness="+this.brightness;
+       if(names["distancelevel"] !== true) url+="&distanceLevel="+this.distanceLevel[0];
+       if(names["skyColor"] !== true) url+="&skyColor="+Math.floor(this.skyColor[0]*255)+"-"+Math.floor(this.skyColor[1]*255)+"-"+Math.floor(this.skyColor[2]*255);
+
+       document.getElementById("settingsURL").value = url+window.location.hash;
+    };
+    
+Settings.prototype.setHashURL = function(cameraPos, cameraRot, name){
+        window.location.hash =
+            "pos="+cameraPos[0].toFixed(2)+"+"+cameraPos[1].toFixed(2)+"+"+cameraPos[2].toFixed(2)
+            +"&rot="+cameraRot[0].toFixed(2)+"+"+cameraRot[1].toFixed(2)
+            +"&camera="+name;
+    };
