@@ -253,6 +253,7 @@ Chunk.prototype.init2 = function(yyyy){
                                     if(flight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     //for(var jj = 0; jj < shape2.front.length; jj+=5 ){
+                                    if(block.lightSource[blockId] === 0){
                                     var f1light = Math.floor((flight+cacheSlight[findex-18]+cacheSlight[findex-324-18]+cacheSlight[findex-324])/4);
                                     var f2light = Math.floor((flight+cacheSlight[findex-324]+cacheSlight[findex-324+18]+cacheSlight[findex+18])/4);
                                     var f3light = Math.floor((flight+cacheSlight[findex+18]+cacheSlight[findex+324+18]+cacheSlight[findex+324])/4);
@@ -261,7 +262,9 @@ Chunk.prototype.init2 = function(yyyy){
                                     var f2Blight = Math.floor((fBlight+cacheBlight[findex-324]+cacheBlight[findex-324+18]+cacheBlight[findex+18])/4);
                                     var f3Blight = Math.floor((fBlight+cacheBlight[findex+18]+cacheBlight[findex+324+18]+cacheBlight[findex+324])/4);
                                     var f4Blight = Math.floor((fBlight+cacheBlight[findex+324]+cacheBlight[findex+324-18]+cacheBlight[findex-18])/4);
-
+                                    } else {
+                                        f1light = f2light = f3light = f4light = f1Blight = f2Blight = f3Blight = f4Blight = 15;
+                                    }
                                     var jj = 0;
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.front[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape2.front[jj+1]; 
@@ -327,7 +330,7 @@ Chunk.prototype.init2 = function(yyyy){
                                 if(drawB){
                                     if(blight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
-                                    
+                                    if(block.lightSource[blockId] === 0){
                                     var b1light = Math.floor((blight+cacheSlight[bindex-18]+cacheSlight[bindex-324-18]+cacheSlight[bindex-324])/4);
                                     var b2light = Math.floor((blight+cacheSlight[bindex-324]+cacheSlight[bindex-324+18]+cacheSlight[bindex+18])/4);
                                     var b3light = Math.floor((blight+cacheSlight[bindex+18]+cacheSlight[bindex+324+18]+cacheSlight[bindex+324])/4);
@@ -336,7 +339,9 @@ Chunk.prototype.init2 = function(yyyy){
                                     var b2Blight = Math.floor((bBlight+cacheBlight[bindex-324]+cacheBlight[bindex-324+18]+cacheBlight[bindex+18])/4);
                                     var b3Blight = Math.floor((bBlight+cacheBlight[bindex+18]+cacheBlight[bindex+324+18]+cacheBlight[bindex+324])/4);
                                     var b4Blight = Math.floor((bBlight+cacheBlight[bindex+324]+cacheBlight[bindex+324-18]+cacheBlight[bindex-18])/4);
-                                    //for(var jj = 0; jj < shape2.back.length; jj+=5 ){
+                                    } else {
+                                        b1light = b2light = b3light = b4light = b1Blight = b2Blight = b3Blight = b4Blight = 15;
+                                    }
                                     var jj = 0;
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.back[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape2.back[jj+1]; 
@@ -402,6 +407,7 @@ Chunk.prototype.init2 = function(yyyy){
                                 if(drawR){ //right
                                     if(rlight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
+                                    if(block.lightSource[blockId] === 0){
                                     var r1light = Math.floor((rlight+cacheSlight[rindex-1]+cacheSlight[rindex-324-1]+cacheSlight[rindex-324])/4);
                                     var r2light = Math.floor((rlight+cacheSlight[rindex-324]+cacheSlight[rindex-324+1]+cacheSlight[rindex+1])/4);
                                     var r3light = Math.floor((rlight+cacheSlight[rindex+1]+cacheSlight[rindex+324+1]+cacheSlight[rindex+324])/4);
@@ -410,8 +416,10 @@ Chunk.prototype.init2 = function(yyyy){
                                     var r2Blight = Math.floor((rBlight+cacheBlight[rindex-324]+cacheBlight[rindex-324+1]+cacheBlight[rindex+1])/4);
                                     var r3Blight = Math.floor((rBlight+cacheBlight[rindex+1]+cacheBlight[rindex+324+1]+cacheBlight[rindex+324])/4);
                                     var r4Blight = Math.floor((rBlight+cacheBlight[rindex+324]+cacheBlight[rindex+324-1]+cacheBlight[rindex-1])/4);
+                                    } else {
+                                        r1light = r2light = r3light = r4light = r1Blight = r2Blight = r3Blight = r4Blight = 15;
+                                    }
                                     var jj = 0;
-                                    //for(var jj = 0; jj < shape2.right.length; jj+=5 ){
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.right[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape2.right[jj+1]; 
                                         punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.right[jj+2];
@@ -476,6 +484,7 @@ Chunk.prototype.init2 = function(yyyy){
                                 if(drawL){ //left
                                     if(llight > 8 && drawLevel === 0  ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
+                                    if(block.lightSource[blockId] === 0){
                                     var l1light = Math.floor((llight+cacheSlight[lindex-1]+cacheSlight[lindex-324-1]+cacheSlight[lindex-324])/4);
                                     var l2light = Math.floor((llight+cacheSlight[lindex-324]+cacheSlight[lindex-324+1]+cacheSlight[lindex+1])/4);
                                     var l3light = Math.floor((llight+cacheSlight[lindex+1]+cacheSlight[lindex+324+1]+cacheSlight[lindex+324])/4);
@@ -484,8 +493,10 @@ Chunk.prototype.init2 = function(yyyy){
                                     var l2Blight = Math.floor((lBlight+cacheBlight[lindex-324]+cacheBlight[lindex-324+1]+cacheBlight[lindex+1])/4);
                                     var l3Blight = Math.floor((lBlight+cacheBlight[lindex+1]+cacheBlight[lindex+324+1]+cacheBlight[lindex+324])/4);
                                     var l4Blight = Math.floor((lBlight+cacheBlight[lindex+324]+cacheBlight[lindex+324-1]+cacheBlight[lindex-1])/4);
+                                    } else {
+                                        l1light = l2light = l3light = l4light = l1Blight = l2Blight = l3Blight = l4Blight = 15;
+                                    }                    
                                     var jj = 0;
-                                    //for(var jj = 0; jj < shape2.left.length; jj+=5 ){
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape2.left[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape2.left[jj+1]; 
                                         punkty22.d[punkty22.o++] = this.zPos*16+z+shape2.left[jj+2];
@@ -550,6 +561,7 @@ Chunk.prototype.init2 = function(yyyy){
                                 if(drawD){ //bottom
                                     punkty22 = punkty[drawLevel];
                                     //for(var jj = 0; jj < shape.bottom.length; jj+=5 ){
+                                    if(block.lightSource[blockId] === 0){
                                     var d1light = Math.floor((dlight+cacheSlight[dindex-1]+cacheSlight[dindex-18-1]+cacheSlight[dindex-18])/4);
                                     var d2light = Math.floor((dlight+cacheSlight[dindex-18]+cacheSlight[dindex-18+1]+cacheSlight[dindex+1])/4);
                                     var d3light = Math.floor((dlight+cacheSlight[dindex+1]+cacheSlight[dindex+18+1]+cacheSlight[dindex+18])/4);
@@ -558,6 +570,9 @@ Chunk.prototype.init2 = function(yyyy){
                                     var d2Blight = Math.floor((dBlight+cacheBlight[dindex-18]+cacheBlight[dindex-18+1]+cacheBlight[dindex+1])/4);
                                     var d3Blight = Math.floor((dBlight+cacheBlight[dindex+1]+cacheBlight[dindex+18+1]+cacheBlight[dindex+18])/4);
                                     var d4Blight = Math.floor((dBlight+cacheBlight[dindex+18]+cacheBlight[dindex+18-1]+cacheBlight[dindex-1])/4);
+                                    } else {
+                                        d1light = d2light = d3light = d4light = d1Blight = d2Blight = d3Blight = d4Blight = 15;
+                                    }
                                     var jj = 0;
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
@@ -624,6 +639,7 @@ Chunk.prototype.init2 = function(yyyy){
                                     if(tlight > 8 && drawLevel === 0 ) punkty22 = punkty[drawLevel+1];
                                     else punkty22 = punkty[drawLevel];
                                     //for(var jj = 0; jj < shape.top.length; jj+=5 ){
+                                    if(block.lightSource[blockId] === 0){
                                     var t1light = Math.floor((tlight+cacheSlight[tindex-1]+cacheSlight[tindex-18-1]+cacheSlight[tindex-18])/4);
                                     var t2light = Math.floor((tlight+cacheSlight[tindex-18]+cacheSlight[tindex-18+1]+cacheSlight[tindex+1])/4);
                                     var t3light = Math.floor((tlight+cacheSlight[tindex+1]+cacheSlight[tindex+18+1]+cacheSlight[tindex+18])/4);
@@ -632,6 +648,9 @@ Chunk.prototype.init2 = function(yyyy){
                                     var t2Blight = Math.floor((tBlight+cacheBlight[tindex-18]+cacheBlight[tindex-18+1]+cacheBlight[tindex+1])/4);
                                     var t3Blight = Math.floor((tBlight+cacheBlight[tindex+1]+cacheBlight[tindex+18+1]+cacheBlight[tindex+18])/4);
                                     var t4Blight = Math.floor((tBlight+cacheBlight[tindex+18]+cacheBlight[tindex+18-1]+cacheBlight[tindex-1])/4);
+                                    } else {
+                                        t1light = t2light = t3light = t4light = t1Blight = t2Blight = t3Blight = t4Blight = 15;
+                                    }
                                     var jj = 0;
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
@@ -1836,6 +1855,7 @@ Chunk.prototype.init2 = function(yyyy){
                                 }
 
                                 if(drawF){
+                                    if(block.lightSource[blockId] === 0){
                                     var f1light = Math.floor((flight+cacheSlight[findex-18]+cacheSlight[findex-324-18]+cacheSlight[findex-324])/4);
                                     var f2light = Math.floor((flight+cacheSlight[findex-324]+cacheSlight[findex-324+18]+cacheSlight[findex+18])/4);
                                     var f3light = Math.floor((flight+cacheSlight[findex+18]+cacheSlight[findex+324+18]+cacheSlight[findex+324])/4);
@@ -1844,7 +1864,9 @@ Chunk.prototype.init2 = function(yyyy){
                                     var f2Blight = Math.floor((fBlight+cacheBlight[findex-324]+cacheBlight[findex-324+18]+cacheBlight[findex+18])/4);
                                     var f3Blight = Math.floor((fBlight+cacheBlight[findex+18]+cacheBlight[findex+324+18]+cacheBlight[findex+324])/4);
                                     var f4Blight = Math.floor((fBlight+cacheBlight[findex+324]+cacheBlight[findex+324-18]+cacheBlight[findex-18])/4);
-
+                                    } else {
+                                        f1light = f2light = f3light = f4light = f1Blight = f2Blight = f3Blight = f4Blight = 15;
+                                    }
                                     var jj = 0;
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape.front[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape.front[jj+1]*height1; 
@@ -1908,6 +1930,7 @@ Chunk.prototype.init2 = function(yyyy){
                                     //}    
                                 }//back
                                 if(drawB){
+                                    if(block.lightSource[blockId] === 0){
                                     var b1light = Math.floor((blight+cacheSlight[bindex-18]+cacheSlight[bindex-324-18]+cacheSlight[bindex-324])/4);
                                     var b2light = Math.floor((blight+cacheSlight[bindex-324]+cacheSlight[bindex-324+18]+cacheSlight[bindex+18])/4);
                                     var b3light = Math.floor((blight+cacheSlight[bindex+18]+cacheSlight[bindex+324+18]+cacheSlight[bindex+324])/4);
@@ -1916,7 +1939,9 @@ Chunk.prototype.init2 = function(yyyy){
                                     var b2Blight = Math.floor((bBlight+cacheBlight[bindex-324]+cacheBlight[bindex-324+18]+cacheBlight[bindex+18])/4);
                                     var b3Blight = Math.floor((bBlight+cacheBlight[bindex+18]+cacheBlight[bindex+324+18]+cacheBlight[bindex+324])/4);
                                     var b4Blight = Math.floor((bBlight+cacheBlight[bindex+324]+cacheBlight[bindex+324-18]+cacheBlight[bindex-18])/4);
-
+                                    } else {
+                                        b1light = b2light = b3light = b4light = b1Blight = b2Blight = b3Blight = b4Blight = 15;
+                                    }
                                     var jj = 0;
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape.back[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape.back[jj+1]*height3; 
@@ -1980,6 +2005,7 @@ Chunk.prototype.init2 = function(yyyy){
                                     //}  
                                 }
                                 if(drawR){ //right
+                                    if(block.lightSource[blockId] === 0){
                                     var r1light = Math.floor((rlight+cacheSlight[rindex-1]+cacheSlight[rindex-324-1]+cacheSlight[rindex-324])/4);
                                     var r2light = Math.floor((rlight+cacheSlight[rindex-324]+cacheSlight[rindex-324+1]+cacheSlight[rindex+1])/4);
                                     var r3light = Math.floor((rlight+cacheSlight[rindex+1]+cacheSlight[rindex+324+1]+cacheSlight[rindex+324])/4);
@@ -1988,6 +2014,9 @@ Chunk.prototype.init2 = function(yyyy){
                                     var r2Blight = Math.floor((rBlight+cacheBlight[rindex-324]+cacheBlight[rindex-324+1]+cacheBlight[rindex+1])/4);
                                     var r3Blight = Math.floor((rBlight+cacheBlight[rindex+1]+cacheBlight[rindex+324+1]+cacheBlight[rindex+324])/4);
                                     var r4Blight = Math.floor((rBlight+cacheBlight[rindex+324]+cacheBlight[rindex+324-1]+cacheBlight[rindex-1])/4);
+                                    } else {
+                                        r1light = r2light = r3light = r4light = r1Blight = r2Blight = r3Blight = r4Blight = 15;
+                                    }
                                     var jj = 0;
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape.right[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape.right[jj+1]*height2; 
@@ -2051,6 +2080,7 @@ Chunk.prototype.init2 = function(yyyy){
                                     //}  
                                 }
                                 if(drawL){ //left
+                                    if(block.lightSource[blockId] === 0){
                                     var l1light = Math.floor((llight+cacheSlight[lindex-1]+cacheSlight[lindex-324-1]+cacheSlight[lindex-324])/4);
                                     var l2light = Math.floor((llight+cacheSlight[lindex-324]+cacheSlight[lindex-324+1]+cacheSlight[lindex+1])/4);
                                     var l3light = Math.floor((llight+cacheSlight[lindex+1]+cacheSlight[lindex+324+1]+cacheSlight[lindex+324])/4);
@@ -2059,6 +2089,9 @@ Chunk.prototype.init2 = function(yyyy){
                                     var l2Blight = Math.floor((lBlight+cacheBlight[lindex-324]+cacheBlight[lindex-324+1]+cacheBlight[lindex+1])/4);
                                     var l3Blight = Math.floor((lBlight+cacheBlight[lindex+1]+cacheBlight[lindex+324+1]+cacheBlight[lindex+324])/4);
                                     var l4Blight = Math.floor((lBlight+cacheBlight[lindex+324]+cacheBlight[lindex+324-1]+cacheBlight[lindex-1])/4);
+                                    } else {
+                                        l1light = l2light = l3light = l4light = l1Blight = l2Blight = l3Blight = l4Blight = 15;
+                                    }     
                                     var jj = 0;
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape.left[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape.left[jj+1]*height4; 
@@ -2122,6 +2155,7 @@ Chunk.prototype.init2 = function(yyyy){
                                     //} 
                                 }
                                 if(drawD){ //bottom
+                                    if(block.lightSource[blockId] === 0){
                                     var d1light = Math.floor((dlight+cacheSlight[dindex-1]+cacheSlight[dindex-18-1]+cacheSlight[dindex-18])/4);
                                     var d2light = Math.floor((dlight+cacheSlight[dindex-18]+cacheSlight[dindex-18+1]+cacheSlight[dindex+1])/4);
                                     var d3light = Math.floor((dlight+cacheSlight[dindex+1]+cacheSlight[dindex+18+1]+cacheSlight[dindex+18])/4);
@@ -2130,6 +2164,9 @@ Chunk.prototype.init2 = function(yyyy){
                                     var d2Blight = Math.floor((dBlight+cacheBlight[dindex-18]+cacheBlight[dindex-18+1]+cacheBlight[dindex+1])/4);
                                     var d3Blight = Math.floor((dBlight+cacheBlight[dindex+1]+cacheBlight[dindex+18+1]+cacheBlight[dindex+18])/4);
                                     var d4Blight = Math.floor((dBlight+cacheBlight[dindex+18]+cacheBlight[dindex+18-1]+cacheBlight[dindex-1])/4);
+                                    } else {
+                                        d1light = d2light = d3light = d4light = d1Blight = d2Blight = d3Blight = d4Blight = 15;
+                                    }
                                     var jj = 0;
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape.bottom[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape.bottom[jj+1]; 
@@ -2193,6 +2230,7 @@ Chunk.prototype.init2 = function(yyyy){
                                     //}
                                 }
                                 if(drawT){ //top
+                                    if(block.lightSource[blockId] === 0){
                                     var t1light = Math.floor((tlight+cacheSlight[tindex-1]+cacheSlight[tindex-18-1]+cacheSlight[tindex-18])/4);
                                     var t2light = Math.floor((tlight+cacheSlight[tindex-18]+cacheSlight[tindex-18+1]+cacheSlight[tindex+1])/4);
                                     var t3light = Math.floor((tlight+cacheSlight[tindex+1]+cacheSlight[tindex+18+1]+cacheSlight[tindex+18])/4);
@@ -2201,6 +2239,9 @@ Chunk.prototype.init2 = function(yyyy){
                                     var t2Blight = Math.floor((tBlight+cacheBlight[tindex-18]+cacheBlight[tindex-18+1]+cacheBlight[tindex+1])/4);
                                     var t3Blight = Math.floor((tBlight+cacheBlight[tindex+1]+cacheBlight[tindex+18+1]+cacheBlight[tindex+18])/4);
                                     var t4Blight = Math.floor((tBlight+cacheBlight[tindex+18]+cacheBlight[tindex+18-1]+cacheBlight[tindex-1])/4);
+                                    } else {
+                                        t1light = t2light = t3light = t4light = t1Blight = t2Blight = t3Blight = t4Blight = 15;
+                                    }
                                     var jj = 0;
                                         punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
                                         punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]*height3;
