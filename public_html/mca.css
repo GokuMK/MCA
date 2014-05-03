@@ -1,3 +1,37 @@
+#info {
+    width: 100%;
+    left: 0px; 
+    top: 0px; 
+    background-color:#222222;
+    text-align: left;
+    font-family: Verdana;
+    color: #FFFFFF; 
+    font-size: 14px;
+    padding-left: 10px;
+    padding-right: 2px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    border: none;
+}
+#info2 {
+    right: 0px; 
+    top: 0px; 
+    position:fixed; 
+    text-align: right;
+    font-family: Verdana;
+    color: #666666; 
+    font-size: 9px;
+    border: none;
+}
+#info2 a:link {color: #666666;}
+#info2 a:visited {color: #666666;}
+#info2 a:hover {color: #666666;}
+#info2 a:active {color: #666666;}
+#info a:link {color: #FFFFFF; font-size: 14px; font-family: Verdana;}
+#info a:visited {color: #FFFFFF; font-size: 14px; font-family: Verdana;}
+#info a:hover {color: #FFFFFF; font-size: 14px; font-family: Verdana;}
+#info a:active {color: #FFFFFF; font-size: 14px; font-family: Verdana;}
+
 #settings {
     width: 400px;
     display: none;
@@ -16,7 +50,7 @@
     border: 1px solid #C86E32;
 }
 #tools {
-    width: 550px;
+    width: 600px;
     display: none;
     height: 100%;
     position:fixed; 

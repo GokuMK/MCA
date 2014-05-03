@@ -328,7 +328,7 @@ require("ui/selectionBox.js");
                     var tools = document.getElementById("settings");
                     if(tools.style.display === "none") tools.style.display = "block";
                     else if(tools.style.display === "block") tools.style.display = "none";
-                    if(window["ace"] === undefined) break;
+                    if(window["ace"] !== undefined && settings.edit){ 
                     if(codeEditor === null){
                         codeEditor = ace.edit("editor");
                         codeEditor.setTheme("ace/theme/tomorrow_night");
@@ -348,6 +348,7 @@ mcWorld.updateChunks();");
                     tools = document.getElementById("tools");
                     if(tools.style.display === "none") tools.style.display = "block";
                     else if(tools.style.display === "block") tools.style.display = "none";
+                    }
                     document.exitPointerLock = document.exitPointerLock ||
                                                document.mozExitPointerLock ||
                                                document.webkitExitPointerLock;
@@ -372,6 +373,7 @@ mcWorld.updateChunks();");
                     break;    
                 case 72: //H
                     if(window["ace"] === undefined) break;
+                    if(!settings.edit) break;
                     executeJS();
                     break;
                 case 77: // M

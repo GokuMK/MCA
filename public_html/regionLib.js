@@ -433,7 +433,7 @@ RegionLib.prototype.loadRegion = function(x, y){
     worker.onerror = function(e){
         this.region.loaded = -1;
     };
-    var path = this.gameRoot+"/worlds/"+this.worldName+"/region/r."+x+"."+y+".mca";
+    var path = this.gameRoot+"/"+this.worldName+"/region/r."+x+"."+y+".mca";
     var url = "";
     if(this.gameRoot.indexOf(":") === -1){
         //console.log(document.location);

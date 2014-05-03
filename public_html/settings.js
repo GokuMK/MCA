@@ -169,17 +169,11 @@ Settings.prototype.getSettingsURL = function(){
        if(url2[1] === undefined) url3 = [];
        else url3 = url2[1].split(/&/);
        
-       var url = url2[0];
-       var and = false;
+       var url = url2[0]+"?";
        var names = { };
        var s = this;
        url3.forEach(function(e) {
-           if(!and){ 
-               and = true;
-               url+="?";
-           } else {
-               url+="&";
-           }
+           url+="&";
            if(e.split(/=/)[0].toLowerCase() === "sun") {
                names["sun"] = true;
                url+="sun="+s.sun;
