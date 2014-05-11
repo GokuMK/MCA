@@ -11,6 +11,8 @@ require("camera/camera.js");
 require("camera/cameraGod.js");
 require("camera/cameraPlayer.js");
 require("regionLib.js");
+require("regionSrv.js");
+require("world.js");
 require("chunk/chunk.js");
 require("chunk/chunkCache.js");
 require("chunk/chunkInit.js");
@@ -19,6 +21,7 @@ require("entity/mob.js");
 require("entity/player.js");
 require("ui/pointer.js");
 require("ui/selectionBox.js");
+
 
     var gl;
     var gluu = new Gluu();
@@ -549,7 +552,8 @@ mcWorld.updateChunks();");
             punkty1[i].o = 0;
         }
 
-        mcWorld = new RegionLib(settings.gameRoot, settings.worldName);
+        //mcWorld = new RegionLib(settings.gameRoot, settings.worldName);
+        mcWorld = new World({server: settings.server, gameRoot: settings.gameRoot, worldName: settings.worldName});
         
         document.getElementById("tools").style.display = 'none';
         document.getElementById("setDstLvl").value = settings.distanceLevel[0];

@@ -3,6 +3,7 @@ function SelectionBox(){
 }
 
 SelectionBox.prototype.render = function(selection){
+        if(selection === undefined) return;
         var shader = gluu.lineShader;
         gl.useProgram(shader);
         mat4.perspective(gluu.pMatrix, camera.fovy, gl.viewportWidth / gl.viewportHeight, 0.1, 6000.0);

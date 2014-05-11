@@ -17,6 +17,12 @@ function Settings(){
     if( parameters["worldname"] !== undefined && settings["worldname"].url) 
         this.worldName = parameters["worldname"];
     
+    this.server = undefined;
+    if( settings["server"] !== undefined )
+        this.server = settings["server"].value;
+    if( parameters["server"] !== undefined) 
+        this.server = parameters["server"];
+    
     this.distanceLevel = [10,10,10];
     if( settings["distanceLevel"] !== undefined ){
         this.distanceLevel[0] = parseInt((settings["distanceLevel"].value.split("-"))[0]) || this.distanceLevel[0]; 

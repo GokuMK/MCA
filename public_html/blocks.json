@@ -1972,7 +1972,7 @@
 },              
 "81": {
     "mask": "0x00",
-    "type": 2,        
+    "type": 2,
     "0": {
         "drawLevel": 0,
         "shapeType": 1,

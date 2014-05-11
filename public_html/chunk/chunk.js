@@ -1,13 +1,14 @@
 function Chunk(){
         this.section = new Array();
-        this.isInit = 0;
-        this.isInit1 = 0;
-        this.visible = true;
+        this.isInit = -1;
+        this.isInit1 = -1;
+        //this.visible = true;
         this.changed = false;
         this.ivbo = new Array();
         this.vbo = new Array();
         this.needsUpdate = false;
         this.timestamp = new Date().getTime();
+        this.mxaVal = 0;
 }
 
 Chunk.stairsData = new Array();
@@ -63,6 +64,7 @@ Chunk.cacheId9 = new Int32Array(258*48*48);
 Chunk.prototype.initHeightMap = function(){
     var index = 0;
     this.heightMap = new Uint32Array(256);
+    this.mxaVal = 0;
     for(var z = 0; z < 16; z++)
         for(var x = 0; x < 16; x++)
             for(var i = 255, y = 15; i > 0; i--, y--){
@@ -76,6 +78,7 @@ Chunk.prototype.initHeightMap = function(){
                     }
                 }
                 index = y*256+z*16+x;
+                if(asection.blocks[index] > 0 && i > this.mxaVal ) this.mxaVal = i;
                 if(block.lightTransmission[asection.blocks[index]] !== 1.0){
                     this.heightMap[z*16+x] = i+1;
                     break;
@@ -695,7 +698,7 @@ Chunk.prototype.getSunLightValue = function(x, y, z){
 Chunk.prototype.render = function(drawLevel, shader, level){
         //console.log("aaa");
         //var level = 0;
-        if(!this.visible) return;
+        //if(!this.loaded !== 0) return;
         if(level === 0 && this.isInit === -1)
             return;
         if(level === 1 && this.isInit1 === -1)

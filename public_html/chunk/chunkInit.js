@@ -68,10 +68,10 @@ Chunk.prototype.init2 = function(yyyy){
            var modPosx, modPosz;
            var blockAdd = 0;
            
-           var heightMapMax = 0;
-           for(var z = 0; z < 256; z++)
-                   if(this.heightMap[z] > heightMapMax) heightMapMax = this.heightMap[z];
-           if(heightMapMax +1 < yymax) yymax = heightMapMax + 1;
+           //var heightMapMax = 0;
+           //for(var z = 0; z < 256; z++)
+           //        if(this.heightMap[z] > heightMapMax) heightMapMax = this.heightMap[z];
+           if(this.mxaVal !== 0) if(this.mxaVal +1 < yymax) yymax = this.mxaVal + 1;
            
            for(var y = yymin; y < yymax; y++){
                if(y%16 === 0){
