@@ -42,6 +42,11 @@ function Settings(){
     if(this.distanceLevel[1] > 100) this.distanceLevel[1] = 100;
     if(this.distanceLevel[2] > 100) this.distanceLevel[2] = 100;
 
+    this.waterlevel = 49;
+    if( settings["waterlevel"] !== undefined )
+        this.waterlevel = parseInt(settings["waterlevel"].value);
+    if( parameters["waterlevel"] !== undefined && settings["waterlevel"].url)
+        this.waterlevel = parseInt(parameters["waterlevel"]);
     
     this.sensitivity = 50;
     if( settings["mouseSensitivity"] !== undefined )

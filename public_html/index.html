@@ -14,9 +14,35 @@
 <body oncontextmenu="return false;" onload='webGLStart();' style="margin: 0px; border: none;">
     <center>
         <canvas id="webgl" style="position:fixed; left:0px; top:0px; margin: 0px; background: white; border: none;" width="1200" height="700"></canvas>
+        <canvas id="texture512x64" style="display: none;" width="512" height="64"></canvas>
+        <div id="loginDiv">
+            Join Game
+            <table id="loginTable" class="settingsTable">
+                <tr>
+                    <td>
+                        Server
+                    </td>
+                    <td>
+                        <input type="text" value="" id="servername" class="settingsInput" />
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Nickname
+                    </td>
+                    <td>
+                        <input type="text" id="nickmane" class="settingsInput" />
+                    </td>
+                </tr>
+            </table>
+            <div id="button122" class="settingsButton" 
+                 onclick="mcWorld.connect(document.getElementById('servername').value, document.getElementById('nickmane').value);"
+                 >Connect</div>
+            <p id="servermessage" class="settingsInfoText"></p>
+        </div>
         <div id="settings">
             Display Settings
-            <table id="settingsTable">
+            <table class="settingsTable">
                 <tr>
                     <td>
                         Sky color

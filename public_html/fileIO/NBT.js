@@ -78,7 +78,7 @@ NBT.nextTag = function(nbt){
                     //console.log(tagType+" "+name);
                     tag.length = nbt.data[nbt.offset++]*256*256*256 + nbt.data[nbt.offset++]*256*256 + nbt.data[nbt.offset++]*256 + nbt.data[nbt.offset++];
                     //console.log(" "+iid);
-                    tag.data = new Uint32Array(tag.length);
+                    tag.data = new Int32Array(tag.length);
                     for (var i = 0; i < tag.length; i++) {
                         tag.data[i] = nbt.data[nbt.offset++]*256*256*256 + nbt.data[nbt.offset++]*256*256 + nbt.data[nbt.offset++]*256 + nbt.data[nbt.offset++];
                     }
@@ -127,6 +127,10 @@ NBT.read9 = function(tag, chunk, chunkData){
         //console.log("/======== "+tag.name);
     };
     
+NBT.read3RawTag = function(nbt){
+     return (nbt.data[nbt.offset++]<<24) | (nbt.data[nbt.offset++]<<16) | (nbt.data[nbt.offset++]<<8) | nbt.data[nbt.offset++];
+};
+
 NBT.write0Tag = function(nbt){
     nbt.data[nbt.offset++] = 0;
 };  
@@ -148,6 +152,15 @@ NBT.write3Tag = function(nbt, name, value){
     nbt.data[nbt.offset++] = value & 0xFF;
 };
 
+NBT.write5Tag = function(nbt, name, value){
+    nbt.data[nbt.offset++] = 5;
+    NBT.writeTagName(nbt, name);
+    
+    var dv = new DataView(nbt.data.buffer, nbt.offset, 4);
+    dv.setFloat32(0, value);
+    nbt.offset+=4;
+};
+
 NBT.write7Tag = function(nbt, name, value){
     nbt.data[nbt.offset++] = 7;
     NBT.writeTagName(nbt, name);
@@ -160,6 +173,12 @@ NBT.write7Tag = function(nbt, name, value){
     for(var i = 0; i < value.length; i++) {
         nbt.data[nbt.offset++] = value[i];
     }
+};
+
+NBT.write8Tag = function(nbt, name, value){
+    nbt.data[nbt.offset++] = 8;
+    NBT.writeTagName(nbt, name);
+    NBT.writeTagName(nbt, value);
 };
 
 NBT.write9Tag = function(nbt, name, type, value){
@@ -176,6 +195,23 @@ NBT.write9Tag = function(nbt, name, type, value){
 NBT.write10Tag = function(nbt, name){
     nbt.data[nbt.offset++] = 10;
     NBT.writeTagName(nbt, name);
+};
+
+NBT.write11Tag = function(nbt, name, value){
+    nbt.data[nbt.offset++] = 11;
+    NBT.writeTagName(nbt, name);
+    
+    nbt.data[nbt.offset++] = (value.length>>24) & 0xFF;
+    nbt.data[nbt.offset++] = (value.length>>16) & 0xFF;
+    nbt.data[nbt.offset++] = (value.length>>8) & 0xFF;
+    nbt.data[nbt.offset++] = value.length & 0xFF;
+    
+    for(var i = 0; i < value.length; i++) {
+        nbt.data[nbt.offset++] = (value[i]>>24) & 0xFF;
+        nbt.data[nbt.offset++] = (value[i]>>16) & 0xFF;
+        nbt.data[nbt.offset++] = (value[i]>>8) & 0xFF;
+        nbt.data[nbt.offset++] = value[i] & 0xFF;
+    }
 };
 
 NBT.writeTagName = function(nbt, name) {

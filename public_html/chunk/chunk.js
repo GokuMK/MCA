@@ -367,7 +367,7 @@ Chunk.prototype.getBiomeColor1 = function(x, z, idx){
     //    color/=3; color1/=3; color2/=3;
     aBiomeIdx = this.cacheBiomes[(z+1)*18+x+1];
     color += biomes[aBiomeIdx].colorR[idx]; color1 += biomes[aBiomeIdx].colorG[idx]; color2 += biomes[aBiomeIdx].colorB[idx];
-
+    
     color = Math.floor(color/4)*256*256 + Math.floor(color1/4)*256 + Math.floor(color2/4);
     return color;    
     };  
@@ -440,6 +440,49 @@ Chunk.prototype.getBiomeColor = function(x, z, idx){
     color = Math.floor(color/8)*256*256 + Math.floor(color1/8)*256 + Math.floor(color2/8);
     return color;    
     };  
+    
+Chunk.prototype.getNearestPosition = function(pos){
+        if(this.isInit === -1)     return false;
+        if(!this.getCache(0, 256)) return false;
+        
+        var cacheId = Chunk.cacheId;
+        var tPos = [Math.floor(pos[0]),Math.floor(pos[1]),Math.floor(pos[2])];
+        var index = 0, index2 = 0;
+
+        var yPos = new Array(9);
+        var y = 0;
+        
+        for(var i = -1; i < 2; i++)
+            for(var j = -1; j < 2; j++){
+                y = tPos[1];
+                yPos[(i+1)*3+(j+1)] = 256;
+                for(;y < 256; y++){
+                    index = (y+1)*324+(tPos[2]+1+i)*18+(tPos[0]+1+j);
+                    index2 = (y+2)*324+(tPos[2]+1+i)*18+(tPos[0]+1+j);
+                    if(this.section[Math.floor(y/16)] === undefined || cacheId[(y+2)*324 + 19] === -1){
+                        yPos[(i+1)*3+(j+1)] = y;
+                        break;
+                    }
+                    if(block[cacheId[index]].type === 0 && block[cacheId[index2]].type === 0){
+                        yPos[(i+1)*3+(j+1)] = y;
+                        break;
+                    }
+                }
+            }
+        //console.log(yPos);
+        //console.log(tPos);
+        var newPos = [tPos[0], yPos[4], tPos[2]];
+        for(var i = -1; i < 2; i++)
+            for(var j = -1; j < 2; j++){
+                if(yPos[(i+1)*3+(j+1)] < newPos[1] - 1){
+                    newPos[0] = tPos[0]+j; 
+                    newPos[1] = yPos[(i+1)*3+(j+1)]; 
+                    newPos[2] = tPos[2]+i;
+                }
+            }
+
+        return newPos;
+};
     
 Chunk.prototype.getBlock = function(x,h,z){
         if(this.isInit === -1)
@@ -706,17 +749,14 @@ Chunk.prototype.render = function(drawLevel, shader, level){
         if(level === 0 && this.isInit === 0){
             if(iLag > 1){
                 iLag -= 1;
-                if(!this.init2(0, true)) {
-                    //iLag += 1;
-                    return;
-                }
+                if(!this.init2(0, true)); return;
             }
             else return;
         }
         if(level === 1 && this.isInit1 === 0){
             if(iLag > 1){
                 iLag -= 1;
-                if(!this.init2(1, true)) return;
+                if(!this.init2(1, true)); return;
             }
             else return;
         }

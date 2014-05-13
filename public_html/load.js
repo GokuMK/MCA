@@ -31,13 +31,15 @@ require("ui/selectionBox.js");
     var biomes;
     var mcWorld;
     var block;
-    var blockTexture;
+    var blockTexture = {loaded: false};
+    var playerTexture = {loaded: false};
     var blockSelection;
     var camera;
-    var initTexture = false;
-    
+    //var initTexture = false;
+    var _gameStop = true;
     var gpuMem = 0;
     var lastTime = 0;
+    var last50msTime = 0;
     var firstTime = 0;
     var fps = 0;
     var newSec = false;
@@ -52,9 +54,12 @@ require("ui/selectionBox.js");
     var punkty1 = new Array();
     var pointer = new Pointer();
     var selectBox = new SelectionBox();
+    var players = undefined;//
 
     function tick() {
+        if(_gameStop) return;
         requestAnimFrame(tick);
+        
         var timeNow = new Date().getTime();
         fps = 1000/(timeNow-lastTime);
         
@@ -68,6 +73,11 @@ require("ui/selectionBox.js");
                     useBlock.data+"  : "+(block[useBlock.id][useBlock.data].name || block[useBlock.id].name || block[useBlock.id][useBlock.data].defaultTexture || ""
             );
             textDiv.innerHTML += "<br/>Est. Gpu Mem: "+Math.floor((gpuMem*8)/(1024*1024))+" M";    
+            if(players !== undefined){
+                var iplayers = 0;
+                for (key in players) if(players[key] !== undefined) iplayers++;
+                textDiv.innerHTML += "<br/>Players online: "+(iplayers+1)+"";    
+            }
         }
         newSec = false;
         if(lastTime%1000 > timeNow%1000){
@@ -77,6 +87,11 @@ require("ui/selectionBox.js");
         var new100msec = false;
         if(lastTime%100 > timeNow%100){
             new100msec = true;
+        }
+        var new50msec = false;
+        if(timeNow > last50msTime + 50){
+            last50msTime = timeNow;
+            new50msec = true;
         }
         lastTime = timeNow;
         camera.updatePosition(fps);
@@ -151,11 +166,19 @@ require("ui/selectionBox.js");
         }
 
         mcWorld.render();
-        //player.render();
+        player.render();
+        for (key in players) {
+            if(players[key] !== undefined)
+                players[key].render();
+        }
         
         if(settings.edit) {
             selectBox.render(blockSelection);
             pointer.render();
+        }
+        
+        if(new50msec){
+            mcWorld.new50msec();
         }
         
         if(newSec){
@@ -171,8 +194,14 @@ require("ui/selectionBox.js");
     function initTextures() {
       blockTexture = gl.createTexture();
       var blockImage = new Image();
+      blockTexture.loaded = false;
       blockImage.onload = function() { handleTextureLoaded(blockImage, blockTexture); };
       blockImage.src = "blocks.png";
+      playerTexture = gl.createTexture();
+      playerTexture.loaded = false;
+      var blockImage2 = new Image();
+      blockImage2.onload = function() { handleTextureLoaded(blockImage2, playerTexture); };
+      blockImage2.src = "steve.png";
     }
 
     function handleTextureLoaded(image, texture) {
@@ -181,16 +210,19 @@ require("ui/selectionBox.js");
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.NEAREST);
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.NEAREST);
       gl.bindTexture(gl.TEXTURE_2D, null);
-      initTexture = true;
+      texture.loaded = true;
     }
 
     function initBlocks() {
        texLib = JSON.parse(Readfile.readTxt('textures.json'));
        console.log(texLib);
-        
+       
        block = JSON.parse(Readfile.readTxt('blocks.json'));
        block.length = 300;
        biomes = JSON.parse(Readfile.readTxt('biomes.json'));
+       for(var i = 0; i < 256; i++){
+           if(biomes[i] === undefined) biomes[i] = biomes[0];
+       }
        
        shapeLib = JSON.parse(Readfile.readTxt('shapes.json'));
        console.log(shapeLib);
@@ -352,9 +384,6 @@ mcWorld.updateChunks();");
                     if(tools.style.display === "none") tools.style.display = "block";
                     else if(tools.style.display === "block") tools.style.display = "none";
                     }
-                    document.exitPointerLock = document.exitPointerLock ||
-                                               document.mozExitPointerLock ||
-                                               document.webkitExitPointerLock;
                     document.exitPointerLock();
                     camera.moveX = 0;
                     camera.moveY = 0;
@@ -488,6 +517,7 @@ mcWorld.updateChunks();");
         canvas.height = window.innerHeight;
         gl.viewportWidth = canvas.width;
         gl.viewportHeight = canvas.height;
+        camera.resetFov();
     }
     
     function canvasOn(){
@@ -518,6 +548,10 @@ mcWorld.updateChunks();");
         window.addEventListener("mouseup", mouseUp, true);
         window.addEventListener("mousewheel", mouseWheel, false);
 	window.addEventListener("DOMMouseScroll", mouseWheel, false);
+        
+        document.exitPointerLock = document.exitPointerLock ||
+                                   document.mozExitPointerLock ||
+                                   document.webkitExitPointerLock;
         
         textDiv = document.getElementById("text");
         
@@ -567,7 +601,8 @@ mcWorld.updateChunks();");
       
         firstTime = new Date().getTime();
         lastTime = new Date().getTime();
-        tick();               
+        
+        tick();   
     }
     
     function executeJS(){

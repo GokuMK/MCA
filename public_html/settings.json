@@ -56,7 +56,11 @@
     "url": true
 },
 "lightInit": {
-    "value": false,
+    "value": true,
+    "url": true
+},
+"waterlevel": {
+    "value": "49",
     "url": true
 }
 }

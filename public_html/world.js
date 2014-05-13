@@ -6,6 +6,10 @@ function World(opt){
     
 }
 
+World.prototype.connect = function(server, name){
+    this.worldData.connect(server, name);
+};
+
 World.prototype.getChunkBlock = function(chx, chz, x, y, z){
     return this.worldData.getChunkBlock(chx, chz, x, y, z);
 };
@@ -46,9 +50,18 @@ World.prototype.requestChunk = function(x, z, load){
     return this.worldData.requestChunk(x, z, load);
 };
 
+World.prototype.new100msec = function(){
+    this.worldData.new100msec();
+};
+
+World.prototype.new50msec = function(){
+    this.worldData.new50msec();
+};
+
 World.prototype.render = function(){
-        if(!initTexture) return;
+        if(!blockTexture.loaded) return;
         
+        gl.bindTexture(gl.TEXTURE_2D, blockTexture);
         var shader = gluu.standardShader;
         gl.useProgram(shader);
         gl.viewport(0, 0, gl.viewportWidth, gl.viewportHeight);
@@ -125,19 +138,18 @@ World.prototype.render = function(){
 
                 chunk.timestamp = lastTime;
                 
-                if(cameraPos[1] >= 62 || lod < 10*16)
+                if(cameraPos[1] >= settings.waterlevel || lod < 10*16)
                     chunk.render(drawLevel, shader, 0);
-                if(cameraPos[1] < 62 && lod < 6*16)
+                if(cameraPos[1] < settings.waterlevel && lod < 6*16)
                     chunk.render(drawLevel, shader, 1);
-                else if(lod < 4*16)
+                else if(lod < 5*16)
                     chunk.render(drawLevel, shader, 1);
             }
         }
     };
 
 World.prototype.renderSelection = function(){
-        if(!initTexture) 
-            return;
+        if(!blockTexture.loaded) return;
         
         var shader = gluu.selectionShader;
         gl.useProgram(shader);
@@ -222,6 +234,10 @@ World.prototype.renderSelection = function(){
         selection.rchz = chz;
         return selection;
     };
+
+World.prototype.getNearestPosition = function(pos){
+    return this.worldData.getNearestPosition(pos);
+};
 
 World.prototype.testCollisions = function(){
             var cameraPos = camera.getPos();

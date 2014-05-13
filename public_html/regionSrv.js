@@ -1,17 +1,42 @@
 function RegionSrv(server){
-    this.region = new Array();
     this.rchunk = new Array();
     this.iChunk = 0;
     this.wsOpen = false;
+    this.position = new Int32Array(6);
     this.wsMsg = new Object();
     this.wsMsg.offset = 0;
     this.wsMsg.data = new Uint8Array(100000);
+    players = new Object();
+    
+    document.getElementById('servername').value = server;
+    document.getElementById("loginDiv").style.display = 'block';
+    return;
+}
+
+RegionSrv.prototype.connect = function(server, name){
+    console.log(server + " " + name);
+    
+    name = name || "";
+    if(name.length > 20){
+        document.getElementById("servermessage").innerHTML = "Nickname too long, max 20";
+        return;
+    }
+    if(name.length < 1){
+        document.getElementById("servermessage").innerHTML = "Nickname too short, min 1";
+        return;
+    }
+    this.nickname = name;
+    player.setName(name);
     
     this.ws = new WebSocket("ws://"+server+"/ws");
     this.ws.regionSrv = this;
     this.ws.binaryType = "arraybuffer";
     this.ws.onopen = function(){
+        //send nickname
         this.regionSrv.wsOpen = true;
+        this.regionSrv.wsMsg.offset = 0;
+        NBT.write8Tag(this.regionSrv.wsMsg, "Nickname", this.regionSrv.nickname);
+        this.send(new Uint8Array(this.regionSrv.wsMsg.data.buffer,0,this.regionSrv.wsMsg.offset));    
     };
     
     this.ws.onmessage = function(evt){
@@ -24,7 +49,74 @@ function RegionSrv(server){
         var aTag;
         
         if((aTag = NBT.nextTag(data)) === -1) return;
+        console.log("ddd "+aTag.name);
         switch(aTag.name){
+            case "Update":
+                //console.log("dostalem update");
+                for(var j = 0; j < 2; j++){
+                    if((aTag = NBT.nextTag(data)) === -1) break;
+                    switch(aTag.name){
+                        case "BlockUpdate":
+                            console.log("bu "+aTag.length);
+                            var length = aTag.length;
+                            var update = 0;
+                            for(var i = 0; i<length; i++){
+                                var blockData = NBT.nextTag(data).data;
+                                var source = NBT.nextTag(data).value;
+                                if(!source.equalsIgnoreCase(this.regionSrv.nickname)){
+                                    if(length < 4) this.regionSrv.updateRawBlock(blockData, false);
+                                    else {
+                                        this.regionSrv.setRawBlock(blockData);
+                                        update++;
+                                    }
+                                }
+                            }
+                            if(update > 0) this.regionSrv.updateChunks();
+                            break;
+                        case "PlayerUpdate":
+                            //console.log("pu "+aTag.length);
+                            var length = aTag.length;
+                            for(var i = 0; i<length; i++){
+                                aTag = NBT.nextTag(data);
+                                if(!aTag.name.equalsIgnoreCase(this.regionSrv.nickname)){
+                                    //console.log(aTag.name);
+                                    //console.log(aTag.data[0] + " " + aTag.data[1] + " " + aTag.data[2]);
+                                    if(players[aTag.name] === undefined) {
+                                        players[aTag.name] = new Player();
+                                        players[aTag.name].name = aTag.name;
+                                    }
+                                    players[aTag.name].setPosRotRawInt(aTag.data);
+                                    //this.regionSrv.setRawBlock(blockData);
+                                }
+                            }
+                            break;
+                    }
+                }
+                break;
+            case "PlayerQuit":
+                console.log("delp "+aTag.value);
+                players[aTag.value] = undefined;
+                break;    
+            case "JoinGame":
+                if((aTag = NBT.nextTag(data)) === -1) break;
+                switch(aTag.name){
+                    case "setPos":
+                        console.log(aTag.tagId + " "+aTag.length);
+                        var x = NBT.read3RawTag(data);
+                        var y = NBT.read3RawTag(data);
+                        var z = NBT.read3RawTag(data);
+                        camera.setPos(x,y,z);
+                        document.getElementById("loginDiv").style.display = 'none';
+                        document.getElementById("webgl").style["-webkit-filter"] = "none";
+                        document.getElementById("webgl").style["-moz-filter"] = "none";
+                        _gameStop = false;
+                        requestAnimFrame(tick);
+                        break;
+                }
+                break;
+            case "Kick":
+                this.regionSrv.connectionClosed(aTag.value);
+                break;   
             case "ChunkData":
                 var xPos = NBT.nextTag(data).value;
                 var zPos = NBT.nextTag(data).value;
@@ -43,9 +135,61 @@ function RegionSrv(server){
     };
     
     this.ws.onclose = function(){
-        console.log("WebSocket closed.");
+        this.regionSrv.connectionClosed("Connection closed");
     };
-}
+};
+
+RegionSrv.prototype.connectionClosed = function(msg){
+        this.wsOpen = false;
+        document.getElementById("loginDiv").style.display = 'block';
+        document.getElementById("servermessage").innerHTML = msg;
+        document.getElementById("webgl").style["-webkit-filter"] = "blur(5px)";
+        document.getElementById("webgl").style["-moz-filter"] = "blur(5px)";
+        _gameStop = true;
+        this.deleteBuffers(true);
+        this.rchunk = new Array();
+        players = new Array();
+        document.exitPointerLock();
+        camera.moveX = 0;
+        camera.moveY = 0;
+        console.log("WebSocket closed." + msg);    
+};
+RegionSrv.prototype.new100msec = function(){
+    
+};
+RegionSrv.prototype.new50msec = function(){
+    if(this.wsOpen){
+        var pos = camera.getPos();
+        var rot = camera.getRot();
+        
+        this.position[0] = Math.floor(pos[0]*100);
+        this.position[1] = Math.floor(pos[1]*100);
+        this.position[2] = Math.floor(pos[2]*100);
+        this.position[3] = Math.floor(rot[0]*100);
+        this.position[4] = Math.floor(rot[1]*100);
+        this.position[5] = Math.floor(rot[2]*100);
+        this.wsMsg.offset = 0;
+        NBT.write11Tag(this.wsMsg, "Position", this.position, 6);
+
+        this.ws.send(new Uint8Array(this.wsMsg.data.buffer,0,this.wsMsg.offset));    
+        //console.log(pos[0]+" "+pos[1]+" "+pos[2]);
+        //console.log(rot);
+    }
+};
+
+RegionSrv.prototype.getNearestPosition = function(pos){
+    var chx = Math.floor(pos[0]/16);
+    var chz = Math.floor(pos[2]/16);
+    var i = chx*10000+chz;
+    if(this.rchunk[i] !== undefined && this.rchunk[i] !== -1 && this.rchunk[i] !== -2){
+        var ix = pos[0] - chx*16; if(ix < 0) ix+=16;
+        var iz = pos[2] - chz*16; if(iz < 0) iz+=16;
+        var chPos = this.rchunk[i].getNearestPosition([ix,pos[1],iz]);
+        if(chPos !== false)
+            return [chx*16 + chPos[0], chPos[1], chz*16 + chPos[2]];
+    }
+    return false;
+};
 
 RegionSrv.prototype.getChunkBlock = function(chx, chz, x, y, z){
     var i = chx*10000+chz;
@@ -76,12 +220,21 @@ RegionSrv.prototype.updateChunkBlock = function(chx, chz, x, y, z, b, d){
     this.sendBlockData(x+chx*16, y, z+chz*16, b, d);
 };
 
-RegionSrv.prototype.updateBlock = function(x, y, z, b, d){
+RegionSrv.prototype.setRawBlock = function(raw){
+    this.setBlock(raw[0], raw[1], raw[2], raw[3], raw[4]);
+};
+
+RegionSrv.prototype.updateRawBlock = function(raw, send){
+     this.updateBlock(raw[0], raw[1], raw[2], raw[3], raw[4], send);
+};
+
+RegionSrv.prototype.updateBlock = function(x, y, z, b, d, send){
+    if(send === undefined) send = true;
     var chx = Math.floor(x/16);
     var chz = Math.floor(z/16);
     var i = chx*10000+chz;
-    
-    this.sendBlockData(x, y, z, b, d);
+
+    if(send) this.sendBlockData(x, y, z, b, d);
     
     if(this.rchunk[i] !== undefined && this.rchunk[i] !== -1 && this.rchunk[i] !== -2){
         x = x - chx*16; if(x < 0) x+=16;
@@ -124,7 +277,8 @@ RegionSrv.prototype.updateChunks = function(){
     console.log("update chunk "+(timeNow3-timeNow1)+" "+i);
 };
 
-RegionSrv.prototype.deleteBuffers = function(){
+RegionSrv.prototype.deleteBuffers = function(all){
+    all = all || false;
     var timeNow1 = new Date().getTime();
     var i = 0;
     //rchunk.forEach(function(e) {
@@ -134,7 +288,7 @@ RegionSrv.prototype.deleteBuffers = function(){
         if(this.rchunk[key] === -2) continue;
         if(this.rchunk[key].changed === true) continue;
         if(this.rchunk[key].isInit === 1 || this.rchunk[key].isInit1 === 1)
-            if(this.rchunk[key].timestamp + 10000 < timeNow1){
+            if(this.rchunk[key].timestamp + 10000 < timeNow1 || all){
                 this.rchunk[key].deleteBuffers();    
                 this.rchunk[key] = undefined;
                 i++;
@@ -156,7 +310,7 @@ RegionSrv.prototype.requestChunk = function(x, z, load){
         return this.rchunk[i];
     }
     
-    if(!this.wsOpen) return undefined;
+    if(_gameStop) return undefined;
     
     //var msg = new Uint8Array(8);
     this.wsMsg.offset = 0;

@@ -32,6 +32,46 @@
 #info a:hover {color: #FFFFFF; font-size: 14px; font-family: Verdana;}
 #info a:active {color: #FFFFFF; font-size: 14px; font-family: Verdana;}
 
+.settingsInfoText {
+    font-family: Verdana;
+    color: #FFFFFF; 
+    font-size: 10px;
+}
+
+.settingsButton {
+    width: 100%;
+    background-color:#C86E32;
+    text-align: center;
+    font-family: Verdana;
+    color: #FFFFFF; 
+    font-size: 16px;
+    margin-top: 10px;
+    padding-top: 1px;
+    padding-bottom: 1px;
+    border: 1px solid #C86E32;
+}
+
+#loginDiv {
+    width: 280px;
+    height: 170px;
+    display: none;
+    top: 50%;
+    left: 50%;
+    position: fixed;
+    margin-top: -100px;
+    margin-left: -180px;
+    background-color:#222222;
+    text-align: left;
+    font-family: Verdana;
+    color: #C86E32; 
+    font-size:20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border: 1px solid #C86E32;
+}
+
 #settings {
     width: 400px;
     display: none;
@@ -66,7 +106,7 @@
     text-align: left; 
     font-size:12px;
 }
-#settingsTable {
+.settingsTable {
     text-align: left;
     width: 100%;
     text-align: left; 
@@ -75,7 +115,7 @@
     font-size:12px;
     padding-top: 10px;
 }
-#settingsTable td {
+.settingsTable td {
     height: 30px;
     width: 150px;
 }

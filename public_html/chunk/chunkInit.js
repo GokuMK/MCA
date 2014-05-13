@@ -1,11 +1,11 @@
 
 Chunk.prototype.init2 = function(yyyy){
         if(yyyy === 0){ 
-            var yymin = 49;
+            var yymin = settings.waterlevel;
             var yymax = 256;
         } else {
             var yymin = 0; 
-            var yymax = 49;
+            var yymax = settings.waterlevel;
         }
         
         if(this.lightPopulated === 0 && settings.lightInit){
@@ -73,12 +73,16 @@ Chunk.prototype.init2 = function(yyyy){
            //        if(this.heightMap[z] > heightMapMax) heightMapMax = this.heightMap[z];
            if(this.mxaVal !== 0) if(this.mxaVal +1 < yymax) yymax = this.mxaVal + 1;
            
+           if(this.section[Math.floor(yymin/16)] === undefined)
+               yymin = Math.floor(yymin/16)*16 + 16;
+           
            for(var y = yymin; y < yymax; y++){
                if(y%16 === 0){
-               if(cacheId[(y+2)*324 + 19] === -1){
-                    y+=15;
-                    continue;
-               }
+                   //if(this.section[y/16] === undefined){
+                   if(cacheId[(y+2)*324 + 19] === -1){
+                       y+=15;
+                       continue;
+                   }
                }
                for(var z = 0; z < 16; z++){
                    for(var x = 0; x < 16; x++){
@@ -91,6 +95,7 @@ Chunk.prototype.init2 = function(yyyy){
                        
                        aindex = (y+1)*324+(z+1)*18+(x+1);
                        blockType = block[cacheId[aindex]].type;
+
                        if(blockType === 0) continue;
                        
                        lindex = aindex + 18;

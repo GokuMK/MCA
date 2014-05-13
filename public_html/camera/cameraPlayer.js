@@ -30,6 +30,15 @@ function CameraPlayer(p){
      this.upY = 0;
 }
 
+CameraPlayer.prototype.resetFov = function(){
+   this.aspect = gl.viewportWidth / gl.viewportHeight;
+   this.fovx = this.fovy * this.aspect;
+};
+
+CameraPlayer.prototype.setPos = function(x,y,z){
+   this.entity.setPos(x,y,z);
+};
+
 CameraPlayer.prototype.getMatrix = function(){
     var lookAt = mat4.create();
     mat4.lookAt(lookAt, this.getEye(), this.getTarget(), this.entity.up);
@@ -112,6 +121,21 @@ CameraPlayer.prototype.patrzY = function(f){
     };
     
 CameraPlayer.prototype.updatePosition = function(fps) {
+        if(mcWorld.testCollisions()){
+            //console.log("utklem");
+            //console.log(this.entity.pos);
+            var newPos = mcWorld.getNearestPosition(this.entity.pos);
+            //console.log(newPos);
+            if(newPos!==false) {
+                this.entity.pos[0] = newPos[0]+0.5;
+                this.entity.pos[1] = newPos[1]+0.05;
+                this.entity.pos[2] = newPos[2]+0.5;
+                this.tPos[0] = this.entity.pos[0];
+                this.tPos[1] = this.entity.pos[1];
+                this.tPos[2] = this.entity.pos[2];
+            }
+        }
+    
         this.oldPos[0] = this.entity.pos[0];
         this.oldPos[1] = this.entity.pos[1];
         this.oldPos[2] = this.entity.pos[2];
@@ -143,7 +167,6 @@ CameraPlayer.prototype.updatePosition = function(fps) {
             this.upY -= (1000/fps);
             if(this.upY < 0) this.upY = 0;
         }
-        
         ////////////////////////
         var npos1 = 0;
         this.entity.pos[1] = this.tPos[1];

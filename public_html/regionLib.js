@@ -5,7 +5,20 @@ function RegionLib(gameRoot, worldName){
     this.localIChunk = new Array();
     this.rchunk = new Array();
     this.iChunk = 0;
+    _gameStop = false;
 }
+
+RegionLib.prototype.new100msec = function(){
+
+};
+
+RegionLib.prototype.new50msec = function(){
+
+};
+
+RegionLib.prototype.connect = function(server, name){
+    console.log("not supported");
+};
 
 RegionLib.prototype.getChunkBlock = function(chx, chz, x, y, z){
     var i = chx*10000+chz;
@@ -15,10 +28,23 @@ RegionLib.prototype.getChunkBlock = function(chx, chz, x, y, z){
         return {id: 0, data: 0};
 };
 
+RegionLib.prototype.getNearestPosition = function(pos){
+    var chx = Math.floor(pos[0]/16);
+    var chz = Math.floor(pos[2]/16);
+    var i = chx*10000+chz;
+    if(this.rchunk[i] !== undefined && this.rchunk[i] !== -1 && this.rchunk[i] !== -2){
+        pos[0] = pos[0] - chx*16; if(pos[0] < 0) pos[0]+=16;
+        pos[2] = pos[2] - chz*16; if(pos[2] < 0) pos[2]+=16;
+        var chPos = this.rchunk[i].getNearestPosition(pos);
+        if(chPos !== false)
+            return [chx*16 + chPos[0], chPos[1], chz*16 + chPos[2]];
+    }
+    return false;
+};
+
 RegionLib.prototype.getBlock = function(x, y, z){
     var chx = Math.floor(x/16);
     var chz = Math.floor(z/16);
-    var i = chx*10000+chz;
     var i = chx*10000+chz;
     if(this.rchunk[i] !== undefined && this.rchunk[i] !== -1 && this.rchunk[i] !== -2){
         x = x - chx*16; if(x < 0) x+=16;

@@ -27,6 +27,15 @@ function CameraGod(e,r,u){
      this.moveY = 0;
 }
 
+CameraGod.prototype.resetFov = function(){
+   this.aspect = gl.viewportWidth / gl.viewportHeight;
+   this.fovx = this.fovy * this.aspect;
+};
+
+CameraGod.prototype.setPos = function(x,y,z){
+   this.pos[0] = x; this.pos[1] = y; this.pos[2] = z; 
+};
+
 CameraGod.prototype.getMatrix = function(){
     var lookAt = mat4.create();
     mat4.lookAt(lookAt, this.getEye(), this.getTarget(), this.up);

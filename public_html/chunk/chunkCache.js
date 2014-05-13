@@ -231,6 +231,15 @@ Chunk.prototype.getCache = function(yymin, yymax){
                var asection = this.section[i/16];
                y = 0;
                if(asection === undefined){
+                   /*for(var z = 0; z < 16; z++)
+                       for(var x = 0; x < 16; x++){
+                           for(var y = 0; y < 16; y++, i++){
+                               index2 = (i+1)*324 + (z+1)*18 + (x+1);
+                               cacheId[index2] = 0;
+                               cacheSlight[index2] = 15;
+                               cacheBlight[index2] = 0;
+                           }
+                       }*/
                    for(var z = 0; z < 16; z++)
                        for(var x = 0; x < 16; x++){
                            index2 = (i+1)*324 + (z+1)*18 + (x+1);
