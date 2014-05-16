@@ -1,9 +1,9 @@
 function CameraGod(e,r,u){
      this.name = "CameraGod";
-     this.pos = e;
-     this.oldPos = new Float32Array(3);
+     this.pos = [e[0],e[1],e[2]];
+     this.rot = [r[0],r[1],r[2]];
+     this.oldPos = [0,0,0];
      //this.relPos = e;
-     this.rot = r;
      this.up = u;
      this.przesx = 1;
      this.przesy = 1; 

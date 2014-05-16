@@ -136,6 +136,8 @@ function Settings(){
         if(parameters["lightInit"] === "true") this.lightInit = true; 
         if(parameters["lightInit"] === "false") this.lightInit = false; 
     }
+    
+    this.allowTools = true;
     //camera = new Camera([-400,120,0],[5.5,0],[0,1,0]);
     //camera = new CameraGod([0,120,0],[5.5,0],[0,1,0]);
     //camera = new Camera([-176,90,2],[5.5,0],[0,1,0]);

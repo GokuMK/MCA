@@ -1,14 +1,21 @@
 function Player(p, r, u){
-    this.pos = p || [0,0,0];
-    this.rot = r || [0,0];
+    p = p || [0,0,0];
+    r = r || [0,0];
+    this.pos = [p[0],p[1],p[2]];
+    this.rot = [r[0],r[1],r[2]];
+    this.oldPos = [0,0,0];
+    this.speed = [0,0,0];
+    this.tPos = [0,0,0];
     this.up = u || [0,1,0];
-    this.eyePos = [0,1.65,0];
+    this.eyePos = [0.0,1.60,0.15];
     this.przesx = 8;
     this.przesy = 1; 
     this.przesz = 8;
     this.drawName = true;
     this.name = "";
+    this.lastTime = lastTime;
     this.texture = playerTexture;
+    this.renderShape = ShapeLib.getObj('steve.obj');
 }
 Player.prototype = Mob.prototype;
 

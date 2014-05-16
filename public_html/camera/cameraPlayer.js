@@ -252,7 +252,7 @@ CameraPlayer.prototype.keyUp = function(e){
                 //this.jestcontrol = 0;
                 break;
             case 69: // E
-                this.entity.przesx = this.entity.przesz = 10;
+                this.entity.przesx = this.entity.przesz = 8;
                 break;
             case 37:  // left
             case 65: // A 
@@ -302,7 +302,7 @@ CameraPlayer.prototype.keyDown = function(e, fps){
                 this.moveB = true;
                 break;
             case 69: // E
-                this.entity.przesx = this.entity.przesz = 20;
+                this.entity.przesx = this.entity.przesz = 16;
                 break;
             default: 
                 //camera.moveBackward();

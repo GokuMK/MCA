@@ -7,6 +7,7 @@ require("fileIO/zlib.min.js");
 require("fileIO/readfile.js");
 require("fileIO/NBT.js");
 require("intersection3d.js");
+require("ShapeLib.js");
 require("camera/camera.js");
 require("camera/cameraGod.js");
 require("camera/cameraPlayer.js");
@@ -168,8 +169,10 @@ require("ui/selectionBox.js");
         mcWorld.render();
         player.render();
         for (key in players) {
-            if(players[key] !== undefined)
+            if(players[key] !== undefined){
+                players[key].update(fps);
                 players[key].render();
+            }
         }
         
         if(settings.edit) {
@@ -197,9 +200,10 @@ require("ui/selectionBox.js");
       blockTexture.loaded = false;
       blockImage.onload = function() { handleTextureLoaded(blockImage, blockTexture); };
       blockImage.src = "blocks.png";
+      
       playerTexture = gl.createTexture();
-      playerTexture.loaded = false;
       var blockImage2 = new Image();
+      playerTexture.loaded = false;
       blockImage2.onload = function() { handleTextureLoaded(blockImage2, playerTexture); };
       blockImage2.src = "steve.png";
     }
@@ -360,6 +364,7 @@ require("ui/selectionBox.js");
                     mcWorld.save();
                     break;    
                 case 71: // G
+                    if(!settings.allowTools) break;
                     var tools = document.getElementById("settings");
                     if(tools.style.display === "none") tools.style.display = "block";
                     else if(tools.style.display === "block") tools.style.display = "none";
@@ -404,6 +409,7 @@ mcWorld.updateChunks();");
                     mcWorld.loadChunkFromStorage(xxx, zzz, false);*/
                     break;    
                 case 72: //H
+                    if(!settings.allowTools) break;
                     if(window["ace"] === undefined) break;
                     if(!settings.edit) break;
                     executeJS();

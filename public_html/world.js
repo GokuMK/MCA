@@ -3,7 +3,6 @@ function World(opt){
         this.worldData = new RegionSrv(opt.server);
     else
         this.worldData = new RegionLib(opt.gameRoot, opt.worldName);
-    
 }
 
 World.prototype.connect = function(server, name){
@@ -71,8 +70,10 @@ World.prototype.render = function(){
         
         mat4.perspective(gluu.pMatrix, camera.fovy, gl.viewportWidth / gl.viewportHeight, 0.1, 6000.0);
         var lookAt = camera.getMatrix();
-        mat4.multiply(gluu.pMatrix, gluu.pMatrix, lookAt);
         mat4.identity(gluu.mvMatrix);
+        //mat4.translate(gluu.mvMatrix, gluu.mvMatrix, [-camera.entity.eyePos[0],-camera.entity.eyePos[1],-camera.entity.eyePos[2]]);
+        mat4.multiply(gluu.pMatrix, gluu.pMatrix, lookAt);
+        //
         gl.uniformMatrix4fv(shader.pMatrixUniform, false, gluu.pMatrix);
         gl.uniformMatrix4fv(shader.mvMatrixUniform, false, gluu.mvMatrix);
         gl.uniform1f(shader.lod, settings.distanceLevel[1]);
@@ -188,9 +189,9 @@ World.prototype.renderSelection = function(){
                     continue;
                 }
                 if(chunk === undefined) {
-                if(iLag > 1){
-                    iLag -= 1;
-                    this.worldData.requestChunk(xxx, zzz);
+                    if(iLag > 1){
+                        iLag -= 1;
+                        this.worldData.requestChunk(xxx, zzz);
                     }
                     continue;
                 }

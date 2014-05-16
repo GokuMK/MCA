@@ -6,6 +6,7 @@ function RegionSrv(server){
     this.wsMsg = new Object();
     this.wsMsg.offset = 0;
     this.wsMsg.data = new Uint8Array(100000);
+    settings.allowTools = false;
     players = new Object();
     
     document.getElementById('servername').value = server;
@@ -49,7 +50,7 @@ RegionSrv.prototype.connect = function(server, name){
         var aTag;
         
         if((aTag = NBT.nextTag(data)) === -1) return;
-        console.log("ddd "+aTag.name);
+        //console.log("ddd "+aTag.name);
         switch(aTag.name){
             case "Update":
                 //console.log("dostalem update");
@@ -159,15 +160,15 @@ RegionSrv.prototype.new100msec = function(){
 };
 RegionSrv.prototype.new50msec = function(){
     if(this.wsOpen){
-        var pos = camera.getPos();
-        var rot = camera.getRot();
+        var pos = player.getPos();
+        var rot = player.getRot();
         
         this.position[0] = Math.floor(pos[0]*100);
         this.position[1] = Math.floor(pos[1]*100);
         this.position[2] = Math.floor(pos[2]*100);
         this.position[3] = Math.floor(rot[0]*100);
         this.position[4] = Math.floor(rot[1]*100);
-        this.position[5] = Math.floor(rot[2]*100);
+        this.position[5] = Math.floor(lastTime);
         this.wsMsg.offset = 0;
         NBT.write11Tag(this.wsMsg, "Position", this.position, 6);
 
