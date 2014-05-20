@@ -48,11 +48,11 @@
     "url": true
 },
 "loadLag": {
-    "value": 3,
+    "value": 2,
     "url": true
 },
 "loadSpeed": {
-    "value": 3,
+    "value": 2,
     "url": true
 },
 "lightInit": {

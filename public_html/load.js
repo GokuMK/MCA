@@ -261,6 +261,7 @@ require("ui/selectionBox.js");
                 }
                 if(block[i][dd].shapeName !== undefined){
                     block[i][dd].shape = new Object;
+                    if(block[i][dd].normal === undefined) block[i][dd].normal = 1.0;
                     for (var k in shapeLib[block[i][dd].shapeName]){
                          block[i][dd].shape[k] = new Array();
 
@@ -274,10 +275,27 @@ require("ui/selectionBox.js");
                              texy = (textureId - texx)/texLib.row;
                          }
                          block[i][dd].shape[k] = new Float32Array(shapeLib[block[i][dd].shapeName][k].length);
+                         var rx, ry, rz,rx2, ry2, rz2, roty, rotx;
+                         if(block[i][dd].roty === undefined) roty = 0;
+                         else roty = block[i][dd].roty;
+                         if(block[i][dd].rotx === undefined) rotx = 0;
+                         else rotx = block[i][dd].rotx;
                          for(var j = 0; j < shapeLib[block[i][dd].shapeName][k].length; j+=5){
-                             block[i][dd].shape[k][j] = shapeLib[block[i][dd].shapeName][k][j];
-                             block[i][dd].shape[k][j+1] = shapeLib[block[i][dd].shapeName][k][j+1];
-                             block[i][dd].shape[k][j+2] = shapeLib[block[i][dd].shapeName][k][j+2];
+                             if(roty !== 0 || rotx !== 0){
+                                rx = Math.cos(rotx)*(shapeLib[block[i][dd].shapeName][k][j]-0.5) - Math.sin(rotx)*(shapeLib[block[i][dd].shapeName][k][j+1]-0.5) +0.5;
+                                ry = Math.sin(rotx)*(shapeLib[block[i][dd].shapeName][k][j]-0.5) + Math.cos(rotx)*(shapeLib[block[i][dd].shapeName][k][j+1]-0.5) +0.5;
+                                rz = shapeLib[block[i][dd].shapeName][k][j+2];
+                                rx2 = Math.cos(roty)*(rx-0.5) - Math.sin(roty)*(rz-0.5) +0.5;
+                                ry2 = ry;
+                                rz2 = Math.sin(roty)*(rx-0.5) + Math.cos(roty)*(rz-0.5) +0.5;
+                                block[i][dd].shape[k][j] = rx2;
+                                block[i][dd].shape[k][j+1] = ry2;
+                                block[i][dd].shape[k][j+2] = rz2;
+                             } else { 
+                                block[i][dd].shape[k][j] = shapeLib[block[i][dd].shapeName][k][j];
+                                block[i][dd].shape[k][j+1] = shapeLib[block[i][dd].shapeName][k][j+1];
+                                block[i][dd].shape[k][j+2] = shapeLib[block[i][dd].shapeName][k][j+2];
+                             }
                              block[i][dd].shape[k][j+3] = texf*(shapeLib[block[i][dd].shapeName][k][j+3]+texx);
                              block[i][dd].shape[k][j+4] = texf*(shapeLib[block[i][dd].shapeName][k][j+4]+texy);
                          }

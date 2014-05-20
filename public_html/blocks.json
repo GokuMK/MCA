@@ -643,7 +643,423 @@
         "shapeName": "simpleBlock",
         "defaultTexture": "noteblock.png"
     }
-},              
+},                           
+"26": {
+    "mask": "0x0B",
+    "type": 2,   
+    "name": "Bed",
+    "0": {
+        "roty": 1.57,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "bedFeet",
+        "defaultTexture": "bed_feet_side.png",
+        "top": "bed_feet_top.png",
+        "back": "bed_feet_end.png",
+        "front": "bed_feet_end.png"
+    },
+    "1": {
+        "roty": 3.14,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "bedFeet",
+        "defaultTexture": "bed_feet_side.png",
+        "top": "bed_feet_top.png",
+        "back": "bed_feet_end.png",
+        "front": "bed_feet_end.png"
+    },
+    "2": {
+        "roty": -1.57,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "bedFeet",
+        "defaultTexture": "bed_feet_side.png",
+        "top": "bed_feet_top.png",
+        "back": "bed_feet_end.png",
+        "front": "bed_feet_end.png"
+    },
+    "3": {
+        "roty": 0,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "bedFeet",
+        "defaultTexture": "bed_feet_side.png",
+        "top": "bed_feet_top.png",
+        "back": "bed_feet_end.png",
+        "front": "bed_feet_end.png"
+    },
+    "8": {
+        "roty": 1.57,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "bedHead",
+        "defaultTexture": "bed_feet_side.png",
+        "top": "bed_head_top.png",
+        "back": "bed_feet_end.png",
+        "front": "bed_feet_end.png"
+    },
+    "9": {
+        "roty": 3.14,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "bedHead",
+        "defaultTexture": "bed_feet_side.png",
+        "top": "bed_head_top.png",
+        "back": "bed_feet_end.png",
+        "front": "bed_feet_end.png"
+    },
+    "10": {
+        "roty": -1.57,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "bedHead",
+        "defaultTexture": "bed_feet_side.png",
+        "top": "bed_head_top.png",
+        "back": "bed_feet_end.png",
+        "front": "bed_feet_end.png"
+    },
+    "11": {
+        "roty": 0,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "bedHead",
+        "defaultTexture": "bed_feet_side.png",
+        "top": "bed_head_top.png",
+        "back": "bed_feet_end.png",
+        "front": "bed_feet_end.png"
+    }
+},        
+"27": {
+    "mask": "0x0F",
+    "type": 2, 
+    "name": "Golden Rail",
+    "0": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railNS",
+        "defaultTexture": "rail_golden.png"
+    },
+    "1": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railWE",
+        "defaultTexture": "rail_golden.png"
+    },
+    "2": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railE",
+        "defaultTexture": "rail_golden.png"
+    },
+    "3": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railW",
+        "defaultTexture": "rail_golden.png"
+    },
+    "4": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railN",
+        "defaultTexture": "rail_golden.png"
+    },
+    "5": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railS",
+        "defaultTexture": "rail_golden.png"
+    },
+    "8": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railNS",
+        "defaultTexture": "rail_golden_powered.png"
+    },
+    "9": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railWE",
+        "defaultTexture": "rail_golden_powered.png"
+    },
+    "10": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railE",
+        "defaultTexture": "rail_golden_powered.png"
+    },
+    "11": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railW",
+        "defaultTexture": "rail_golden_powered.png"
+    },
+    "12": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railN",
+        "defaultTexture": "rail_golden_powered.png"
+    },
+    "13": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railS",
+        "defaultTexture": "rail_golden_powered.png"
+    }            
+},
+"28": {
+    "mask": "0x0F",
+    "type": 2, 
+    "name": "Detector Rail",
+    "0": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railNS",
+        "defaultTexture": "rail_detector.png"
+    },
+    "1": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railWE",
+        "defaultTexture": "rail_detector.png"
+    },
+    "2": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railE",
+        "defaultTexture": "rail_detector.png"
+    },
+    "3": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railW",
+        "defaultTexture": "rail_detector.png"
+    },
+    "4": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railN",
+        "defaultTexture": "rail_detector.png"
+    },
+    "5": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railS",
+        "defaultTexture": "rail_detector.png"
+    },
+    "8": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railNS",
+        "defaultTexture": "rail_detector_powered.png"
+    },
+    "9": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railWE",
+        "defaultTexture": "rail_detector_powered.png"
+    },
+    "10": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railE",
+        "defaultTexture": "rail_detector_powered.png"
+    },
+    "11": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railW",
+        "defaultTexture": "rail_detector_powered.png"
+    },
+    "12": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railN",
+        "defaultTexture": "rail_detector_powered.png"
+    },
+    "13": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railS",
+        "defaultTexture": "rail_detector_powered.png"
+    }            
+},        
+"29": {
+    "mask": "0x0F",
+    "type": 2,        
+    "name": "Piston",
+    "0": {
+        "rotx": 3.14,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "simpleBlock",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_normal.png",
+        "bottom": "piston_bottom.png"
+    },
+    "1": {
+        "rotx": 0.0,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "simpleBlock",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_normal.png",
+        "bottom": "piston_bottom.png"
+    },
+    "2": {
+        "rotx": 1.57,
+        "roty": 1.57,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "simpleBlock",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_normal.png",
+        "bottom": "piston_bottom.png"
+    },
+    "3": {
+        "rotx": 1.57,
+        "roty": -1.57,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "simpleBlock",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_normal.png",
+        "bottom": "piston_bottom.png"
+    },
+    "4": {
+        "rotx": 1.57,
+        "roty": 0.0,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "simpleBlock",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_normal.png",
+        "bottom": "piston_bottom.png"
+    },
+    "5": {
+        "rotx": 1.57,
+        "roty": 3.14,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "simpleBlock",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_normal.png",
+        "bottom": "piston_bottom.png"
+    },
+    "8": {
+        "rotx": 3.14,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "piston",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_inner.png",
+        "bottom": "piston_bottom.png"
+    },
+    "9": {
+        "rotx": 0.0,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "piston",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_inner.png",
+        "bottom": "piston_bottom.png"
+    },
+    "10": {
+        "rotx": 1.57,
+        "roty": 1.57,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "piston",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_inner.png",
+        "bottom": "piston_bottom.png"
+    },
+    "11": {
+        "rotx": 1.57,
+        "roty": -1.57,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "piston",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_inner.png",
+        "bottom": "piston_bottom.png"
+    },
+    "12": {
+        "rotx": 1.57,
+        "roty": 0.0,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "piston",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_inner.png",
+        "bottom": "piston_bottom.png"
+    },
+    "13": {
+        "rotx": 1.57,
+        "roty": 3.14,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "piston",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_normal.png",
+        "bottom": "piston_bottom.png"
+    }
+},        
 "30": {
     "mask": "0x00",
     "type": 2,        
@@ -704,6 +1120,296 @@
         "defaultTexture": "deadbush.png"
     }
 },
+"33": {
+    "mask": "0x0F",
+    "type": 2,        
+    "name": "Piston",
+    "0": {
+        "rotx": 3.14,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "simpleBlock",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_sticky.png",
+        "bottom": "piston_bottom.png"
+    },
+    "1": {
+        "rotx": 0.0,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "simpleBlock",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_sticky.png",
+        "bottom": "piston_bottom.png"
+    },
+    "2": {
+        "rotx": 1.57,
+        "roty": 1.57,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "simpleBlock",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_sticky.png",
+        "bottom": "piston_bottom.png"
+    },
+    "3": {
+        "rotx": 1.57,
+        "roty": -1.57,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "simpleBlock",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_sticky.png",
+        "bottom": "piston_bottom.png"
+    },
+    "4": {
+        "rotx": 1.57,
+        "roty": 0.0,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "simpleBlock",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_sticky.png",
+        "bottom": "piston_bottom.png"
+    },
+    "5": {
+        "rotx": 1.57,
+        "roty": 3.14,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "simpleBlock",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_sticky.png",
+        "bottom": "piston_bottom.png"
+    },
+    "8": {
+        "rotx": 3.14,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "piston",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_inner.png",
+        "bottom": "piston_bottom.png"
+    },
+    "9": {
+        "rotx": 0.0,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "piston",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_inner.png",
+        "bottom": "piston_bottom.png"
+    },
+    "10": {
+        "rotx": 1.57,
+        "roty": 1.57,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "piston",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_inner.png",
+        "bottom": "piston_bottom.png"
+    },
+    "11": {
+        "rotx": 1.57,
+        "roty": -1.57,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "piston",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_inner.png",
+        "bottom": "piston_bottom.png"
+    },
+    "12": {
+        "rotx": 1.57,
+        "roty": 0.0,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "piston",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_inner.png",
+        "bottom": "piston_bottom.png"
+    },
+    "13": {
+        "rotx": 1.57,
+        "roty": 3.14,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "piston",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_normal.png",
+        "bottom": "piston_bottom.png"
+    }
+},        
+"34": {
+    "mask": "0x0F",
+    "type": 2,        
+    "name": "Piston",
+    "0": {
+        "rotx": 3.14,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "pistonHead",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_normal.png",
+        "bottom": "piston_top_normal.png"
+    },
+    "1": {
+        "rotx": 0.0,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "pistonHead",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_normal.png",
+        "bottom": "piston_top_normal.png"
+    },
+    "2": {
+        "rotx": 1.57,
+        "roty": 1.57,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "pistonHead",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_normal.png",
+        "bottom": "piston_top_normal.png"
+    },
+    "3": {
+        "rotx": 1.57,
+        "roty": -1.57,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "pistonHead",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_normal.png",
+        "bottom": "piston_top_normal.png"
+    },
+    "4": {
+        "rotx": 1.57,
+        "roty": 0.0,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "pistonHead",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_normal.png",
+        "bottom": "piston_top_normal.png"
+    },
+    "5": {
+        "rotx": 1.57,
+        "roty": 3.14,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "pistonHead",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_normal.png",
+        "bottom": "piston_top_normal.png"
+    },
+    "8": {
+        "rotx": 3.14,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "pistonHead",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_sticky.png",
+        "bottom": "piston_top_normal.png"
+    },
+    "9": {
+        "rotx": 0.0,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "pistonHead",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_sticky.png",
+        "bottom": "piston_top_normal.png"
+    },
+    "10": {
+        "rotx": 1.57,
+        "roty": 1.57,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "pistonHead",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_sticky.png",
+        "bottom": "piston_top_normal.png"
+    },
+    "11": {
+        "rotx": 1.57,
+        "roty": -1.57,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "pistonHead",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_sticky.png",
+        "bottom": "piston_top_normal.png"
+    },
+    "12": {
+        "rotx": 1.57,
+        "roty": 0.0,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "pistonHead",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_sticky.png",
+        "bottom": "piston_top_normal.png"
+    },
+    "13": {
+        "rotx": 1.57,
+        "roty": 3.14,
+        "normal": 0.8,
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "pistonHead",
+        "defaultTexture": "piston_side.png",
+        "top": "piston_top_sticky.png",
+        "bottom": "piston_top_normal.png"
+    }
+},               
 "35": {
     "mask": "0x0F",
     "type": 1,        
@@ -1425,6 +2131,105 @@
         "defaultTexture": "planks_oak.png"
     }                 
 },        
+"55": {
+    "mask": "0x0F",
+    "type": 2,      
+    "name": "Redstone",
+    "shapeType": 12,
+    "0": {
+        "drawLevel": 0,
+        "shapeType": 12,
+        "useBiomeColor": 0,
+        "shapeName": "redstoneNS",
+        "defaultTexture": "redstone_dust_line.png"
+    },
+    "1": {
+        "hidden": true,
+        "drawLevel": 0,
+        "shapeType": 12,
+        "useBiomeColor": 0,
+        "shapeName": "redstoneWE",
+        "defaultTexture": "redstone_dust_line.png"
+    },
+    "2": {
+        "hidden": true,
+        "drawLevel": 0,
+        "shapeType": 12,
+        "useBiomeColor": 0,
+        "shapeName": "redstoneNS",
+        "defaultTexture": "redstone_dust_cross.png"
+    },
+    "3": {
+        "hidden": true,
+        "roty": 1.57,
+        "drawLevel": 0,
+        "shapeType": 12,
+        "useBiomeColor": 0,
+        "shapeName": "redstoneC2",
+        "defaultTexture": "redstone_dust_cross.png"
+    },
+    "4": {
+        "hidden": true,
+        "roty": 3.14,
+        "drawLevel": 0,
+        "shapeType": 12,
+        "useBiomeColor": 0,
+        "shapeName": "redstoneC2",
+        "defaultTexture": "redstone_dust_cross.png"
+    },
+    "5": {
+        "hidden": true,
+        "roty": -1.57,
+        "drawLevel": 0,
+        "shapeType": 12,
+        "useBiomeColor": 0,
+        "shapeName": "redstoneC2",
+        "defaultTexture": "redstone_dust_cross.png"
+    },
+    "6": {
+        "hidden": true,
+        "drawLevel": 0,
+        "shapeType": 12,
+        "useBiomeColor": 0,
+        "shapeName": "redstoneC2",
+        "defaultTexture": "redstone_dust_cross.png"
+    },
+    "7": {
+        "hidden": true,
+        "roty": 1.57,
+        "drawLevel": 0,
+        "shapeType": 12,
+        "useBiomeColor": 0,
+        "shapeName": "redstoneC3",
+        "defaultTexture": "redstone_dust_cross.png"
+    },
+    "8": {
+        "hidden": true,
+        "roty": 3.14,
+        "drawLevel": 0,
+        "shapeType": 12,
+        "useBiomeColor": 0,
+        "shapeName": "redstoneC3",
+        "defaultTexture": "redstone_dust_cross.png"
+    },
+    "9": {
+        "hidden": true,
+        "roty": -1.57,
+        "drawLevel": 0,
+        "shapeType": 12,
+        "useBiomeColor": 0,
+        "shapeName": "redstoneC3",
+        "defaultTexture": "redstone_dust_cross.png"
+    },
+    "10": {
+        "hidden": true,
+        "drawLevel": 0,
+        "shapeType": 12,
+        "useBiomeColor": 0,
+        "shapeName": "redstoneC3",
+        "defaultTexture": "redstone_dust_cross.png"
+    }
+},
 "56": {
     "mask": "0x00",
     "type": 1,
@@ -1642,6 +2447,155 @@
         "bottom": "furnace_top.png"
     }
 },        
+"63": {
+    "mask": "0x0F",
+    "type": 2,
+    "name": "Sign",
+    "0": {
+        "roty": 1.57,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "1": {
+        "roty": 1.9625,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "2": {
+        "roty": 2.355,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "3": {
+        "roty": 2.7475,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "4": {
+        "roty": 3.14,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "5": {
+        "roty": 3.5325,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "6": {
+        "roty": 3.925,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "7": {
+        "roty": 4.3175,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "8": {
+        "roty": 4.71,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "9": { 
+        "roty": 5.1025,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "10": {
+        "roty": 5.495,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "11": {
+        "roty": 5.8875,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "12": {
+        "roty": 6.28,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "13": {
+        "roty": 6.6725,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "14": {
+        "roty": 7.065,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    },
+    "15": {
+        "roty": 7.4575,
+        "drawLevel": 0,
+        "normal": 0.8,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "sign",
+        "defaultTexture": "planks_oak.png"
+    }
+},        
 "65": {
     "mask": "0x0F",
     "type": 2,        
@@ -1674,6 +2628,81 @@
         "defaultTexture": "ladder.png"
     }
 },              
+"66": {
+    "mask": "0x0F",
+    "type": 2, 
+    "name": "Rail",
+    "0": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railNS",
+        "defaultTexture": "rail_normal.png"
+    },
+    "1": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railWE",
+        "defaultTexture": "rail_normal.png"
+    },
+    "2": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railE",
+        "defaultTexture": "rail_normal.png"
+    },
+    "3": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railW",
+        "defaultTexture": "rail_normal.png"
+    },
+    "4": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railN",
+        "defaultTexture": "rail_normal.png"
+    },
+    "5": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railS",
+        "defaultTexture": "rail_normal.png"
+    },
+    "6": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railES",
+        "defaultTexture": "rail_normal_turned.png"
+    },
+    "7": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railWS",
+        "defaultTexture": "rail_normal_turned.png"
+    },
+    "8": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railWN",
+        "defaultTexture": "rail_normal_turned.png"
+    },
+    "9": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railEN",
+        "defaultTexture": "rail_normal_turned.png"
+    }
+},
 "67": {
     "mask": "0x0F",
     "type": 6,        
@@ -1758,6 +2787,49 @@
         "defaultTexture": "cobblestone.png"
     }                 
 },         
+"68": {
+    "mask": "0x0F",
+    "type": 2,        
+    "0": {
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "wallSign",
+        "defaultTexture": "planks_oak.png"
+    },        
+    "2": {
+        "roty": -1.57,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "wallSign",
+        "defaultTexture": "planks_oak.png"
+    },        
+    "3": {
+        "roty": 1.57,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "wallSign",
+        "defaultTexture": "planks_oak.png"
+    },        
+    "4": {
+        "roty": 3.14,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "wallSign",
+        "defaultTexture": "planks_oak.png"
+    },        
+    "5": {
+        "roty": 0,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "wallSign",
+        "defaultTexture": "planks_oak.png"
+    }
+},        
 "70": {
     "mask": "0x00",
     "type": 2, 
@@ -1883,6 +2955,49 @@
         "defaultTexture": "redstone_torch_on.png"
     }
 },     
+"77": {
+    "mask": "0x07",
+    "type": 2,        
+    "name": "Stone Button",
+    "0": {
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "button",
+        "defaultTexture": "stone.png"
+    },
+    "1": {
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "button",
+        "defaultTexture": "stone.png"
+    },
+    "2": {
+        "roty": 3.14,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "button",
+        "defaultTexture": "stone.png"
+    },
+    "3": {
+        "roty": 1.57,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "button",
+        "defaultTexture": "stone.png"
+    },
+    "4": {
+        "roty": -1.57,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "button",
+        "defaultTexture": "stone.png"
+    }
+},        
 "78": {
     "mask": "0x0F",
     "name": "Snow",
@@ -3181,6 +4296,84 @@
         "defaultTexture": "emerald_ore.png"
     }
 },        
+"131": {
+    "mask": "0x03",
+    "type": 2,        
+    "name": "Tripwire Hook",
+    "0": {
+        "roty": 1.57,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "tripwirehook",
+        "defaultTexture": "planks_oak.png"
+    },
+    "1": {
+        "roty": 3.14,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "tripwirehook",
+        "defaultTexture": "planks_oak.png"
+    },
+    "2": {
+        "roty": -1.57,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "tripwirehook",
+        "defaultTexture": "planks_oak.png"
+    },
+    "3": {
+        "roty": 0,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "tripwirehook",
+        "defaultTexture": "planks_oak.png"
+    }
+},    
+"132": {
+    "mask": "0x00",
+    "type": 2,        
+    "name": "Tripwire",
+    "shapeType": 13,
+    "0": {
+        "roty": 0,
+        "drawLevel": 2,
+        "shapeType": 13,
+        "useBiomeColor": 0,
+        "shapeName": "tripwire",
+        "defaultTexture": "trip_wire.png"
+    },
+    "1": {
+        "hidden": true,
+        "roty": 3.14,
+        "drawLevel": 2,
+        "shapeType": 13,
+        "useBiomeColor": 0,
+        "shapeName": "tripwire",
+        "defaultTexture": "trip_wire.png"
+    },
+    "2": {
+        "hidden": true,
+        "roty": 1.57,
+        "drawLevel": 2,
+        "shapeType": 13,
+        "useBiomeColor": 0,
+        "shapeName": "tripwire",
+        "defaultTexture": "trip_wire.png"
+    },
+    "3": {
+        "hidden": true,
+        "roty": -1.57,
+        "drawLevel": 2,
+        "shapeType": 13,
+        "useBiomeColor": 0,
+        "shapeName": "tripwire",
+        "defaultTexture": "trip_wire.png"
+    }
+},                
 "133": {
     "mask": "0x00",
     "type": 1,        
@@ -3606,6 +4799,49 @@
         "defaultTexture": "potatoes_stage_3.png"
     }
 },
+"143": {
+    "mask": "0x07",
+    "type": 2,        
+    "name": "Wooden Button",
+    "0": {
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "button",
+        "defaultTexture": "planks_oak.png"
+    },
+    "1": {
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "button",
+        "defaultTexture": "planks_oak.png"
+    },
+    "2": {
+        "roty": 3.14,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "button",
+        "defaultTexture": "planks_oak.png"
+    },
+    "3": {
+        "roty": 1.57,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "button",
+        "defaultTexture": "planks_oak.png"
+    },
+    "4": {
+        "roty": -1.57,
+        "drawLevel": 0,
+        "shapeType": 11,
+        "useBiomeColor": 0,
+        "shapeName": "button",
+        "defaultTexture": "planks_oak.png"
+    }
+},    
 "147": {
     "mask": "0x00",
     "type": 2, 
@@ -3799,6 +5035,95 @@
         "defaultTexture": "quartz_block_top.png"
     }                 
 },             
+"157": {
+    "mask": "0x0F",
+    "type": 2, 
+    "name": "Activator Rail",
+    "0": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railNS",
+        "defaultTexture": "rail_activator.png"
+    },
+    "1": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railWE",
+        "defaultTexture": "rail_activator.png"
+    },
+    "2": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railE",
+        "defaultTexture": "rail_activator.png"
+    },
+    "3": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railW",
+        "defaultTexture": "rail_activator.png"
+    },
+    "4": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railN",
+        "defaultTexture": "rail_activator.png"
+    },
+    "5": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railS",
+        "defaultTexture": "rail_activator.png"
+    },
+    "8": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railNS",
+        "defaultTexture": "rail_activator_powered.png"
+    },
+    "9": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railWE",
+        "defaultTexture": "rail_activator_powered.png"
+    },
+    "10": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railE",
+        "defaultTexture": "rail_activator_powered.png"
+    },
+    "11": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railW",
+        "defaultTexture": "rail_activator_powered.png"
+    },
+    "12": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railN",
+        "defaultTexture": "rail_activator_powered.png"
+    },
+    "13": {
+        "drawLevel": 0,
+        "shapeType": 3,
+        "useBiomeColor": 0,
+        "shapeName": "railS",
+        "defaultTexture": "rail_activator_powered.png"
+    }            
+},                
 "158": {
     "mask": "0x03",
     "type": 1,        

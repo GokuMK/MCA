@@ -394,7 +394,7 @@ Chunk.prototype.getBuffer = function(pos){
                        //////////
                        if(ablock.shapeType === undefined) continue;
                        
-                            if(ablock.shapeType === 1){ // simple blocks
+                            if(ablock.shapeType === 1 || ablock.shapeType === 11){ // simple blocks
                                 var shape = ablock.shape;
                                 var shape2 = shape;
                                 color = 0.0;

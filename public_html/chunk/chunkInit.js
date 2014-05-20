@@ -67,6 +67,7 @@ Chunk.prototype.init2 = function(yyyy){
            var color = 0, color1 = 0, color2 = 0, color3 = 0, color4 = 0;
            var modPosx, modPosz;
            var blockAdd = 0;
+           var selectAF = 0, selectAB = 0, selectAR = 0, selectAL = 0, selectAT = 0, selectAD = 0;
            
            //var heightMapMax = 0;
            //for(var z = 0; z < 256; z++)
@@ -231,6 +232,11 @@ Chunk.prototype.init2 = function(yyyy){
                        if(!(drawF || drawB || drawR || drawL || drawD || drawT))
                            continue;
                        
+                       if(blockType === 2){
+                           drawF = drawF || drawB || drawR || drawL || drawD || drawT;
+                           drawB = drawR = drawL = drawD = drawT = drawF;
+                       }
+                       
                        blockId = cacheId[aindex];
                        blockData = cacheData[aindex];
                        
@@ -242,7 +248,13 @@ Chunk.prototype.init2 = function(yyyy){
                        if(ablock.shapeType === undefined) continue;
                        if(ablock.shapeType === 0) continue;
                        
-                            if(ablock.shapeType === 1){ // simple blocks
+                            if(ablock.shapeType === 1 || ablock.shapeType === 11){ // simple blocks
+                                if(ablock.shapeType === 1){
+                                    selectAF = 1; selectAB = 2; selectAR = 3; selectAL = 4; selectAT = 6; selectAD = 5;
+                                } else {
+                                    selectAF = 0; selectAB = 0; selectAR = 0; selectAL = 0; selectAT = 0; selectAD = 0;
+                                }
+                            
                                 drawLevel = ablock.drawLevel;
                                 punkty22 = punkty[drawLevel];
                                 var shape = ablock.shape;
@@ -277,7 +289,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.front[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.front[jj+4];
                                         punkty22.d[punkty22.o++] = f1light * 100 + f1Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAF;
                                         punkty22.d[punkty22.o++] = 0.8;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 5;
@@ -287,7 +299,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.front[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.front[jj+4];
                                         punkty22.d[punkty22.o++] = f2light * 100 + f2Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAF;
                                         punkty22.d[punkty22.o++] = 0.8;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 10;
@@ -297,7 +309,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.front[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.front[jj+4];
                                         punkty22.d[punkty22.o++] = f3light * 100 + f3Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAF;
                                         punkty22.d[punkty22.o++] = 0.8;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 15;
@@ -307,7 +319,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.front[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.front[jj+4];
                                         punkty22.d[punkty22.o++] = f1light * 100 + f1Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAF;
                                         punkty22.d[punkty22.o++] = 0.8;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 20;
@@ -317,7 +329,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.front[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.front[jj+4];
                                         punkty22.d[punkty22.o++] = f3light * 100 + f3Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAF;
                                         punkty22.d[punkty22.o++] = 0.8;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 25;
@@ -327,7 +339,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.front[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.front[jj+4];
                                         punkty22.d[punkty22.o++] = f4light * 100 + f4Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 1;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAF;
                                         punkty22.d[punkty22.o++] = 0.8;
                                         punkty22.d[punkty22.o++] = color;
                                     //}    
@@ -354,7 +366,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.back[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.back[jj+4];
                                         punkty22.d[punkty22.o++] = b3light * 100 + b3Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAB;
                                         punkty22.d[punkty22.o++] = 0.8;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 5;
@@ -364,7 +376,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.back[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.back[jj+4];
                                         punkty22.d[punkty22.o++] = b1light * 100 + b1Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAB;
                                         punkty22.d[punkty22.o++] = 0.8;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 10;
@@ -374,7 +386,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.back[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.back[jj+4];
                                         punkty22.d[punkty22.o++] = b4light * 100 + b4Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAB;
                                         punkty22.d[punkty22.o++] = 0.8;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 15;
@@ -384,7 +396,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.back[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.back[jj+4];
                                         punkty22.d[punkty22.o++] = b1light * 100 + b1Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAB;
                                         punkty22.d[punkty22.o++] = 0.8;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 20;
@@ -394,7 +406,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.back[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.back[jj+4];
                                         punkty22.d[punkty22.o++] = b3light * 100 + b3Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAB;
                                         punkty22.d[punkty22.o++] = 0.8;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 25;
@@ -404,7 +416,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.back[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.back[jj+4];
                                         punkty22.d[punkty22.o++] = b2light * 100 + b2Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 2;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAB;
                                         punkty22.d[punkty22.o++] = 0.8;
                                         punkty22.d[punkty22.o++] = color;
                                     //}  
@@ -431,7 +443,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.right[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.right[jj+4];
                                         punkty22.d[punkty22.o++] = r3light * 100 + r3Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAR;
                                         punkty22.d[punkty22.o++] = 0.55;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 5;
@@ -441,7 +453,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.right[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.right[jj+4];
                                         punkty22.d[punkty22.o++] = r1light * 100 + r1Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAR;
                                         punkty22.d[punkty22.o++] = 0.55;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 10;
@@ -451,7 +463,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.right[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.right[jj+4];
                                         punkty22.d[punkty22.o++] = r4light * 100 + r4Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAR;
                                         punkty22.d[punkty22.o++] = 0.55;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 15;
@@ -461,7 +473,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.right[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.right[jj+4];
                                         punkty22.d[punkty22.o++] = r3light * 100 + r3Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAR;
                                         punkty22.d[punkty22.o++] = 0.55;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 20;
@@ -471,7 +483,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.right[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.right[jj+4];
                                         punkty22.d[punkty22.o++] = r2light * 100 + r2Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAR;
                                         punkty22.d[punkty22.o++] = 0.55;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 25;
@@ -481,7 +493,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.right[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.right[jj+4];
                                         punkty22.d[punkty22.o++] = r1light * 100 + r1Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 3;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAR;
                                         punkty22.d[punkty22.o++] = 0.55;
                                         punkty22.d[punkty22.o++] = color;
                                     //}  
@@ -508,7 +520,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.left[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.left[jj+4];
                                         punkty22.d[punkty22.o++] = l4light * 100 + l4Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAL;
                                         punkty22.d[punkty22.o++] = 0.55;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 5;
@@ -518,7 +530,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.left[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.left[jj+4];
                                         punkty22.d[punkty22.o++] = l1light * 100 + l1Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAL;
                                         punkty22.d[punkty22.o++] = 0.55;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 10;
@@ -528,7 +540,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.left[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.left[jj+4];
                                         punkty22.d[punkty22.o++] = l2light * 100 + l2Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAL;
                                         punkty22.d[punkty22.o++] = 0.55;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 15;
@@ -538,7 +550,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.left[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.left[jj+4];
                                         punkty22.d[punkty22.o++] = l3light * 100 + l3Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAL;
                                         punkty22.d[punkty22.o++] = 0.55;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 20;
@@ -548,7 +560,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.left[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.left[jj+4];
                                         punkty22.d[punkty22.o++] = l4light * 100 + l4Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAL;
                                         punkty22.d[punkty22.o++] = 0.55;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 25;
@@ -558,7 +570,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.left[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.left[jj+4];
                                         punkty22.d[punkty22.o++] = l2light * 100 + l2Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAL;
                                         punkty22.d[punkty22.o++] = 0.55;
                                         punkty22.d[punkty22.o++] = color;
                                     //} 
@@ -585,7 +597,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.bottom[jj+4];
                                         punkty22.d[punkty22.o++] = d3light * 100 + d3Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAD;
                                         punkty22.d[punkty22.o++] = 1.0;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 5;
@@ -595,7 +607,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.bottom[jj+4];
                                         punkty22.d[punkty22.o++] = d1light * 100 + d1Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAD;
                                         punkty22.d[punkty22.o++] = 1.0;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 10;
@@ -605,7 +617,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.bottom[jj+4];
                                         punkty22.d[punkty22.o++] = d2light * 100 + d2Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAD;
                                         punkty22.d[punkty22.o++] = 1.0;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 15;
@@ -615,7 +627,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.bottom[jj+4];
                                         punkty22.d[punkty22.o++] = d3light * 100 + d3Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAD;
                                         punkty22.d[punkty22.o++] = 1.0;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 20;
@@ -625,7 +637,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.bottom[jj+4];
                                         punkty22.d[punkty22.o++] = d4light * 100 + d4Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAD;
                                         punkty22.d[punkty22.o++] = 1.0;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 25;
@@ -635,7 +647,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.bottom[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.bottom[jj+4];
                                         punkty22.d[punkty22.o++] = d1light * 100 + d1Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 5;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAD;
                                         punkty22.d[punkty22.o++] = 1.0;
                                         punkty22.d[punkty22.o++] = color;
                                     //}
@@ -663,7 +675,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.top[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.top[jj+4];
                                         punkty22.d[punkty22.o++] = t3light * 100 + t3Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAT;
                                         punkty22.d[punkty22.o++] = 1.0;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 5;
@@ -673,7 +685,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.top[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.top[jj+4];
                                         punkty22.d[punkty22.o++] = t2light * 100 + t2Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAT;
                                         punkty22.d[punkty22.o++] = 1.0;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 10;
@@ -683,7 +695,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.top[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.top[jj+4];
                                         punkty22.d[punkty22.o++] = t1light * 100 + t1Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAT;
                                         punkty22.d[punkty22.o++] = 1.0;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 15;
@@ -693,7 +705,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.top[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.top[jj+4];
                                         punkty22.d[punkty22.o++] = t3light * 100 + t3Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAT;
                                         punkty22.d[punkty22.o++] = 1.0;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 20;
@@ -703,7 +715,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.top[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.top[jj+4];
                                         punkty22.d[punkty22.o++] = t1light * 100 + t1Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAT;
                                         punkty22.d[punkty22.o++] = 1.0;
                                         punkty22.d[punkty22.o++] = color;
                                     jj = 25;
@@ -713,7 +725,7 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = shape.top[jj+3]; 
                                         punkty22.d[punkty22.o++] = shape.top[jj+4];
                                         punkty22.d[punkty22.o++] = t4light * 100 + t4Blight;
-                                        punkty22.d[punkty22.o++] = selectionIndex + 6;
+                                        punkty22.d[punkty22.o++] = selectionIndex + selectAT;
                                         punkty22.d[punkty22.o++] = 1.0;
                                         punkty22.d[punkty22.o++] = color;
                                     //}
@@ -778,10 +790,11 @@ Chunk.prototype.init2 = function(yyyy){
                                 flight = Math.floor((flight+blight+rlight+llight+tlight)/5);
                                 fBlight = Math.floor((fBlight+bBlight+rBlight+lBlight+tBlight)/5);
                                 color = 0.0;
+                                var normal = ablock.normal;
                                 if(ablock.useBiomeColor > 0){ 
                                     color = this.getBiomeColor(x, z, ablock.useBiomeColor-1);
                                 }
-                                if(drawF || drawB || drawR || drawL) 
+                                if(drawF || drawB || drawR || drawL || drawT || drawD) 
                                     for (var key in shape) {
                                         for(var jj = 0; jj < shape[key].length; jj+=5 ){
                                             punkty22.d[punkty22.o++] = this.xPos*16+x+shape[key][jj];
@@ -791,7 +804,7 @@ Chunk.prototype.init2 = function(yyyy){
                                             punkty22.d[punkty22.o++] = shape[key][jj+4];
                                             punkty22.d[punkty22.o++] = flight * 100 + fBlight;
                                             punkty22.d[punkty22.o++] = selectionIndex + 0;
-                                            punkty22.d[punkty22.o++] = 1.0;
+                                            punkty22.d[punkty22.o++] = normal;
                                             punkty22.d[punkty22.o++] = color;
                                         }
                                     }
@@ -2391,6 +2404,129 @@ Chunk.prototype.init2 = function(yyyy){
                                         punkty22.d[punkty22.o++] = color;
                                     } 
                                 }
+                                }
+                            } else if(ablock.shapeType === 12){ // redstone wire
+                                drawLevel = ablock.drawLevel;
+                                punkty22 = punkty[drawLevel];
+                                ablock = block[blockId][2];
+                                if(block[cacheId[findex]].shapeType !== 12 && block[cacheId[bindex]].shapeType === 12
+                                    && block[cacheId[rindex]].shapeType === 12 && block[cacheId[lindex]].shapeType === 12)
+                                        ablock = block[blockId][7];
+                                else if(block[cacheId[findex]].shapeType === 12 && block[cacheId[bindex]].shapeType === 12
+                                    && block[cacheId[rindex]].shapeType !== 12 && block[cacheId[lindex]].shapeType === 12)
+                                        ablock = block[blockId][8];
+                                else if(block[cacheId[findex]].shapeType === 12 && block[cacheId[bindex]].shapeType === 12
+                                    && block[cacheId[rindex]].shapeType === 12 && block[cacheId[lindex]].shapeType !== 12)
+                                        ablock = block[blockId][10];
+                                else if(block[cacheId[findex]].shapeType === 12 && block[cacheId[bindex]].shapeType !== 12
+                                    && block[cacheId[rindex]].shapeType === 12 && block[cacheId[lindex]].shapeType === 12)
+                                        ablock = block[blockId][9];
+                                    
+                                else if(block[cacheId[findex]].shapeType !== 12 && block[cacheId[bindex]].shapeType === 12
+                                    && block[cacheId[rindex]].shapeType === 12 && block[cacheId[lindex]].shapeType !== 12)
+                                        ablock = block[blockId][3];
+                                else if(block[cacheId[findex]].shapeType !== 12 && block[cacheId[bindex]].shapeType === 12
+                                    && block[cacheId[rindex]].shapeType !== 12 && block[cacheId[lindex]].shapeType === 12)
+                                        ablock = block[blockId][4];
+                                else if(block[cacheId[findex]].shapeType === 12 && block[cacheId[bindex]].shapeType !== 12
+                                    && block[cacheId[rindex]].shapeType === 12 && block[cacheId[lindex]].shapeType !== 12)
+                                        ablock = block[blockId][6];
+                                else if(block[cacheId[findex]].shapeType === 12 && block[cacheId[bindex]].shapeType !== 12
+                                    && block[cacheId[rindex]].shapeType !== 12 && block[cacheId[lindex]].shapeType === 12)
+                                        ablock = block[blockId][5];
+                                    
+                                else if((block[cacheId[findex]].shapeType === 12 || block[cacheId[bindex]].shapeType === 12)
+                                    && block[cacheId[rindex]].shapeType !== 12 && block[cacheId[lindex]].shapeType !== 12)
+                                        ablock = block[blockId][0];
+                                else if(block[cacheId[findex]].shapeType !== 12 && block[cacheId[bindex]].shapeType !== 12
+                                    && (block[cacheId[rindex]].shapeType === 12 || block[cacheId[lindex]].shapeType === 12))
+                                        ablock = block[blockId][1];
+                                else if(block[cacheId[findex]].shapeType === 12 && block[cacheId[bindex]].shapeType === 12
+                                    && block[cacheId[rindex]].shapeType === 12 && block[cacheId[lindex]].shapeType === 12)
+                                        ablock = block[blockId][2];
+                                
+                                var shape = ablock.shape;
+                                
+                                color = Math.floor(blockData*12+75)*256*256 + Math.floor(0)*256 + Math.floor(0);
+                                
+                                if(drawT || drawR || drawL || drawD || drawF || drawB ) //left
+                                    for(var jj = 0; jj < shape.top.length; jj+=5 ){
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = color;
+                                    }      
+                            }else if(ablock.shapeType === 13){ // redstone wire
+                                if(!(drawT || drawR || drawL || drawD || drawF || drawB )) continue;
+                                drawLevel = ablock.drawLevel;
+                                punkty22 = punkty[drawLevel];
+                                var it = 0;
+                                if(block[cacheId[findex]].shapeType === 13 || cacheId[findex] === 131){
+                                    ablock = block[blockId][0];
+                                    shape = ablock.shape;
+                                    it++;
+                                    for(var jj = 0; jj < shape.top.length; jj+=5 ){
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0;
+                                    }      
+                                }
+                                if(block[cacheId[bindex]].shapeType === 13 || cacheId[bindex] === 131){
+                                    ablock = block[blockId][1];
+                                    shape = ablock.shape;
+                                    it++;
+                                    for(var jj = 0; jj < shape.top.length; jj+=5 ){
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0;
+                                    }      
+                                }
+                                if(block[cacheId[rindex]].shapeType === 13 || cacheId[rindex] === 131 || it < 1){
+                                    ablock = block[blockId][2];
+                                    shape = ablock.shape;
+                                    for(var jj = 0; jj < shape.top.length; jj+=5 ){
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0;
+                                    }      
+                                }
+                                if(block[cacheId[lindex]].shapeType === 13 || cacheId[lindex] === 131 || it < 1){
+                                    ablock = block[blockId][3];
+                                    shape = ablock.shape;
+                                    for(var jj = 0; jj < shape.top.length; jj+=5 ){
+                                        punkty22.d[punkty22.o++] = this.xPos*16+x+shape.top[jj];
+                                        punkty22.d[punkty22.o++] = yy+y+shape.top[jj+1]; 
+                                        punkty22.d[punkty22.o++] = this.zPos*16+z+shape.top[jj+2];
+                                        punkty22.d[punkty22.o++] = shape.top[jj+3]; 
+                                        punkty22.d[punkty22.o++] = shape.top[jj+4];
+                                        punkty22.d[punkty22.o++] = llight * 100 + lBlight;
+                                        punkty22.d[punkty22.o++] = selectionIndex + 4;
+                                        punkty22.d[punkty22.o++] = 0.8;
+                                        punkty22.d[punkty22.o++] = 0;
+                                    }      
                                 }
                             }
                         }
