@@ -65,14 +65,14 @@ RegionSrv.prototype.connect = function(server, name){
                                 var blockData = NBT.nextTag(data).data;
                                 var source = NBT.nextTag(data).value;
                                 if(!source.equalsIgnoreCase(this.regionSrv.nickname)){
-                                    if(length < 4) this.regionSrv.updateRawBlock(blockData, false);
-                                    else {
+                                    //if(length < 4) this.regionSrv.updateRawBlock(blockData, false);
+                                    //else {
                                         this.regionSrv.setRawBlock(blockData);
                                         update++;
-                                    }
+                                    //}
                                 }
                             }
-                            if(update > 0) this.regionSrv.updateChunks();
+                            //if(update > 0) this.regionSrv.updateChunks();
                             break;
                         case "PlayerUpdate":
                             //console.log("pu "+aTag.length);
@@ -275,7 +275,8 @@ RegionSrv.prototype.updateChunks = function(){
         }
     }
     var timeNow3 = new Date().getTime();
-    console.log("update chunk "+(timeNow3-timeNow1)+" "+i);
+    if(i > 0)
+        console.log("update chunk "+(timeNow3-timeNow1)+" "+i);
 };
 
 RegionSrv.prototype.deleteBuffers = function(all){

@@ -89,6 +89,12 @@ require("ui/selectionBox.js");
         if(lastTime%100 > timeNow%100){
             new100msec = true;
         }
+        
+        var new500msec = false;
+        if(lastTime%500 > timeNow%500){
+            new500msec = true;
+        }
+        
         var new50msec = false;
         if(timeNow > last50msTime + 50){
             last50msTime = timeNow;
@@ -185,7 +191,11 @@ require("ui/selectionBox.js");
         }
         
         if(newSec){
-           settings.setHashURL(cameraPos, cameraRot, camera.name);
+           settings.setHashURL(cameraPos, cameraRot, camera.name);  
+        }
+        
+        if(new500msec){
+           mcWorld.updateChunks();
         }
         
         if(sec === 10){
