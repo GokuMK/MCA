@@ -7,3 +7,6 @@ More (old) info about viewer:
 http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-tools/1265996-mca-webgl-world-viewer-editor
 
 How run multiplayer game - look for yourself
+
+Screenshot from web browser:
+![MCA](http://i.imgur.com/vzqKlq6.jpg)
